@@ -11,6 +11,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const examples = [
     {
+        name: "Paradise Donuts Muskogee",
+        image: "/examples/Paradise_Donuts_Full_Site.webp",
+        description: "A fresh, high-performance bakery interface with cinematic visuals, glassmorphism, and tactical local SEO.",
+    },
+    {
         name: "Harrison Tire & Supply",
         image: "/examples/Harrison_Tire_Full_Site.webp",
         description: "A powerhouse industrial design featuring tactical quoting systems and heavy-duty grid aesthetics.",

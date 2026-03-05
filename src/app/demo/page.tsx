@@ -7,6 +7,13 @@ import { ExternalLink, Rocket, Monitor } from "lucide-react";
 
 const demoSites = [
     {
+        name: "Paradise Donuts Muskogee",
+        href: "/DEMO/paradise-donuts-muskogee/index.html",
+        description: "Fresh, high-performance bakery interface with cinematic visuals, glassmorphism, and tactical local SEO.",
+        tech: "React / Tailwind v4",
+        category: "Bakery / Retail"
+    },
+    {
         name: "Harrison Tire & Supply",
         href: "/DEMO/harrison-tire/index.html",
         description: "Industrial-grade auto repair and tire center with a mission-critical tactical quoting engine.",
