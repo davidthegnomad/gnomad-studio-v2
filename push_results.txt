@@ -1,3 +1,2 @@
-To https://github.com/davidthegnomad/gnomadstudio.org.git
- + 683e8ac...55b3922 main -> main (forced update)
-branch 'main' set up to track 'origin/main'.
+To https://github.com/davidthegnomad/gnomad-studio-v2.git
+   190b9393..d391c5be  master -> master
