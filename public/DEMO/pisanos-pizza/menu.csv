@@ -1,0 +1,23 @@
+Pizza,,,
+Item,Medium,Large,X-Large
+1 Topping,$8.99,$11.99,$12.99
+2 Topping,$9.99,$12.99,$14.49
+3 Topping,$10.49,$14.49,$15.49
+Supreme,$11.49,$19.49,$20.49
+Super Supreme,$12.99,$20.49,$21.49
+All Meat,$11.49,$19.49,$20.49
+Veggie,$10.49,$13.49,$15.49
+Alpine,$8.49,$11.49,$12.49
+,,,
+Calizones,,,
+Item,Small,Medium,Large
+Regular,$8.99,$16.99,$22.99
+All Meat,$9.99,$17.99,$23.99
+Supreme,$9.99,$17.99,$23.99
+,,,
+Extras,,,
+Item,Price,,
+Extra Toppings,$1.50,,
+Extra Sauce,$0.35,,
+,,,
+Buffet,$12.80,,

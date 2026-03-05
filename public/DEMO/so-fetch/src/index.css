@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #a855f7;
+    /* Purple-500 */
+    --color-secondary: #06b6d4;
+    /* Cyan-500 */
+    --color-background-light: #faf5ff;
+    /* Purple-50 */
+    --color-text-dark: #2e1065;
+    /* Purple-950 */
+}
+
+@layer base {
+    body {
+        @apply bg-background-light text-text-dark font-sans antialiased;
+    }
+}
+
+/* Custom glam pattern */
+.bg-glam-pattern {
+    background-image: radial-gradient(#a855f7 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.1;
+}
+
+/* Glass panel */
+.glass-panel {
+    @apply bg-white/80 backdrop-blur-2xl border border-purple-100 shadow-2xl;
+}

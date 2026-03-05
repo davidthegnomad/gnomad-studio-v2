@@ -1,0 +1,46 @@
+
+> gnomad-studio-v2@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.9s
+  Running TypeScript ...
+  Collecting page data using 23 workers ...
+  Generating static pages using 23 workers (0/24) ...
+  Generating static pages using 23 workers (6/24) 
+  Generating static pages using 23 workers (12/24) 
+  Generating static pages using 23 workers (18/24) 
+✓ Generating static pages using 23 workers (24/24) in 704.4ms
+  Finalizing page optimization ...
+⚠ Statically exporting a Next.js application via `next export` disables API routes and middleware.
+This command is meant for static-only hosts, and is not necessary to make your application static.
+Pages in your application without server-side data dependencies will be automatically statically exported by `next build`, including pages powered by `getStaticProps`.
+Learn more: https://nextjs.org/docs/messages/api-routes-static-export
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /advisory
+├ ○ /client-portal
+├ ○ /client-portal/resources
+├ ● /client-portal/resources/[toolId]
+│ ├ /client-portal/resources/forensic-competitive-stack
+│ ├ /client-portal/resources/audience-spending-leakage
+│ ├ /client-portal/resources/blue-ocean-gap
+│ └ [+9 more paths]
+├ ○ /contact
+├ ○ /examples
+├ ○ /icon.png
+├ ○ /login
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+

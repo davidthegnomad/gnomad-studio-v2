@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gnomad Studio | Client Demo Portal</title>
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --surface-color: rgba(30, 32, 40, 0.6);
+            --surface-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a5b1;
+
+            /* Gnomad Brand Colors - adjusted for dark mode */
+            --brand-gold: #c5a059;
+            --brand-gold-glow: rgba(197, 160, 89, 0.4);
+            --brand-green: #2c4c3b;
+            --brand-green-glow: rgba(44, 76, 59, 0.6);
+            --accent-blue: #4a90e2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Gradient Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 15% 50%, var(--brand-green-glow), transparent 30%),
+                radial-gradient(circle at 85% 30%, var(--brand-gold-glow), transparent 30%);
+            filter: blur(80px);
+            animation: pulse-bg 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-bg {
+            0% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.6;
+            }
+        }
+
+        header {
+            margin-top: 5rem;
+            text-align: center;
+            animation: fade-in-down 1s ease-out forwards;
+        }
+
+        .subtitle {
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.85rem;
+            color: var(--brand-gold);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            background: linear-gradient(to right, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .header-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 4rem auto;
+            line-height: 1.6;
+        }
+
+        /* Grid Layout */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            padding-bottom: 5rem;
+            animation: slide-up 1s ease-out forwards;
+            opacity: 0;
+            animation-delay: 0.2s;
+        }
+
+        /* Glassmorphism Card */
+        .demo-card {
+            background: var(--surface-color);
+            border: 1px solid var(--surface-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+            overflow: hidden;
+            group: hover;
+        }
+
+        /* Hover Effects */
+        .demo-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(197, 160, 89, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(197, 160, 89, 0.1);
+        }
+
+        /* Glow effect on hover */
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: skewX(-20deg);
+            transition: 0.7s;
+        }
+
+        .demo-card:hover::before {
+            left: 200%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(74, 144, 226, 0.1);
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .demo-card:hover h2 {
+            color: var(--brand-gold);
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            color: var(--brand-gold);
+            font-weight: 500;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .demo-card:hover .card-footer {
+            opacity: 1;
+        }
+
+        .card-footer svg {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover .card-footer svg {
+            transform: translateX(5px);
+        }
+
+        /* Animations */
+        @keyframes fade-in-down {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slide-up {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            header {
+                margin-top: 3rem;
+                padding: 0 1rem;
+            }
+
+            .container {
+                padding-bottom: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient-bg"></div>
+
+    <header>
+        <span class="subtitle">Gnomad Studio</span>
+        <h1>Client Demo Portal</h1>
+        <p class="header-desc">
+            Explore the latest interactive previews of your active web projects.
+            Click on any card below to launch the live development environment.
+        </p>
+    </header>
+
+    <main class="container">
+
+        <!-- Grass Monkey Landscaping -->
+        <a href="./grass-monkey-landscaping/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge">Landscaping</span>
+                </div>
+                <h2>Grass Monkey Landscaping</h2>
+                <p>Lead-gen platform with lush emerald theme, interactive estimate flow, and service area map.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- Muskogee Tree Care -->
+        <a href="./muskogee-tree-care/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge">Outdoor Services</span>
+                </div>
+                <h2>Muskogee Tree Care</h2>
+                <p>Professional tree service site with service area targeting, lead capture, and Hey Siri FAQ.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- Champion Car Detailing -->
+        <a href="./champion-car-detailing/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge" style="background: rgba(197,160,89,0.1); color: var(--brand-gold);">Auto
+                        Detail</span>
+                </div>
+                <h2>Champion Car Detailing</h2>
+                <p>Premium mobile detailing showcase with ceramic coating focus, smooth scroll, and interactive booking.
+                </p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- Harrison Tire & Supply -->
+        <a href="./harrison-tire/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge" style="background: rgba(197,160,89,0.1); color: var(--brand-gold);">Auto
+                        Service</span>
+                </div>
+                <h2>Harrison Tire &amp; Supply</h2>
+                <p>Industrial Iron &amp; Orange themed auto shop with Tire Quote Wizard and Facebook Review Bar.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- Okie Paws -->
+        <a href="./okie-paws/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge" style="background: rgba(255,105,180,0.1); color: #FF69B4;">Pet
+                        Services</span>
+                </div>
+                <h2>Okie Paws</h2>
+                <p>Playful pet sitting &amp; dog walking site with floating mobile actions and booking flow.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- Doggie Doo Mobile Grooming -->
+        <a href="./doggie-doo/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge" style="background: rgba(255,105,180,0.1); color: #FF69B4;">Mobile
+                        Grooming</span>
+                </div>
+                <h2>Doggie Doo</h2>
+                <p>Mobile dog grooming onboarding site with Doodle Specialist branding and standard mobile footer.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- So Fetch Grooming -->
+        <a href="./so-fetch/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge" style="background: rgba(255,105,180,0.1); color: #FF69B4;">Pet
+                        Grooming</span>
+                </div>
+                <h2>So Fetch</h2>
+                <p>Upscale pet grooming boutique site with booking CTA, service showcase, and premium aesthetic.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- McDaniel Family Chiropractic -->
+        <a href="./mcdaniel-chiropractic/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge" style="background: rgba(74,144,226,0.1); color: #4a90e2;">Health</span>
+                </div>
+                <h2>McDaniel Family Chiropractic</h2>
+                <p>Trust-first chiropractic website with doctor profile, services, and appointment booking flow.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- McGaugh Ranch -->
+        <a href="./mcgaughranch-cowsales/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge"
+                        style="background: rgba(139,90,43,0.15); color: #c8a96e;">Agriculture</span>
+                </div>
+                <h2>McGaugh Ranch</h2>
+                <p>Beef share &amp; cattle sales platform with Beef Share Selector wizard and ranching aesthetic.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- Pisano's Pizza -->
+        <a href="./pisanos-pizza/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge"
+                        style="background: rgba(220,50,47,0.1); color: #e05c4b;">Restaurant</span>
+                </div>
+                <h2>Pisano's Pizza</h2>
+                <p>Full-featured pizza ordering experience with interactive menu, cart system, and mobile footer.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- Green St Dispensary -->
+        <a href="./green-st-dispensary/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge"
+                        style="background: rgba(16,185,129,0.1); color: #10b981;">Dispensary</span>
+                </div>
+                <h2>Green St Dispensary</h2>
+                <p>Modern dispensary interface with high-impact visual design and bright green accents.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- Blaze-N-Bake -->
+        <a href="./blaze-n-bake/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge"
+                        style="background: rgba(16,185,129,0.1); color: #10b981;">Dispensary</span>
+                </div>
+                <h2>Blaze-N-Bake</h2>
+                <p>Vibrant cannabis shop with modern product routing, dynamic shopping cart UI, and age gate.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- Lifted Spirits -->
+        <a href="./lifted-spirits/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge"
+                        style="background: rgba(16,185,129,0.1); color: #10b981;">Dispensary</span>
+                </div>
+                <h2>Lifted Spirits Muskogee</h2>
+                <p>Ethereal dispensary experience with age verification gate, ambient theme, and product showcase.</p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+        <!-- Re-Up Muskogee -->
+        <a href="./re-up-muskogee/" class="demo-card">
+            <div>
+                <div class="card-header">
+                    <span class="status-badge"
+                        style="background: rgba(16,185,129,0.1); color: #10b981;">Dispensary</span>
+                </div>
+                <h2>Re-Up Muskogee</h2>
+                <p>Premium dispensary storefront with catalog, membership inner circle concept, and loyalty branding.
+                </p>
+            </div>
+            <div class="card-footer">View Demo <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></div>
+        </a>
+
+    </main>
+
+</body>
+
+</html>

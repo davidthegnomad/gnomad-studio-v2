@@ -1,0 +1,5 @@
+# DEPRECATED: This workflow was previously used to deploy to Hostinger via FTP.
+# It has been replaced by Firebase App Hosting (see apphosting.yaml), which
+# automatically builds and deploys on every push to the main branch.
+#
+# DO NOT RE-ENABLE this workflow unless migrating back to Hostinger.

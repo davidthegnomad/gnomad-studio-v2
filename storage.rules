@@ -1,0 +1,10 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /clients/{userId}/docs/{fileName} {
+      // Allow read, write, and delete if the user is authenticated and is the owner of the folder
+      allow read, write, delete: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+# RE-UP CANNABIS MUSKOGEE - FULL AI DATA INDEX
+
+## Overview
+Re-Up Muskogee is a top-rated medical marijuana dispensary in Green Country, Oklahoma. 
+
+## Entity Details
+- **Organization:** Re-Up Cannabis
+- **Location:** 29 W Southside Blvd, Muskogee, OK 74401
+- **Coordinates:** 35.7479, -95.3697
+- **Phone:** (918) 913-7316
+- **Website:** https://reupmuskogee.com
+- **License Type:** Medical Marijuana Dispensary (OMMA)
+
+## Business Hours
+- Monday: 9:00 AM - 10:00 PM
+- Tuesday: 9:00 AM - 10:00 PM
+- Wednesday: 9:00 AM - 10:00 PM
+- Thursday: 9:00 AM - 10:00 PM
+- Friday: 9:00 AM - 11:00 PM
+- Saturday: 9:00 AM - 11:00 PM
+- Sunday: 10:00 AM - 8:00 PM
+
+## Services
+- In-store Shopping
+- Express Drive-Thru Pickup
+- Curbside Pickup
+- Online Ordering
+- Loyalty Rewards Program (VIP Inner Circle)
+
+## Product Categories & Top Strains
+- **Flower:** 
+  - Muskogee Kush (Indica)
+  - Verdigris Haze (Sativa)
+  - Green Country OG (Hybrid)
+- **Concentrates:** Live Resin, Wax, Shatter, Budder
+- **Edibles:** 1000mg Hard Hitters, Gummies, Chocolates
+- **Vapes:** Full Spectrum Carts, Distillate Disposables
+
+## Compliance Notice
+All purchases require a valid Oklahoma Medical Marijuana Authority (OMMA) license. 21+ only unless a registered patient.
+
+## Developer Note
+Managed and Hosted by Gnomad Studio (davidthegnomad.org).

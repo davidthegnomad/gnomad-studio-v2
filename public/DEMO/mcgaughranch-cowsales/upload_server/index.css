@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@layer base {
+    body {
+        @apply transition-colors duration-300 bg-background-light dark:bg-background-dark text-ranch-dark dark:text-white selection:bg-primary/20 font-sans;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .font-display {
+        @apply font-display;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+@theme {
+    --color-primary: #17cf54;
+    --color-background-light: #f6f8f6;
+    --color-background-dark: #112116;
+    --color-ranch-dark: #111813;
+
+    --font-display: "Newsreader", serif;
+    --font-sans: "Noto Sans", sans-serif;
+
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+}

@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: "Lato", ui-sans-serif, system-ui, sans-serif;
+    --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+
+    --color-earth-slate: #2F3E46;
+    --color-sage-healing: #84A98C;
+    --color-warm-sand: #F5F1E3;
+    --color-terracotta: #D67D47;
+    --color-clinical-wash: #FDFCF0;
+}
+
+@layer base {
+    body {
+        @apply antialiased overflow-x-hidden text-earth-slate;
+        background: linear-gradient(to bottom right, #84A98C 0%, #F5F1E3 50%, #FDFCF0 100%);
+        background-attachment: fixed;
+    }
+}
+
+@layer utilities {
+    .text-shadow-premium {
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .glass-clinical {
+        @apply bg-white/40 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_#2f3e460d];
+    }
+
+    .bg-earth-gradient {
+        background: linear-gradient(135deg, var(--color-warm-sand) 0%, var(--color-clinical-wash) 100%);
+    }
+
+    .bg-sage-gradient {
+        background: linear-gradient(135deg, rgba(132, 169, 140, 0.1) 0%, rgba(245, 241, 227, 0.1) 100%);
+    }
+
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 5s ease-in-out infinite;
+}

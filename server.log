@@ -1,0 +1,57 @@
+
+> gnomad-studio-v2@0.1.0 dev
+> next dev -p 3000
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/package-lock.json
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.10.8:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 838ms
+ GET / 200 in 957ms (compile: 660ms, render: 296ms)
+DeepSeek API error: {"error":{"message":"Authentication Fails, Your api key: ****ined is invalid","type":"authentication_error","param":null,"code":"invalid_request_error"}}
+ POST /api/chat/ 401 in 1265ms (compile: 529ms, render: 736ms)
+⨯ Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at <unknown> (https://supabase.com/dashboard/project/_/settings/api)
+    at updateSession (src/lib/supabase/middleware.ts:9:40)
+    at proxy (src/proxy.ts:8:39)
+   7 |     })
+   8 |
+>  9 |     const supabase = createServerClient(
+     |                                        ^
+  10 |         process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  11 |         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  12 |         {
+ GET /client-portal/ 404 in 331ms (compile: -88107µs, proxy.ts: 328ms, render: 91ms)
+⨯ Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at <unknown> (https://supabase.com/dashboard/project/_/settings/api)
+    at updateSession (src/lib/supabase/middleware.ts:9:40)
+    at proxy (src/proxy.ts:8:39)
+   7 |     })
+   8 |
+>  9 |     const supabase = createServerClient(
+     |                                        ^
+  10 |         process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  11 |         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  12 |         {
+ GET /client-portal/ 404 in 58ms (compile: -8351µs, proxy.ts: 56ms, render: 10ms)
+ GET / 200 in 73ms (compile: 6ms, render: 67ms)
+  Reload env: .env.local
+✓ Compiled in 364ms
+ GET / 200 in 473ms (compile: 394ms, render: 79ms)

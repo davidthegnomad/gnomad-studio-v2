@@ -1,0 +1,38 @@
+# Firebase App Hosting Configuration File
+# See https://firebase.google.com/docs/app-hosting/configure
+
+# Environment variables
+# NOTE: 'FIREBASE_' prefix is reserved for internal use.
+# Sensitive variables MUST use secrets.
+# We omit public vars here as they can be set in the Firebase Console
+# or handled via the FIREBASE_CONFIG fallback in the code.
+env:
+  # Sensitive Admin SDK credentials
+  - variable: CLIENT_EMAIL
+    secret: FIREBASE_CLIENT_EMAIL
+  - variable: PRIVATE_KEY
+    secret: FIREBASE_PRIVATE_KEY
+  - variable: NEXT_PUBLIC_SUPABASE_URL
+    secret: NEXT_PUBLIC_SUPABASE_URL
+  - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
+    secret: NEXT_PUBLIC_SUPABASE_ANON_KEY
+  - variable: DEEPSEEK_API_KEY
+    secret: DEEPSEEK_API_KEY
+  - variable: RESEND_API_KEY
+    secret: RESEND_API_KEY
+  - variable: CRON_SECRET
+    secret: CRON_SECRET
+  - variable: GA4_PROPERTY_ID
+    value: "525643149"
+  - variable: NEXT_PUBLIC_GA_MEASUREMENT_ID
+    value: "G-E1RZ70YGNE"
+  - variable: NEXT_PUBLIC_APP_URL
+    value: "https://gnomadstudio.org"
+
+# Runtime configuration
+runConfig:
+  cpu: 1
+  memoryMiB: 512
+  concurrency: 80
+  maxInstances: 10
+  minInstances: 0

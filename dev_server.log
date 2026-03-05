@@ -1,0 +1,37 @@
+
+> gnomad-studio-v2@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.10.15:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 599ms
+Error [AI_APICallError]: Insufficient Balance
+    at ignore-listed frames {
+  cause: undefined,
+  url: 'https://api.deepseek.com/chat/completions',
+  requestBodyValues: [Object],
+  statusCode: 402,
+  responseHeaders: [Object],
+  responseBody: '{"error":{"message":"Insufficient Balance","type":"unknown_error","param":null,"code":"invalid_request_error"}}',
+  isRetryable: false,
+  data: [Object]
+}
+ POST /api/chat 200 in 1362ms (compile: 337ms, render: 1025ms)
+ POST /api/chat 200 in 4.7s (compile: 4ms, render: 4.7s)
+[Admin SDK] Successfully loaded serviceAccountKey.json for project: gnomad-studio-client
+ GET /client-portal 200 in 3.7s (compile: 2.4s, proxy.ts: 929ms, render: 357ms)
+ GET /client-portal 200 in 122ms (compile: 3ms, proxy.ts: 105ms, render: 14ms)
+ GET /client-portal 200 in 270ms (compile: 5ms, proxy.ts: 227ms, render: 38ms)
+ GET /client-portal 200 in 136ms (compile: 3ms, proxy.ts: 114ms, render: 19ms)
+ GET /client-portal 200 in 254ms (compile: 3ms, proxy.ts: 218ms, render: 33ms)
+ GET /client-portal 200 in 128ms (compile: 3ms, proxy.ts: 114ms, render: 12ms)
+ GET / 200 in 618ms (compile: 537ms, render: 80ms)
+ GET /client-portal 200 in 255ms (compile: 3ms, proxy.ts: 219ms, render: 33ms)
+ GET /client-portal 200 in 130ms (compile: 3ms, proxy.ts: 112ms, render: 14ms)
+ GET /client-portal 200 in 260ms (compile: 3ms, proxy.ts: 216ms, render: 40ms)
+ GET /client-portal 200 in 123ms (compile: 4ms, proxy.ts: 104ms, render: 15ms)
+[?25h
