@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark Nebula Blue backgrounds */
+  --color-background-dark: #080c2e;
+  --color-background-light: #0e1445;
+
+  /* Cosmic Fuchsia — primary accent */
+  --color-primary: #e6007e;
+
+  /* Astra Cyan — highlights */
+  --color-cyan: #00ffff;
+
+  /* Solar Gold — accent */
+  --color-gold: #ffd700;
+
+  /* Starlight Teal — highlight variant */
+  --color-teal: #00e5e5;
+
+  /* Deep Purple Void — accent */
+  --color-purple: #7a1fd6;
+
+  --font-display: "Space Grotesk", sans-serif;
+
+  --animate-ticker: ticker 30s linear infinite;
+  --animate-slow-zoom: slow-zoom 20s ease-in-out infinite alternate;
+
+  @keyframes ticker {
+    0% {
+      transform: translateX(100%);
+    }
+
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes slow-zoom {
+    0% {
+      transform: scale(1);
+    }
+
+    100% {
+      transform: scale(1.15);
+    }
+  }
+}
+
+@layer utilities {
+  .neon-text-glow {
+    text-shadow: 0 0 6px rgba(230, 0, 126, 0.7), 0 0 14px rgba(0, 255, 255, 0.4);
+  }
+
+  .neon-box-glow {
+    box-shadow: 0 0 12px rgba(230, 0, 126, 0.35), inset 0 0 10px rgba(0, 255, 255, 0.1);
+  }
+
+  .bg-aurora-gradient {
+    background: linear-gradient(135deg, #080c2e 0%, #1a0545 50%, #0e1445 100%);
+  }
+
+  .bg-crt-lines {
+    background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+      linear-gradient(90deg, rgba(230, 0, 126, 0.04), rgba(0, 255, 255, 0.02), rgba(122, 31, 214, 0.04));
+    background-size: 100% 2px, 3px 100%;
+  }
+}
+
+body {
+  background-color: var(--color-background-dark);
+  color: #fff;
+}

@@ -1,0 +1,27 @@
+
+> cutting-edge-lawn-service@0.0.0 build
+> vite build
+
+vite v6.4.1 building for production...
+transforming...
+[vite:css][postcss] @import must precede all other statements (besides @charset or empty @layer)
+3  |  @tailwind utilities;
+4  |  
+5  |  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+   |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+6  |  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+7  |  
+[vite:css][postcss] @import must precede all other statements (besides @charset or empty @layer)
+4  |  
+5  |  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+6  |  @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+   |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+7  |  
+8  |  :root {
+✓ 40 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   4.71 kB │ gzip:  1.82 kB
+dist/assets/index-ClmEKyZ-.css    1.44 kB │ gzip:  0.72 kB
+dist/assets/index-Boz5UT3G.js   231.90 kB │ gzip: 68.44 kB
+✓ built in 784ms

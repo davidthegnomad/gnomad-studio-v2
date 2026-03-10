@@ -1,0 +1,35 @@
+
+> gnomad-studio-v2@0.1.0 build
+> next build
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/package-lock.json
+
+▲ Next.js 16.1.6 (Turbopack)
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.4s
+  Running TypeScript ...
+  Collecting page data using 23 workers ...
+Error: Failed to parse private key: Error: Too few bytes to parse DER.
+    at m (.next/server/chunks/[root-of-the-server]__bf73a4e8._.js:1:1453)
+    at module evaluation (.next/server/chunks/[root-of-the-server]__bf73a4e8._.js:1:1543)
+    at instantiateModule (.next/server/chunks/[turbopack]_runtime.js:740:9)
+    at instantiateRuntimeModule (.next/server/chunks/[turbopack]_runtime.js:768:12)
+    at getOrInstantiateRuntimeModule (.next/server/chunks/[turbopack]_runtime.js:781:12)
+    at Object.m (.next/server/chunks/[turbopack]_runtime.js:790:18)
+    at Object.<anonymous> (.next/server/app/api/auth/session/route.js:5:3) {
+  errorInfo: [Object],
+  codePrefix: 'app'
+}
+
+> Build error occurred
+Error: Failed to collect page data for /api/auth/session
+    at ignore-listed frames {
+  type: 'Error'
+}

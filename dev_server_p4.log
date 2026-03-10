@@ -1,0 +1,103 @@
+
+> gnomad-studio-v2@0.1.0 dev
+> next dev
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/package-lock.json
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.10.8:3001
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 883ms
+Error: Can't resolve 'tailwindcss' in '/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project'
+    [2m[at finishWithoutResolve (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:586:18)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:678:14][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m
+    [2m[at eval (eval at create (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m
+    [2m[at eval (eval at create (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/DescriptionFilePlugin.js:89:43][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m
+    [2m[at eval (eval at create (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m {
+  details: "resolve 'tailwindcss' in '/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/package.json (relative path: .)\n' +
+    '    resolve as module\n' +
+    '      looking for modules in /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules\n' +
+    '        single file module\n' +
+    '          using description file: /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    "              /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules/tailwindcss doesn't exist\n" +
+    '            .css\n' +
+    "              /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules/tailwindcss.css doesn't exist\n" +
+    "        /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules/tailwindcss doesn't exist\n" +
+    "      /home/gnomad/Antigravity Projects/node_modules doesn't exist or is not a directory\n" +
+    "      /home/gnomad/node_modules doesn't exist or is not a directory\n" +
+    "      /home/node_modules doesn't exist or is not a directory\n" +
+    "      /node_modules doesn't exist or is not a directory"
+}
+ GET / 200 in 2.3s (compile: 1885ms, render: 370ms)
+Error: Can't resolve 'tailwindcss' in '/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project'
+    [2m[at finishWithoutResolve (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:586:18)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:678:14][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m
+    [2m[at eval (eval at create (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m
+    [2m[at eval (eval at create (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/DescriptionFilePlugin.js:89:43][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m
+    [2m[at eval (eval at create (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m {
+  details: "resolve 'tailwindcss' in '/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/package.json (relative path: .)\n' +
+    '    resolve as module\n' +
+    '      looking for modules in /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules\n' +
+    '        single file module\n' +
+    '          using description file: /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    "              /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules/tailwindcss doesn't exist\n" +
+    '            .css\n' +
+    "              /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules/tailwindcss.css doesn't exist\n" +
+    "        /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules/tailwindcss doesn't exist\n" +
+    "      /home/gnomad/Antigravity Projects/node_modules doesn't exist or is not a directory\n" +
+    "      /home/gnomad/node_modules doesn't exist or is not a directory\n" +
+    "      /home/node_modules doesn't exist or is not a directory\n" +
+    "      /node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in '/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project'
+    [2m[at finishWithoutResolve (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:586:18)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:678:14][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m
+    [2m[at eval (eval at create (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m
+    [2m[at eval (eval at create (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/DescriptionFilePlugin.js:89:43][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m
+    [2m[at eval (eval at create (/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/tapable/lib/HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2/node_modules/enhanced-resolve/lib/Resolver.js:739:5][0m {
+  details: "resolve 'tailwindcss' in '/home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/package.json (relative path: .)\n' +
+    '    resolve as module\n' +
+    '      looking for modules in /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules\n' +
+    '        single file module\n' +
+    '          using description file: /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    "              /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules/tailwindcss doesn't exist\n" +
+    '            .css\n' +
+    "              /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules/tailwindcss.css doesn't exist\n" +
+    "        /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/node_modules/tailwindcss doesn't exist\n" +
+    "      /home/gnomad/Antigravity Projects/node_modules doesn't exist or is not a directory\n" +
+    "      /home/gnomad/node_modules doesn't exist or is not a directory\n" +
+    "      /home/node_modules doesn't exist or is not a directory\n" +
+    "      /node_modules doesn't exist or is not a directory"
+}

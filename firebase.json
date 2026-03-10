@@ -1,0 +1,238 @@
+{
+  "hosting": [
+    {
+      "target": "main",
+      "public": "out",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo1",
+      "public": "DEMO/so-fetch/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo2",
+      "public": "DEMO/paradise-donuts-muskogee/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo3",
+      "public": "DEMO/harrison-tire/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo4",
+      "public": "DEMO/doggie-doo-mobile-grooming/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo5",
+      "public": "DEMO/cutting-edge-lawn-service/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo6",
+      "public": "DEMO/grass-monkey-landscaping/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo7",
+      "public": "DEMO/okie-paws/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo8",
+      "public": "DEMO/champion-car-detailing/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo9",
+      "public": "DEMO/muskogee-tree-care/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo10",
+      "public": "DEMO/green-st-dispensary/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo11",
+      "public": "DEMO/elevate-n-print/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo12",
+      "public": "DEMO/tucker-photography/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo13",
+      "public": "DEMO/muskogee-bail-bonds/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo14",
+      "public": "DEMO/tb-custom-tinting/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo15",
+      "public": "DEMO/jfr-tire-shop/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo16",
+      "public": "DEMO/home-turf-of-muskogee/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo17",
+      "public": "DEMO/e-j-mayes-auto-repair/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo18",
+      "public": "DEMO/cs-detailing/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo19",
+      "public": "DEMO/aaron-and-son-custom-cabinets/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo20",
+      "public": "DEMO/body-craft-supply/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    }
+  ],
+  "firestore": {
+    "rules": "firestore.rules"
+  }
+}

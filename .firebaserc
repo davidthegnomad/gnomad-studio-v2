@@ -1,0 +1,75 @@
+{
+  "projects": {
+    "default": "gnomad-studio-client"
+  },
+  "targets": {
+    "gnomad-studio-client": {
+      "hosting": {
+        "main": [
+          "gnomad-studio-client"
+        ],
+        "demo1": [
+          "demo1-gnomadstudio"
+        ],
+        "demo2": [
+          "demo2-gnomadstudio"
+        ],
+        "demo3": [
+          "demo3-gnomadstudio"
+        ],
+        "demo4": [
+          "demo4-gnomadstudio"
+        ],
+        "demo5": [
+          "demo5-gnomadstudio"
+        ],
+        "demo6": [
+          "demo6-gnomadstudio"
+        ],
+        "demo7": [
+          "demo7-gnomadstudio"
+        ],
+        "demo8": [
+          "demo8-gnomadstudio"
+        ],
+        "demo9": [
+          "demo9-gnomadstudio"
+        ],
+        "demo10": [
+          "demo10-gnomadstudio"
+        ],
+        "demo11": [
+          "demo11-gnomadstudio"
+        ],
+        "demo12": [
+          "demo12-gnomadstudio"
+        ],
+        "demo13": [
+          "demo13-gnomadstudio"
+        ],
+        "demo14": [
+          "demo14-gnomadstudio"
+        ],
+        "demo15": [
+          "demo15-gnomadstudio"
+        ],
+        "demo16": [
+          "demo16-gnomadstudio"
+        ],
+        "demo17": [
+          "demo17-gnomadstudio"
+        ],
+        "demo18": [
+          "demo18-gnomadstudio"
+        ],
+        "demo19": [
+          "demo19-gnomadstudio"
+        ],
+        "demo20": [
+          "demo20-gnomadstudio"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

@@ -1,0 +1,26 @@
+# Grass Monkey Landscaping
+
+> The most dependable weekly lawn maintenance crew in Muskogee, OK.
+
+## Business Core
+- **Tagline**: We show up. Every single week.
+- **Service Type**: Weekly Residential Mowing & Commercial Property Maintenance.
+- **Location**: Muskogee, Oklahoma (Serving Green Country).
+- **Phone**: (918) 348-1663
+- **Hours**: Mon-Fri 8:00 AM - 6:00 PM.
+
+## Core Services
+- **Lawn Mowing**: Weekly routes, includes trimming/edging/blowing.
+- **Commercial Property Care**: Professional clinics, HOAs, retail storefronts.
+- **Mulching & Bed Care**: Seasonal refreshing and landscaping resets.
+- **Seasonal Cleanups**: Leaf removal and property prep.
+
+## Reliable Tech
+- **Secure Billing**: Pay via card through client portal.
+- **Communication**: Automated text alerts when crew is en route.
+- **Proof of Quality**: Digital property reports for every visit.
+
+## Commercial Inquiries
+- W-9 Compliant.
+- Fully Insured.
+- Net-30 Invoicing available for qualified properties.

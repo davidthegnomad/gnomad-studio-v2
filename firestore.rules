@@ -1,0 +1,22 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ClientProfile collection: A user can only access their own profile document, or admins can access all
+    match /ClientProfile/{userId} {
+      // Allow read and write if the user is authenticated and the document ID matches their UID, OR if they are the admin
+      allow read, write: if request.auth != null && (request.auth.uid == userId || request.auth.token.email == "david.the.gnomad@gmail.com");
+    }
+    
+    // Documents collection: Metadata for client uploaded files
+    match /Documents/{docId} {
+      allow read, delete: if request.auth != null && resource.data.ownerId == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.ownerId == request.auth.uid;
+    }
+
+    // Default security posture: Deny all reads and writes
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

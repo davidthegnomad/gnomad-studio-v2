@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Green St Dispensary</title>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dispensary",
+      "name": "Green St. Dispensary",
+      "image": "https://davidthegnomad.org/DEMO/shared-images/green_st_neon_logo.webp",
+      "@id": "https://davidthegnomad.org/DEMO/green-st-dispensary/",
+      "url": "https://davidthegnomad.org/DEMO/green-st-dispensary/",
+      "telephone": "+19185776160",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "301 S Main St",
+        "addressLocality": "Muskogee",
+        "addressRegion": "OK",
+        "postalCode": "74401",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 35.7483,
+        "longitude": -95.3695
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "09:00",
+          "closes": "22:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Sunday",
+          "opens": "10:00",
+          "closes": "22:00"
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

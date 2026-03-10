@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #d97706; /* Amber-600 */
+  --color-secondary: #064e3b; /* Emerald-900 */
+  --color-background-dark: #1e293b; /* Slate-800 */
+  --color-linen: #fdfbf7;
+}
+
+@layer base {
+  body {
+    @apply bg-background-dark text-white font-sans antialiased;
+  }
+}
+
+/* Custom wood texture pattern */
+.bg-wood-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+}

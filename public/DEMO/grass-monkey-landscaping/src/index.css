@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #11d452;
+  --color-primary-dark: #0da541;
+  --color-emerald-lush: #059669;
+  --color-forest-deep: #064e3b;
+  --color-background-light: #f8fcf9;
+  --color-background-dark: #020617;
+  --color-accent-dark: #064e3b;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #34d399;
+}
+
+@layer base {
+  body {
+    @apply antialiased overflow-x-hidden bg-background-dark text-slate-100;
+  }
+}
+
+@layer utilities {
+  .animate-grass-sway {
+    animation: grass-sway 6s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+
+  .text-shadow-lush {
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+  }
+
+  .glass-emerald {
+    @apply bg-emerald-950/20 backdrop-blur-xl border border-emerald-500/20;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes grass-sway {
+
+  0%,
+  100% {
+    transform: rotate(-2deg) skewX(-1deg);
+  }
+
+  50% {
+    transform: rotate(2deg) skewX(1deg);
+  }
+}
+
+.text-shadow {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
