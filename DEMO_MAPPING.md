@@ -24,6 +24,11 @@ This document tracks the mapping between local demo projects, Firebase Hosting t
 | `DEMO/cs-detailing` | `demo18` | [https://demo18-gnomadstudio.web.app](https://demo18-gnomadstudio.web.app) | Automotive |
 | `DEMO/aaron-and-son-custom-cabinets` | `demo19` | [https://demo19-gnomadstudio.web.app](https://demo19-gnomadstudio.web.app) | Furniture |
 | `DEMO/body-craft-supply` | `demo20` | [https://demo20-gnomadstudio.web.app](https://demo20-gnomadstudio.web.app) | Industrial Supply |
+| `DEMO/three-rivers-pools-and-spas` | `demo21` | [https://demo21-gnomadstudio.web.app](https://demo21-gnomadstudio.web.app) | Outdoor Services |
+| `DEMO/wilcoxen-and-wilcoxen` | `demo22` | [https://demo22-gnomadstudio.web.app](https://demo22-gnomadstudio.web.app) | Legal Services |
+| `DEMO/wild-west-junk-and-lawncare` | `demo23` | [https://demo23-gnomadstudio.web.app](https://demo23-gnomadstudio.web.app) | Outdoor Services |
+| `DEMO/woodworth-lawn-and-tree-service` | `demo24` | [https://demo24-gnomadstudio.web.app](https://demo24-gnomadstudio.web.app) | Outdoor Services |
+| `DEMO/petes-machine-shop` | `demo25` | [https://demo25-gnomadstudio.web.app](https://demo25-gnomadstudio.web.app) | Precision Engineering |
 
 ## Main Application
 

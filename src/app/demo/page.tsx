@@ -165,6 +165,46 @@ const demoSites = [
         description: "High-performance industrial tattooing and medical supply portal for Body Craft with precision-engineered UX.",
         tech: "Master Template v1",
         category: "Industrial Supply"
+    },
+    {
+        id: "three-rivers-pools-and-spas",
+        name: "Three Rivers Pools & Spas",
+        href: "https://demo21-gnomadstudio.web.app",
+        description: "Luxury aquatic retreat showcase for Three Rivers with tranquil visuals and premium service depth.",
+        tech: "Master Template v1",
+        category: "Outdoor Services"
+    },
+    {
+        id: "wilcoxen-and-wilcoxen",
+        name: "Wilcoxen & Wilcoxen",
+        href: "https://demo22-gnomadstudio.web.app",
+        description: "Regal, trust-engineered legal advocacy portal for Wilcoxen & Wilcoxen with principled design language.",
+        tech: "Master Template v1",
+        category: "Legal Services"
+    },
+    {
+        id: "wild-west-junk-and-lawncare",
+        name: "Wild West Junk & Lawncare",
+        href: "https://demo23-gnomadstudio.web.app",
+        description: "Rugged service portal for Wild West with dual-track scheduling for junk removal and lawn care.",
+        tech: "Master Template v1",
+        category: "Outdoor Services"
+    },
+    {
+        id: "woodworth-lawn-and-tree-service",
+        name: "Woodworth Lawn & Tree Service",
+        href: "https://demo24-gnomadstudio.web.app",
+        description: "Elite arboricultural and turf management showcase for Woodworth with towering visual impact.",
+        tech: "Master Template v1",
+        category: "Outdoor Services"
+    },
+    {
+        id: "petes-machine-shop",
+        name: "Pete's Machine Shop",
+        href: "https://demo25-gnomadstudio.web.app",
+        description: "Precision-engineered industrial manufacturing portal for Pete's with technical spec transparency.",
+        tech: "Master Template v1",
+        category: "Industrial Supply"
     }
 ];
 

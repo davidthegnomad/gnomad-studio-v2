@@ -230,6 +230,61 @@
       ],
       "cleanUrls": true,
       "trailingSlash": false
+    },
+    {
+      "target": "demo21",
+      "public": "DEMO/three-rivers-pools-and-spas/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo22",
+      "public": "DEMO/wilcoxen-and-wilcoxen/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo23",
+      "public": "DEMO/wild-west-junk-and-lawncare/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo24",
+      "public": "DEMO/woodworth-lawn-and-tree-service/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo25",
+      "public": "DEMO/petes-machine-shop/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
     }
   ],
   "firestore": {

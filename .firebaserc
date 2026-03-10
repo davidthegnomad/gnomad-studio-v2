@@ -67,6 +67,21 @@
         ],
         "demo20": [
           "demo20-gnomadstudio"
+        ],
+        "demo21": [
+          "demo21-gnomadstudio"
+        ],
+        "demo22": [
+          "demo22-gnomadstudio"
+        ],
+        "demo23": [
+          "demo23-gnomadstudio"
+        ],
+        "demo24": [
+          "demo24-gnomadstudio"
+        ],
+        "demo25": [
+          "demo25-gnomadstudio"
         ]
       }
     }
