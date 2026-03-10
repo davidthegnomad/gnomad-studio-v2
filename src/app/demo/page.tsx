@@ -205,6 +205,86 @@ const demoSites = [
         description: "Precision-engineered industrial manufacturing portal for Pete's with technical spec transparency.",
         tech: "Master Template v1",
         category: "Industrial Supply"
+    },
+    {
+        id: "scotts-repair-shop",
+        name: "Scott's Repair Shop",
+        href: "https://demo26-gnomadstudio.web.app",
+        description: "Rugged, mission-critical automotive repair showcase for Scott's with heavy-duty service menus.",
+        tech: "Master Template v1",
+        category: "Automotive"
+    },
+    {
+        id: "opulent-salon-suites",
+        name: "Opulent Salon Suites",
+        href: "https://demo27-gnomadstudio.web.app",
+        description: "Ultra-premium wellness and beauty sanctuary showcase for Opulent with sophisticated visual depth.",
+        tech: "Master Template v1",
+        category: "Beauty & Wellness"
+    },
+    {
+        id: "oklahoma-uncontested-divorce",
+        name: "Oklahoma Uncontested Divorce",
+        href: "https://demo28-gnomadstudio.web.app",
+        description: "Streamlined, trust-engineered legal advocacy portal for Oklahoma divorce services with principled UI.",
+        tech: "Master Template v1",
+        category: "Legal Services"
+    },
+    {
+        id: "new-life-ministries",
+        name: "New Life Ministries",
+        href: "https://demo29-gnomadstudio.web.app",
+        description: "Inspirational community outreach portal for New Life Ministries with ethereal storytelling visuals.",
+        tech: "Master Template v1",
+        category: "Non-Profit"
+    },
+    {
+        id: "natural-nails-muskogee",
+        name: "Natural Nails Muskogee",
+        href: "https://demo30-gnomadstudio.web.app",
+        description: "Vibrant and aesthetic nail sanctuary showcase for Natural Nails with high-gloss visual impact.",
+        tech: "Master Template v1",
+        category: "Beauty & Wellness"
+    },
+    {
+        id: "michaels-jewelry",
+        name: "Michael's Jewelry",
+        href: "https://demo31-gnomadstudio.web.app",
+        description: "Elegant, high-performance retail showcase for Michael's Jewelry with refined artisan aesthetics.",
+        tech: "Master Template v1",
+        category: "Retail"
+    },
+    {
+        id: "maxs-garage",
+        name: "Max's Garage",
+        href: "https://demo32-gnomadstudio.web.app",
+        description: "Industrial automotive portal for Max's Garage with rugged diagnostics and service transparency.",
+        tech: "Master Template v1",
+        category: "Automotive"
+    },
+    {
+        id: "making-it-happen-cleaning-services",
+        name: "Making It Happen Cleaning",
+        href: "https://demo33-gnomadstudio.web.app",
+        description: "Spotless, trust-driven service industry showcase for Making It Happen with fresh visuals.",
+        tech: "Master Template v1",
+        category: "Service Industry"
+    },
+    {
+        id: "lawnbros-outdoor-services",
+        name: "LawnBros Outdoor Services",
+        href: "https://demo34-gnomadstudio.web.app",
+        description: "Elite turf and landscape management showcase for LawnBros with high-performance impact.",
+        tech: "Master Template v1",
+        category: "Outdoor Services"
+    },
+    {
+        id: "l-and-m-tree-service",
+        name: "L & M Tree Service",
+        href: "https://demo35-gnomadstudio.web.app",
+        description: "Towering arboricultural showcase for L & M with heavy-duty visual storytelling and service depth.",
+        tech: "Master Template v1",
+        category: "Outdoor Services"
     }
 ];
 

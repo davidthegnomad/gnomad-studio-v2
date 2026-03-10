@@ -29,6 +29,16 @@ This document tracks the mapping between local demo projects, Firebase Hosting t
 | `DEMO/wild-west-junk-and-lawncare` | `demo23` | [https://demo23-gnomadstudio.web.app](https://demo23-gnomadstudio.web.app) | Outdoor Services |
 | `DEMO/woodworth-lawn-and-tree-service` | `demo24` | [https://demo24-gnomadstudio.web.app](https://demo24-gnomadstudio.web.app) | Outdoor Services |
 | `DEMO/petes-machine-shop` | `demo25` | [https://demo25-gnomadstudio.web.app](https://demo25-gnomadstudio.web.app) | Precision Engineering |
+| `DEMO/scotts-repair-shop` | `demo26` | [https://demo26-gnomadstudio.web.app](https://demo26-gnomadstudio.web.app) | Automotive |
+| `DEMO/opulent-salon-suites` | `demo27` | [https://demo27-gnomadstudio.web.app](https://demo27-gnomadstudio.web.app) | Beauty & Wellness |
+| `DEMO/oklahoma-uncontested-divorce` | `demo28` | [https://demo28-gnomadstudio.web.app](https://demo28-gnomadstudio.web.app) | Legal Services |
+| `DEMO/new-life-ministries` | `demo29` | [https://demo29-gnomadstudio.web.app](https://demo29-gnomadstudio.web.app) | Non-Profit |
+| `DEMO/natural-nails-muskogee` | `demo30` | [https://demo30-gnomadstudio.web.app](https://demo30-gnomadstudio.web.app) | Beauty & Wellness |
+| `DEMO/michaels-jewelry` | `demo31` | [https://demo31-gnomadstudio.web.app](https://demo31-gnomadstudio.web.app) | Retail |
+| `DEMO/maxs-garage` | `demo32` | [https://demo32-gnomadstudio.web.app](https://demo32-gnomadstudio.web.app) | Automotive |
+| `DEMO/making-it-happen-cleaning-services` | `demo33` | [https://demo33-gnomadstudio.web.app](https://demo33-gnomadstudio.web.app) | Service Industry |
+| `DEMO/lawnbros-outdoor-services` | `demo34` | [https://demo34-gnomadstudio.web.app](https://demo34-gnomadstudio.web.app) | Outdoor Services |
+| `DEMO/l-and-m-tree-service` | `demo35` | [https://demo35-gnomadstudio.web.app](https://demo35-gnomadstudio.web.app) | Outdoor Services |
 
 ## Main Application
 
