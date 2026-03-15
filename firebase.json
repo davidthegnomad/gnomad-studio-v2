@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "main",
-      "public": "out",
+      "public": "public",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -388,6 +388,17 @@
     {
       "target": "demo35",
       "public": "DEMO/l-and-m-tree-service/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo36",
+      "public": "DEMO/affordable-roofing-solutionz/dist",
       "ignore": [
         "firebase.json",
         "**/.*",

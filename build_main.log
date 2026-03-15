@@ -1,0 +1,58 @@
+
+> gnomad-studio-v2@0.1.0 build
+> next build
+
+⚠ turbopack.root should be absolute, using: /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2
+▲ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.7s
+  Running TypeScript ...
+  Collecting page data using 23 workers ...
+  Generating static pages using 23 workers (0/35) ...
+  Generating static pages using 23 workers (8/35) 
+  Generating static pages using 23 workers (17/35) 
+  Generating static pages using 23 workers (26/35) 
+✓ Generating static pages using 23 workers (35/35) in 388.3ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /advisory
+├ ƒ /api/admin/clients
+├ ƒ /api/admin/clients/create
+├ ƒ /api/admin/invoices/generate
+├ ƒ /api/admin/profile/update
+├ ƒ /api/admin/sync-auth-users
+├ ƒ /api/chat
+├ ƒ /api/cron/monthly-invoices
+├ ƒ /api/documents/upload
+├ ƒ /api/ga4
+├ ƒ /api/tools/generate
+├ ƒ /api/tools/market-analysis
+├ ƒ /api/vapi/webhook
+├ ○ /client-portal
+├ ○ /client-portal/resources
+├ ● /client-portal/resources/[toolId]
+│ ├ /client-portal/resources/forensic-competitive-stack
+│ ├ /client-portal/resources/audience-spending-leakage
+│ ├ /client-portal/resources/blue-ocean-gap
+│ └ [+9 more paths]
+├ ○ /contact
+├ ○ /demo
+├ ƒ /demo/[clientSlug]
+├ ○ /examples
+├ ○ /icon.png
+├ ○ /login
+├ ○ /robots.txt
+├ ○ /services
+└ ○ /sitemap.xml
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

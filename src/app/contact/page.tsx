@@ -10,6 +10,7 @@ export default function ContactPage() {
     const [formState, setFormState] = useState({
         name: "",
         email: "",
+        phone: "",
         business: "",
         message: "",
     });
@@ -44,25 +45,18 @@ export default function ContactPage() {
         }
 
         try {
-            // Using FormSubmit's AJAX endpoint
-            const response = await fetch("https://formsubmit.co/ajax/david.the.gnomad@gmail.com", {
+            // Using internal API for L2V and Email
+            const response = await fetch("/api/lead", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
                 },
-                body: JSON.stringify({
-                    name: formState.name,
-                    email: formState.email,
-                    business: formState.business,
-                    message: formState.message,
-                    _subject: "New Contact Form Submission - Gnomad Studio"
-                })
+                body: JSON.stringify(formState)
             });
 
             if (response.ok) {
                 setSubmitStatus('success');
-                setFormState({ name: "", email: "", business: "", message: "" });
+                setFormState({ name: "", email: "", phone: "", business: "", message: "" });
             } else {
                 setSubmitStatus('error');
             }
@@ -174,6 +168,19 @@ export default function ContactPage() {
                                             className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-brand-primary/50 transition-colors placeholder:text-gray-600"
                                             value={formState.email}
                                             onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="phone" className="text-[10px] font-black tracking-widest uppercase text-gray-500 ml-4">Phone Number</label>
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            name="phone"
+                                            required
+                                            placeholder="(918) 555-0123"
+                                            className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-brand-primary/50 transition-colors placeholder:text-gray-600"
+                                            value={formState.phone}
+                                            onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
                                         />
                                     </div>
                                 </div>

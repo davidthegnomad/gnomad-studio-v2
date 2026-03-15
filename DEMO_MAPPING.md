@@ -39,6 +39,7 @@ This document tracks the mapping between local demo projects, Firebase Hosting t
 | `DEMO/making-it-happen-cleaning-services` | `demo33` | [https://demo33-gnomadstudio.web.app](https://demo33-gnomadstudio.web.app) | Service Industry |
 | `DEMO/lawnbros-outdoor-services` | `demo34` | [https://demo34-gnomadstudio.web.app](https://demo34-gnomadstudio.web.app) | Outdoor Services |
 | `DEMO/l-and-m-tree-service` | `demo35` | [https://demo35-gnomadstudio.web.app](https://demo35-gnomadstudio.web.app) | Outdoor Services |
+| `DEMO/affordable-roofing-solutionz` | `demo36` | [https://gnomad-studio-client.web.app/DEMO/affordable-roofing-solutionz/](https://gnomad-studio-client.web.app/DEMO/affordable-roofing-solutionz/) | Roofing Services |
 
 ## Main Application
 
