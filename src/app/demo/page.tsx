@@ -19,6 +19,8 @@ const demoSites = [
     { name: "Fulton Fried Pies & Bakery", href: "/DEMO/fulton-fried-pies/index.html", category: "Bakery / Retail" },
     { name: "Grass Monkey Landscaping", href: "https://demo6-gnomadstudio.web.app", category: "Service Industry" },
     { name: "Green St Dispensary", href: "https://demo10-gnomadstudio.web.app", category: "Dispensary" },
+    { name: "Jack's Donuts Muskogee", href: "/DEMO/jacks-donuts-muskogee/index.html", category: "Bakery / Retail" },
+    { name: "Blackout Tint", href: "/DEMO/blackout-tint-muskogee/index.html", category: "Automotive" },
     { name: "Harrison Tire & Supply", href: "https://demo3-gnomadstudio.web.app", category: "Automotive" },
     { name: "Home Turf of Muskogee", href: "https://demo16-gnomadstudio.web.app", category: "Outdoor Services" },
     { name: "JFR Tire Shop", href: "https://demo15-gnomadstudio.web.app", category: "Automotive" },
