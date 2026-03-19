@@ -23,7 +23,7 @@ export default function Chatbot({ isEmbedded = false, onClose }: { isEmbedded?: 
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-        api: process.env.NEXT_PUBLIC_CHAT_API_URL || "https://vibe-dashboard-v2--vibe-dashboard-aab61.us-central1.hosted.app/api/chat",
+        api: "/api/chat",
     });
 
     // Auto-scroll to bottom on new messages
