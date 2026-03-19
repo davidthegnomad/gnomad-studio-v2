@@ -41,6 +41,15 @@ export async function POST(request: NextRequest) {
             || message.analysis?.summary
             || "";
 
+        // --- Extract New Structured Data ---
+        // Vapi passes these in analysis.structuredData
+        const structuredData = analysis.structuredData || {};
+        const productInterest = structuredData["Product Interest Level"] || "Not specified";
+        const appointmentBooked = structuredData["Appointment Booked"] === true ? "✅ YES" : "❌ NO";
+        const escalationRequired = structuredData["Escalation Required"] === true ? "⚠️ YES" : "NO";
+        const successScale = structuredData["Success Evaluation - Numeric Scale"] || "N/A";
+        const callSummaryNew = structuredData["Call Summary"] || summary;
+
         // Debug log for troubleshooting empty reports
         if (transcript === "No transcript recorded.") {
             console.warn("Vapi Webhook: Missing transcript in payload. Structure:", JSON.stringify(message, null, 2).slice(0, 500));
@@ -62,43 +71,52 @@ export async function POST(request: NextRequest) {
 
         const html = `
             <div style="font-family: -apple-system, sans-serif; max-width: 640px; margin: auto; background: #0f0c15; color: #fff; padding: 36px; border-radius: 16px;">
-                <h1 style="color: #2dd4bf; margin: 0 0 4px;">📞 New Call — Morgan</h1>
-                <p style="color: #555; margin: 0 0 24px; font-size: 13px;">Gnomad Studio AI Receptionist</p>
+                <h1 style="color: #2dd4bf; margin: 0 0 4px;">📞 Morgan Call Log</h1>
+                <p style="color: #555; margin: 0 0 24px; font-size: 13px;">Gnomad Studio AI Intelligence — 918 Renaissance</p>
 
-                <div style="background: #1a1728; border-radius: 12px; padding: 20px; margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 16px;">
-                    <div style="flex: 1; min-width: 140px;">
-                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Caller</p>
+                <div style="background: #1a1728; border-radius: 12px; padding: 20px; margin-bottom: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div>
+                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Caller ID</p>
                         <p style="margin: 4px 0 0; font-size: 16px; font-weight: bold;">${callerNumber}</p>
                     </div>
-                    <div style="flex: 1; min-width: 140px;">
+                    <div>
                         <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Duration</p>
                         <p style="margin: 4px 0 0; font-size: 16px; font-weight: bold;">${durationFormatted}</p>
                     </div>
-                    <div style="flex: 1; min-width: 140px;">
-                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Time (CST)</p>
-                        <p style="margin: 4px 0 0; font-size: 14px;">${startedAt}</p>
+                    <div>
+                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Success (1-10)</p>
+                        <p style="margin: 4px 0 0; font-size: 16px; font-weight: bold; color: #f59e0b;">${successScale}</p>
                     </div>
-                    <div style="flex: 1; min-width: 140px;">
-                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Ended Reason</p>
-                        <p style="margin: 4px 0 0; font-size: 14px; color: ${endedReason === "customer-ended-call" ? "#10b981" : "#f59e0b"};">${endedReason}</p>
+                    <div>
+                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Appointment</p>
+                        <p style="margin: 4px 0 0; font-size: 16px; font-weight: bold;">${appointmentBooked}</p>
                     </div>
                 </div>
 
-                ${summary ? `
                 <div style="background: #1e1b26; border-left: 3px solid #2dd4bf; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-                    <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold; margin-bottom: 8px;">✨ AI Summary</p>
-                    <p style="margin: 0; color: #bbb; line-height: 1.6; font-size: 14px;">${summary}</p>
-                </div>` : ""}
+                    <div style="margin-bottom: 12px;">
+                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold; margin-bottom: 4px;">🎯 Product Interest</p>
+                        <p style="margin: 0; color: #fff; font-size: 14px;">${productInterest}</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold; margin-bottom: 4px;">📝 Call Summary</p>
+                        <p style="margin: 0; color: #bbb; line-height: 1.5; font-size: 14px;">${callSummaryNew}</p>
+                    </div>
+                    ${escalationRequired.includes("YES") ? `
+                    <div style="margin-top: 12px; padding: 8px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 4px; color: #f87171; font-size: 12px; font-weight: bold; text-align: center;">
+                        ⚠️ ACTION REQUIRED: ESCALATION REMINDER
+                    </div>` : ""}
+                </div>
 
                 <div style="background: #14111d; border-radius: 12px; padding: 20px;">
                     <p style="margin: 0 0 16px; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Full Transcript</p>
-                    <div style="border-top: 1px solid #ffffff10; padding-top: 12px;">
+                    <div style="border-top: 1px solid #ffffff10; padding-top: 12px; font-size: 13px; line-height: 1.6;">
                         ${transcriptHtml || '<p style="color: #555;">No transcript available.</p>'}
                     </div>
                 </div>
 
                 <p style="margin-top: 24px; color: #333; font-size: 11px; text-align: center;">
-                    Call ID: ${callId} — Gnomad Studio AI Receptionist
+                    Call ID: ${callId} — Time: ${startedAt}
                 </p>
             </div>
         `;
@@ -106,14 +124,14 @@ export async function POST(request: NextRequest) {
         // --- Send email ---
         if (!process.env.RESEND_API_KEY) {
             console.error("RESEND_API_KEY not set");
-            return NextResponse.json({ error: "Email not configured" }, { status: 500 });
+            return NextResponse.json({ error: "Email not configured" }, { status: 200 }); // Still return 200 to Vapi
         }
 
         const resend = new Resend(process.env.RESEND_API_KEY);
         await resend.emails.send({
-            from: "Gnomad Studio <morgan@gnomadstudio.org>",
-            to: "david@gnomadstudio.org",
-            subject: `📞 Morgan Call — ${callerNumber} — ${durationFormatted}`,
+            from: "Gnomad Studio <leads@gnomadstudio.org>",
+            to: ["david.the.gnomad@gmail.com"],
+            subject: `📞 Call: ${callerNumber} (Score: ${successScale}) — Morgan`,
             html,
         });
 
