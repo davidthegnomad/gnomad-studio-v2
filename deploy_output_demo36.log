@@ -1,4 +1,0 @@
-
-Error: Deploy target demo36 not configured for project vibe-dashboard-aab61. Configure with:
-
-  firebase target:apply hosting demo36 <resources...>

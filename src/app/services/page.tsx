@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Packages from "@/components/Packages";
 import ContactGrid from "@/components/ContactGrid";
 import Footer from "@/components/Footer";
+import CommunicationHub from "@/components/CommunicationHub";
 import { motion } from "framer-motion";
 import { Globe, Search, BarChart3, Smartphone, Palette, ShoppingCart, Heart } from "lucide-react";
 
@@ -74,7 +75,7 @@ export default function ServicesPage() {
                 </section>
 
                 {/* Tiers Section */}
-                <Packages />
+                <Packages showGradientBackground={true} />
 
                 {/* In-Depth Section */}
                 <section className="py-32 px-6 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent">
@@ -110,7 +111,7 @@ export default function ServicesPage() {
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="mt-24 glass-panel p-10 rounded-[3rem] border-brand-primary/20 bg-brand-primary/5 max-w-4xl mx-auto text-center relative overflow-hidden"
+                            className="mt-24 glass-panel p-10 rounded-[3rem] border-brand-primary/20 bg-gradient-to-r from-[#0d151c] to-[#2a1b18] max-w-4xl mx-auto text-center relative overflow-hidden"
                         >
                             <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-primary/10 rounded-full blur-3xl" />
                             <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-brand-accent/10 rounded-full blur-3xl rotate-12" />
@@ -129,6 +130,7 @@ export default function ServicesPage() {
                 <ContactGrid />
                 <Footer />
             </main>
+            <CommunicationHub />
         </div>
     );
 }

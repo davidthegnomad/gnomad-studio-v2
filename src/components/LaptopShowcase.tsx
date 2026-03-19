@@ -10,12 +10,12 @@ const showcaseItems = [
     },
     {
         name: "Pet Groomer",
-        image: "/examples/Okie_Paws_Full_Page.webp",
+        image: "/examples/pet_example.webp",
         delay: 0.3,
     },
     {
         name: "Mobile Car Detail",
-        image: "/examples/Champion_Mobile_Detail_Full_Site.webp",
+        image: "/examples/car_detail_example.webp",
         delay: 0.5,
     }
 ];

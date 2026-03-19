@@ -1,2 +1,0 @@
-To https://github.com/davidthegnomad/gnomad-studio-v2.git
-   190b9393..d391c5be  master -> master

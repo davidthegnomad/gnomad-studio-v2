@@ -1,0 +1,11 @@
+
+> gnomad-studio-v2@0.1.0 dev
+> next dev -p 8080
+
+⚠ turbopack.root should be absolute, using: /home/gnomad/Antigravity Projects/Gnomad_Studio_Master_Project/gnomad-studio-v2
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:8080
+- Network:       http://192.168.10.8:8080
+
+✓ Starting...
+✓ Ready in 728ms

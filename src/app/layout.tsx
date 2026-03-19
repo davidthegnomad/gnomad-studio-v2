@@ -32,6 +32,14 @@ export const metadata: Metadata = {
     title: "Gnomad Studio | Small Business Web Design Muskogee OK",
     description: "Premium websites for Muskogee small businesses at mission-first rates.",
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: ['/favicon.ico'],
+    apple: [{ url: '/favicon.ico' }],
+  },
   alternates: { canonical: "https://gnomadstudio.org" },
 };
 

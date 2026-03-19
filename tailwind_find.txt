@@ -1,0 +1,5 @@
+./DEMO/muskogee-tree-care/node_modules/tailwindcss
+./DEMO/affordable-roofing-solutionz/node_modules/tailwindcss
+./DEMO/re-up-muskogee/node_modules/tailwindcss
+./DEMO/grass-monkey-landscaping/node_modules/tailwindcss
+./DEMO/elevate-n-print/node_modules/tailwindcss

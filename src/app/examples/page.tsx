@@ -7,13 +7,14 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import MobileDispatch from "@/components/MobileDispatch";
 import MobileShowcase from "@/components/MobileShowcase";
+import CommunicationHub from "@/components/CommunicationHub";
 import { motion, AnimatePresence } from "framer-motion";
 
 const examples = [
     {
-        name: "Donut Shop",
-        image: "/examples/Paradise_Donuts_Full_Site.webp",
-        description: "A fresh, high-performance bakery interface with cinematic visuals, glassmorphism, and tactical local SEO.",
+        name: "Print Shop & Studio",
+        image: "/examples/Elevate_N_Print_Full_Site.webp",
+        description: "A fresh, high-performance brand interface with cinematic visuals, glassmorphism, and tactical local SEO.",
     },
     {
         name: "Tire & Supply",
@@ -21,8 +22,13 @@ const examples = [
         description: "A powerhouse industrial design featuring tactical quoting systems and heavy-duty grid aesthetics.",
     },
     {
+        name: "Cannabis Dispensary",
+        image: "/examples/Lifted_Spirits_Full_Site.webp",
+        description: "A vibrant, ethereal design targeted at expanding the digital presence of a local cannabis dispensary.",
+    },
+    {
         name: "Mobile Pet Grooming",
-        image: "/examples/Doggie_Doo_Full_Site.webp",
+        image: "/examples/mobile_dog_grooming_example.webp",
         description: "A premium, playful mobile spa experience with streamlined booking and high-fidelity pet photography.",
     },
     {
@@ -37,28 +43,28 @@ const examples = [
     },
     {
         name: "Pet Groomer",
-        image: "/examples/Okie_Paws_Full_Page.webp",
+        image: "/examples/pet_example.webp",
         description: "A fast, modern web store design for a local dog grooming business, featuring booking system and services showcase.",
     },
     {
         name: "Mobile Car Detail",
-        image: "/examples/Champion_Mobile_Detail_Full_Site.webp",
+        image: "/examples/car_detail_example.webp",
         description: "A high-octane service site for an auto detailing business with heavy focus on mobile conversions.",
     },
     {
         name: "Family Clinic",
-        image: "/examples/gomcdanielchiro_Full_Site.webp",
+        image: "/examples/gomcdanielchiro_Full_Site_New.webp",
         description: "A clean, restorative earth-toned clinic site designed to build trust and capture local search.",
     },
     {
-        name: "Boutique Cannabis Shop",
-        image: "/examples/Blaze-N-Bake Site.webp",
-        description: "A vibrant, appetizing design targeted at expanding the digital presence of a local bakery / food service.",
+        name: "Photography Studio",
+        image: "/examples/Tucker_Photography_Full_Site.webp",
+        description: "An elegant, portfolio-driven visual experience showcasing premium photography services.",
     },
     {
-        name: "E-Commerce",
-        image: "/examples/mcguaghranch_Full_Shop_Page.webp",
-        description: "A rustic, farm-to-table shopping experience with dynamic 'Butchers Block' styling and seamless herd stock selection.",
+        name: "Tree Care Operations",
+        image: "/examples/Muskogee_Tree_Full_Site.webp",
+        description: "A powerful, action-oriented service platform built for emergency response and tree removal services.",
     }
 ];
 
@@ -179,6 +185,7 @@ export default function ExamplesPage() {
 
             <Footer />
             <MobileDispatch />
+            <CommunicationHub />
 
             <AnimatePresence>
                 {selectedImage && (

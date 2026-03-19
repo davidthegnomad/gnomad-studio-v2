@@ -29,9 +29,22 @@ export async function POST(request: NextRequest) {
             ? `${Math.floor(durationSeconds / 60)}m ${Math.round(durationSeconds % 60)}s`
             : `${Math.round(durationSeconds)}s`;
 
-        // --- Extract transcript & summary ---
-        const transcript = artifact.transcript ?? "No transcript available.";
-        const summary = analysis.summary ?? "";
+        // --- Extract transcript & summary with deep fallbacks ---
+        const transcript = artifact.transcript
+            || call.transcript
+            || message.transcript
+            || message.artifact?.transcript
+            || "No transcript recorded.";
+
+        const summary = analysis.summary
+            || message.summary
+            || message.analysis?.summary
+            || "";
+
+        // Debug log for troubleshooting empty reports
+        if (transcript === "No transcript recorded.") {
+            console.warn("Vapi Webhook: Missing transcript in payload. Structure:", JSON.stringify(message, null, 2).slice(0, 500));
+        }
 
         // --- Build email HTML ---
         const transcriptHtml = transcript
@@ -106,8 +119,9 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({ success: true }, { status: 200 });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error);
         console.error("Vapi webhook error:", error);
-        return NextResponse.json({ error: "Webhook processing failed", message: error.message }, { status: 500 });
+        return NextResponse.json({ error: "Webhook processing failed", message }, { status: 500 });
     }
 }

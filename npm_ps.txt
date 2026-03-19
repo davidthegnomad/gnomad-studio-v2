@@ -1,0 +1,13 @@
+gnomad     12685  0.6  0.1 1373828 55444 ?       Sl   16:32   0:02 npm exec mcp-remote https://stitch.googleapis.com/mcp --header X-Goog-Api-Key: AQ.Ab8RN6KvtxzPefj9zUSp90uMHtWicmju7n2u_K5fda4qpagpIA
+gnomad     12791  0.1  0.1 22327876 54432 ?      Sl   16:32   0:00 node /home/gnomad/.npm/_npx/705d23756ff7dacc/node_modules/.bin/mcp-remote https://stitch.googleapis.com/mcp --header X-Goog-Api-Key: AQ.Ab8RN6KvtxzPefj9zUSp90uMHtWicmju7n2u_K5fda4qpagpIA
+gnomad     12803  0.6  0.1 1378056 53576 ?       Sl   16:32   0:02 npm exec firebase-tools@latest mcp
+gnomad     12925  0.7  0.1 11896748 53900 ?      Sl   16:32   0:02 node /home/gnomad/.npm/_npx/ba4f1959e38407b5/node_modules/.bin/firebase mcp
+gnomad     13426  0.6  0.1 1375216 55432 ?       Sl   16:32   0:02 npm exec @googlemaps/code-assist-mcp@latest
+gnomad     13497  0.1  0.1 11607920 53240 ?      Sl   16:32   0:00 node /home/gnomad/.npm/_npx/f6829324ff4cde8f/node_modules/.bin/code-assist-mcp
+gnomad     13574  0.6  0.1 1375580 55452 ?       Sl   16:32   0:02 npm exec server-perplexity-ask
+gnomad     13686  0.1  0.1 1042020 49460 ?       Sl   16:32   0:00 node /home/gnomad/.npm/_npx/38edfeea335e8e67/node_modules/.bin/mcp-server-perplexity-ask
+gnomad     13708  0.6  0.1 1375680 55484 ?       Sl   16:32   0:02 npm exec @modelcontextprotocol/server-sequential-thinking
+gnomad     13825  0.1  0.1 1042692 49476 ?       Sl   16:32   0:00 node /home/gnomad/.npm/_npx/de2bd410102f5eda/node_modules/.bin/mcp-server-sequential-thinking
+gnomad     16238  0.1  0.1 1131308 49648 pts/15  Sl   16:36   0:00 npm run dev -p 8080
+gnomad     31851  121  0.8 2839400 267204 ?      Rsl  16:37   0:03 /usr/bin/node /home/gnomad/.npm-global/lib/node_modules/openclaw/dist/index.js gateway --port 18789
+gnomad     32154  0.0  0.0 231272 12280 pts/15   S    16:37   0:00 grep --color=auto npm

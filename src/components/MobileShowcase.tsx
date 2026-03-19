@@ -5,17 +5,17 @@ import { motion } from "framer-motion";
 const mobileItems = [
     {
         name: "Mobile Car Detail",
-        image: "/examples/mobile/champion.webp",
+        image: "/examples/car_detail_example_mobile.webp",
         delay: 0.1
     },
     {
         name: "Landscaping Company",
-        image: "/examples/mobile/grass_monkey.webp",
+        image: "/examples/landscape_example_mobile.webp",
         delay: 0.3
     },
     {
         name: "Pet Groomer",
-        image: "/examples/mobile/okie_paws.webp",
+        image: "/examples/pet_example_mobile.webp",
         delay: 0.5
     }
 ];

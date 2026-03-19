@@ -1,0 +1,12 @@
+<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M35 85 V45 C35 30, 31 15, 33 10 C37 5, 43 15, 43 30 L48 30 C48 15, 55 5, 58 10 C61 15, 55 30, 55 35 C55 35, 71 35, 81 40 L81 52 L71 56 Q51 60, 51 85" stroke="url(#gradNew)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="61" cy="42" r="2.5" fill="#eab308"/>
+  <circle cx="81" cy="40" r="2.5" fill="#0ea5e9"/>
+  <defs>
+    <linearGradient id="gradNew" x1="40" y1="10" x2="60" y2="85" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0ea5e9"/>
+      <stop offset="0.5" stop-color="#65a30d"/>
+      <stop offset="1" stop-color="#eab308"/>
+    </linearGradient>
+  </defs>
+</svg>

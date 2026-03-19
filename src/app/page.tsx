@@ -9,7 +9,7 @@ import Founder from "@/components/Founder";
 import ContactGrid from "@/components/ContactGrid";
 import Footer from "@/components/Footer";
 import MobileDispatch from "@/components/MobileDispatch";
-import Chatbot from "@/components/Chatbot";
+import CommunicationHub from "@/components/CommunicationHub";
 
 export default function Home() {
   return (
@@ -23,7 +23,7 @@ export default function Home() {
       <ContactGrid />
       <Footer />
       <MobileDispatch />
-      <Chatbot />
+      <CommunicationHub />
     </div>
   );
 }
