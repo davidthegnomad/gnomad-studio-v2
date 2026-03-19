@@ -48,4 +48,4 @@ This document tracks the mapping between local demo projects, Firebase Hosting t
 | `gnomad-studio-v2` | `main` | [https://gnomad-studio-client.web.app](https://gnomad-studio-client.web.app) |
 
 ---
-**Note:** Unmapped demos (e.g., `mcdaniel-chiropractic`) will be assigned once production-ready.
+**Note:** Unmapped demos will be assigned once production-ready.
