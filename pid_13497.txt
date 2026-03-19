@@ -1,2 +1,0 @@
-UID          PID    PPID  C STIME TTY          TIME CMD
-gnomad     13497   13426  0 16:32 ?        00:00:00 node /home/gnomad/.npm/_npx/f6829324ff4cde8f/node_modules/.bin/code-assist-mcp

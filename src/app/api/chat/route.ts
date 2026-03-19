@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { OpenAIStream, StreamingTextResponse } from 'ai';
 
 export const maxDuration = 30;
-// export const dynamic = 'force-dynamic'; // Removed to allow static export for Hostinger
+export const dynamic = 'force-dynamic';
 
 const systemPrompt = `
 **Persona:**

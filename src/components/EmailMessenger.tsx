@@ -37,7 +37,8 @@ export default function EmailMessenger({ onClose }: EmailMessengerProps) {
         setIsSubmitting(true);
         setError(null);
         try {
-            const response = await fetch("/api/lead", {
+            const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || "https://vibe-dashboard-v2--vibe-dashboard-aab61.us-central1.hosted.app";
+            const response = await fetch(`${apiBase}/api/lead`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)

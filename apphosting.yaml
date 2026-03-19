@@ -28,6 +28,12 @@ env:
     value: "G-E1RZ70YGNE"
   - variable: NEXT_PUBLIC_APP_URL
     value: "https://gnomadstudio.org"
+  - variable: VAPI_API_KEY
+    secret: VAPI_API_KEY
+  - variable: VAPI_ASSISTANT_ID
+    secret: VAPI_ASSISTANT_ID
+  - variable: VAPI_PHONE_NUMBER_ID
+    secret: VAPI_PHONE_NUMBER_ID
 
 # Runtime configuration
 runConfig:

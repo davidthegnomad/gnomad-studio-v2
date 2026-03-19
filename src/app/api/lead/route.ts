@@ -1,7 +1,21 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+export const dynamic = 'force-dynamic';
+
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function OPTIONS() {
+    return new Response(null, {
+        status: 204,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            'Access-Control-Max-Age': '86400',
+        },
+    });
+}
 
 export async function POST(req: Request) {
     try {
@@ -77,9 +91,13 @@ export async function POST(req: Request) {
             }
         }
 
-        return NextResponse.json({ success: true });
+        const res = NextResponse.json({ success: true });
+        res.headers.set('Access-Control-Allow-Origin', '*');
+        return res;
     } catch (error) {
         console.error("Lead submission error:", error);
-        return NextResponse.json({ error: "Failed to process lead" }, { status: 500 });
+        const res = NextResponse.json({ error: "Failed to process lead" }, { status: 500 });
+        res.headers.set('Access-Control-Allow-Origin', '*');
+        return res;
     }
 }
