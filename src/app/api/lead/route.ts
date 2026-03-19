@@ -49,8 +49,8 @@ export async function POST(req: Request) {
                         <p><strong>Message:</strong></p>
                         <p>${message}</p>
                         <div style="margin-top: 30px; padding: 20px; background: rgba(0, 135, 142, 0.1); border-left: 4px solid #00878e;">
-                            <p style="margin: 0; font-size: 12px; color: #00878e; font-weight: bold; text-transform: uppercase;">L2V Protocol Active</p>
-                            <p style="margin: 5px 0 0 0; font-size: 14px;">The 60-Second Loop has been triggered. Morgan is contacting this lead now.</p>
+                            <p style="margin: 0; font-size: 12px; color: #00878e; font-weight: bold; text-transform: uppercase;">Lead Notification</p>
+                            <p style="margin: 5px 0 0 0; font-size: 14px;">A new lead has been captured and is ready for human follow-up.</p>
                         </div>
                     </div>
                 `,
@@ -59,35 +59,6 @@ export async function POST(req: Request) {
             console.error("[API] Resend failed:", emailError);
             if (process.env.NODE_ENV !== "development") {
                 throw emailError;
-            }
-        }
-
-        // 2. Trigger Vapi Outbound Call (L2V Protocol)
-        // Only trigger if phone is provided and Vapi is configured
-        if (phone && process.env.VAPI_API_KEY && process.env.VAPI_ASSISTANT_ID) {
-            console.log(`[L2V] Triggering Vapi call for ${phone}...`);
-
-            const vapiResponse = await fetch("https://api.vapi.ai/call", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${process.env.VAPI_API_KEY}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    assistantId: process.env.VAPI_ASSISTANT_ID,
-                    phoneNumberId: process.env.VAPI_PHONE_NUMBER_ID,
-                    customer: {
-                        number: phone.startsWith('+') ? phone : `+1${phone.replace(/\D/g, '')}`,
-                        name: name,
-                    },
-                }),
-            });
-
-            if (!vapiResponse.ok) {
-                const errorData = await vapiResponse.json();
-                console.error("[L2V] Vapi Call Failed:", errorData);
-            } else {
-                console.log("[L2V] Vapi Call Triggered Successfully.");
             }
         }
 
