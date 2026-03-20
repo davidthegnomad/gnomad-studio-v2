@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useChat } from "@ai-sdk/react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -13,7 +13,23 @@ import {
     Sparkles
 } from "lucide-react";
 
-export default function Chatbot({ isEmbedded = false, onClose }: { isEmbedded?: boolean, onClose?: () => void }) {
+export default function Chatbot({
+    isEmbedded = false,
+    onClose,
+    apiUrl = "/api/chat",
+    body = {},
+    initialMessage = "Welcome back, Partner! How can I help with your project today?",
+    externalInput = "",
+    hideLauncher = false
+}: {
+    isEmbedded?: boolean,
+    onClose?: () => void,
+    apiUrl?: string,
+    body?: Record<string, unknown>,
+    initialMessage?: string,
+    externalInput?: string,
+    hideLauncher?: boolean
+}) {
     const [isOpenInternal, setIsOpenInternal] = useState(false);
     const isOpen = isEmbedded ? true : isOpenInternal;
     const [isMinimized, setIsMinimized] = useState(false);
@@ -22,9 +38,20 @@ export default function Chatbot({ isEmbedded = false, onClose }: { isEmbedded?: 
     const [isResizing, setIsResizing] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-        api: "/api/chat",
+    const { messages, input, setInput, handleInputChange, handleSubmit, isLoading } = useChat({
+        api: apiUrl,
+        body: body,
     });
+
+    useEffect(() => {
+        if (externalInput) {
+            setInput(externalInput);
+            requestAnimationFrame(() => {
+                setIsOpenInternal(true);
+                setIsMinimized(false);
+            });
+        }
+    }, [externalInput, setInput]); // setInput is stable from useChat
 
     // Auto-scroll to bottom on new messages
     useEffect(() => {
@@ -33,15 +60,15 @@ export default function Chatbot({ isEmbedded = false, onClose }: { isEmbedded?: 
         }
     }, [messages]);
 
-    const toggleChat = () => {
+    const toggleChat = useCallback(() => {
         if (isEmbedded && onClose) {
             onClose();
         } else {
-            setIsOpenInternal(!isOpenInternal);
+            setIsOpenInternal((prev) => !prev);
         }
         setIsMinimized(false);
         setIsMaximized(false);
-    };
+    }, [isEmbedded, onClose]);
 
     // Manual Resizing Logic
     const startResizing = (e: React.MouseEvent) => {
@@ -166,7 +193,7 @@ export default function Chatbot({ isEmbedded = false, onClose }: { isEmbedded?: 
                                                 <MessageCircle className="w-8 h-8 text-cyan-400" />
                                             </div>
                                             <p className="text-xs text-zinc-300">
-                                                Welcome back, Partner! <br /> How can I help with your project today?
+                                                {initialMessage}
                                             </p>
                                         </div>
                                     )}
@@ -225,8 +252,8 @@ export default function Chatbot({ isEmbedded = false, onClose }: { isEmbedded?: 
                 )}
             </AnimatePresence>
 
-            {/* Launcher Button - Hidden when embedded */}
-            {!isEmbedded && (
+            {/* Launcher Button - Hidden when embedded or when hideLauncher is true */}
+            {!isEmbedded && !hideLauncher && (
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

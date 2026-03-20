@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 import { createClient } from "@/lib/supabase/client";
+import { User } from "@supabase/supabase-js";
 import {
     LayoutDashboard,
     FileText,
@@ -16,15 +18,17 @@ import {
     CreditCard,
     Rocket,
     Zap,
-    Globe
+    Globe,
+    LucideIcon
 } from "lucide-react";
-import Chatbot from "@/components/Chatbot";
+import CommunicationHub from "@/components/CommunicationHub";
 import DocumentVault from "@/components/DocumentVault";
 import AdminDashboard from "@/components/AdminDashboard";
 
 import GaugeDial from "@/components/GaugeDial";
 import GA4Widget from "@/components/GA4Widget";
 import AccountSection from "@/components/AccountSection";
+import ZeffyModal from "@/components/ZeffyModal";
 
 // --- Schema Definitions ---
 interface ServiceItem {
@@ -57,564 +61,482 @@ interface ClientProfile {
         socialMediaManagement: boolean;
         businessConsulting: boolean;
         websiteUpdateFrequency: string;
+        activeServices?: ServiceItem[];
+        nextMilestone?: string;
+        nextMilestoneDate?: string;
+        invoiceDueDate?: string;
+        invoiceValueSummary?: string;
     };
-    monthlyPrice?: number;
-    customerSince?: string;
+    monthlyPrice: number;
+    customerSince: string;
+    projectStatus: string;
+}
 
-    projectStatus?: string;
+interface FeatureRow {
+    nextMilestone?: string;
+    nextMilestoneDate?: string;
+    invoiceDueDate?: string;
+    invoiceValueSummary?: string;
+    activeServices?: ServiceItem[];
+    chatbot?: boolean;
+    socialMediaManagement?: boolean;
+    businessConsulting?: boolean;
+    websiteUpdateFrequency?: string;
+}
+
+interface KPIRow {
+    websiteHealthScore?: number;
+    leadsPerMonth?: number;
+    pageSpeedScore?: number;
+    seoScore?: number;
+    uptimePercent?: number;
 }
 
 // Map snake_case database row to camelCase interface
-const mapProfile = (row: any): ClientProfile => {
+const mapProfile = (row: Record<string, unknown>): ClientProfile => {
+    const features = (row.features as FeatureRow) || {};
+    const kpi_metrics = (row.kpi_metrics as KPIRow) || {};
+
     return {
-        firstName: row.first_name || "Client",
-        tier: row.tier || "Pioneer",
-        nextMilestone: row.features?.nextMilestone || "Onboarding Call",
-        nextMilestoneDate: row.features?.nextMilestoneDate || "TBD",
-        invoiceAmount: row.monthly_price || 0,
-        invoiceDueDate: row.features?.invoiceDueDate || "TBD",
-        invoiceValueSummary: row.features?.invoiceValueSummary || "Monthly Retainer",
-        ga4WebsiteUri: row.ga4_website_uri,
-        websiteUrl: row.website_url,
-        activeServices: row.features?.activeServices || [],
-        totalStorageUsed: row.total_storage_used || 0,
-        websiteHealthScore: row.kpi_metrics?.websiteHealthScore || 0,
-        leadsPerMonth: row.kpi_metrics?.leadsPerMonth || 0,
-        pageSpeedScore: row.kpi_metrics?.pageSpeedScore || 0,
-        seoScore: row.kpi_metrics?.seoScore || 0,
-        uptimePercent: row.kpi_metrics?.uptimePercent || 99.9,
+        firstName: (row.first_name as string) || "Client",
+        tier: (row.tier as "Pioneer" | "Flagship") || "Pioneer",
+        nextMilestone: (features.nextMilestone as string) || "Onboarding Call",
+        nextMilestoneDate: (features.nextMilestoneDate as string) || "TBD",
+        invoiceAmount: (row.monthly_price as number) || 0,
+        invoiceDueDate: (features.invoiceDueDate as string) || "TBD",
+        invoiceValueSummary: (features.invoiceValueSummary as string) || "Monthly Retainer",
+        ga4WebsiteUri: row.ga4_website_uri as string,
+        websiteUrl: row.website_url as string,
+        activeServices: (features.activeServices as ServiceItem[]) || [],
+        totalStorageUsed: (row.total_storage_used as number) || 0,
+        websiteHealthScore: (kpi_metrics.websiteHealthScore as number) || 0,
+        leadsPerMonth: (kpi_metrics.leadsPerMonth as number) || 0,
+        pageSpeedScore: (kpi_metrics.pageSpeedScore as number) || 0,
+        seoScore: (kpi_metrics.seoScore as number) || 0,
+        uptimePercent: (kpi_metrics.uptimePercent as number) || 99.9,
         features: {
-            chatbot: row.features?.chatbot || false,
-            socialMediaManagement: row.features?.socialMediaManagement || false,
-            businessConsulting: row.features?.businessConsulting || false,
-            websiteUpdateFrequency: row.features?.websiteUpdateFrequency || "Monthly"
+            chatbot: (features.chatbot as boolean) || false,
+            socialMediaManagement: (features.socialMediaManagement as boolean) || false,
+            businessConsulting: (features.businessConsulting as boolean) || false,
+            websiteUpdateFrequency: (features.websiteUpdateFrequency as string) || "Monthly"
         },
-        monthlyPrice: row.monthly_price || 0,
-        customerSince: row.created_at,
-        projectStatus: row.project_status || 'Onboarding'
+        monthlyPrice: (row.monthly_price as number) || 0,
+        customerSince: row.created_at as string,
+        projectStatus: (row.project_status as string) || 'Onboarding'
     }
 }
 
-// Fallback data if profile is not yet created
-const defaultProfile: ClientProfile = {
-    firstName: "Client",
-    tier: "Pioneer",
-    nextMilestone: "Onboarding Call",
-    nextMilestoneDate: "TBD",
-    invoiceAmount: 0,
-    invoiceDueDate: "TBD",
-    invoiceValueSummary: "Monthly Retainer",
-    activeServices: [],
-    totalStorageUsed: 0,
-    websiteHealthScore: 0,
-    leadsPerMonth: 0,
-    pageSpeedScore: 0,
-    seoScore: 0,
-    uptimePercent: 99.9,
-};
-
-export default function ClientPortalDashboard() {
+export default function ClientPortal() {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+    const [uid, setUid] = useState<string | null>(null);
     const [profile, setProfile] = useState<ClientProfile | null>(null);
-    const [activeTab, setActiveTab] = useState<"dashboard" | "documents" | "admin" | "account">("dashboard");
-    const [uid, setUid] = useState<string>("");
-
+    const [activeTab, setActiveTab] = useState("dashboard");
     const [isUserAdmin, setIsUserAdmin] = useState(false);
 
-    const KPI_EXPLANATIONS = {
-        health: "Think of this like a check-up for your website. A high score means your site is technically sound, secure, and ready to handle visitors without crashing.",
-        marketing: "This measures how many new people are reaching out through your site. It's the 'heartbeat' of your business growth—more leads usually mean more customers.",
-        speed: "This is how fast your site loads on phones and computers. If it's slow, people will leave before they even see what you offer. Fast sites keep customers happy.",
-        seo: "This is how easily Google can find you. A high score means you're appearing higher in search results when people look for services like yours.",
-        uptime: "This shows how often your site is 'open for business.' 100% means it's been live every second this month, with no technical outages."
-    };
+    // UI state
+    const [isZeffyOpen, setIsZeffyOpen] = useState(false);
 
     useEffect(() => {
         const supabase = createClient();
-        let subscription: any = null;
+        let subscription: { unsubscribe: () => void } | null = null;
 
-        const handleUser = async (user: any) => {
+        const handleUser = async (user: User | null) => {
             if (user) {
                 setUid(user.id);
                 setIsUserAdmin(user.email === "david.the.gnomad@gmail.com" || user.email === "david@gnomadstudio.org");
                 try {
-                    // Fetch client profile from Supabase
-                    console.log("Authenticated User UID:", user.id);
-                    const { data: profileData, error } = await supabase
+                    const { data, error } = await supabase
                         .from('client_profiles')
                         .select('*')
                         .eq('id', user.id)
                         .single();
 
-                    if (error && error.code !== 'PGRST116') { // PGRST116 is "Rows not found"
-                        console.error("Error fetching client profile:", error);
-                        throw error;
+                    if (data && !error) {
+                        setProfile(mapProfile(data as Record<string, unknown>));
                     }
-
-                    if (profileData) {
-                        setProfile(mapProfile(profileData));
-                    } else {
-                        // Use default if no document exists yet
-                        setProfile(defaultProfile);
-                    }
-                } catch (error) {
-                    console.error("Error fetching client profile:", error);
-                    setProfile(defaultProfile);
-                } finally {
-                    setLoading(false);
+                } catch (err) {
+                    console.error("Error fetching profile:", err);
                 }
             } else {
-                // If not logged in client-side, redirect to login
-                window.location.href = "/login";
+                router.push("/auth/login");
             }
+            setLoading(false);
         };
 
-        const setupAuthListener = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            await handleUser(session?.user ?? null);
+        // Initial check
+        supabase.auth.getUser().then(({ data: { user } }) => handleUser(user));
 
-            const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-                handleUser(session?.user ?? null);
-            });
-            subscription = data.subscription;
-        };
-
-        setupAuthListener();
+        // Listen for changes
+        const { data: { subscription: authSub } } = supabase.auth.onAuthStateChange(
+            (_event, session) => handleUser(session?.user ?? null)
+        );
+        subscription = authSub;
 
         return () => {
-            if (subscription) subscription.unsubscribe();
+            subscription?.unsubscribe();
         };
-    }, []);
+    }, [router]);
 
     const handleLogout = async () => {
         const supabase = createClient();
         await supabase.auth.signOut();
-        router.push("/login");
-        router.refresh();
-    };
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.1 }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: { y: 0, opacity: 1 }
-    };
-
-    // Helper to render dynamic icons
-    const renderIcon = (iconName: string, className: string) => {
-        const icons: any = { LayoutDashboard, ShieldCheck, FileText, Settings, Rocket };
-        const IconComponent = icons[iconName] || FileText;
-        return <IconComponent className={className} />;
+        router.push("/auth/login");
     };
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#0f0c15] flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full border-2 border-brand-primary border-t-transparent animate-spin"></div>
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                    className="mb-8"
+                >
+                    <Image src="/assets/gnomad_logo_new.webp" alt="Gnomad Logo" width={60} height={60} />
+                </motion.div>
+                <div className="w-64 h-2 bg-white/5 rounded-full overflow-hidden">
+                    <motion.div
+                        className="h-full bg-brand-primary"
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                    />
+                </div>
             </div>
         );
     }
 
+    const renderIcon = (name: string) => {
+        const icons: Record<string, LucideIcon> = { Globe, Zap, ShieldCheck, Rocket, Clock };
+        const Icon = icons[name] || Globe;
+        return <Icon className="w-5 h-5" />;
+    };
+
+    const StatusBadge = ({ status }: { status: ServiceItem["status"] }) => {
+        const colors = {
+            Active: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+            "In Progress": "bg-blue-500/10 text-blue-400 border-blue-500/20",
+            Finalizing: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+            Planned: "bg-white/5 text-zinc-500 border-white/10"
+        };
+        return (
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${colors[status]}`}>
+                {status}
+            </span>
+        );
+    };
+
     return (
-        <div className="min-h-screen bg-[#0f0c15] text-white font-sans selection:bg-brand-primary flex">
+        <div className="min-h-screen bg-[#050505] text-white flex">
             {/* Sidebar */}
-            <aside className="w-64 border-r border-white/5 bg-[#14111d] flex flex-col p-6 hidden md:flex">
-                <div className="flex items-center gap-3 mb-10 px-2">
-                    <img
-                        src="/assets/gnomad_logo_new.webp"
-                        alt="Llama Logo"
-                        className="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(45,212,191,0.3)]"
-                    />
-                    <span className="font-bold tracking-tight text-lg">Gnomad Studio</span>
+            <aside className="w-72 border-r border-white/5 flex flex-col pt-8 bg-[#080808]">
+                <div className="px-8 mb-12 flex items-center gap-3">
+                    <Image src="/assets/gnomad_logo_new.webp" alt="Llama Logo" width={40} height={40} className="rounded-xl shadow-lg shadow-brand-primary/10" />
+                    <div>
+                        <h1 className="text-xl font-black tracking-tighter">STUDIO<span className="text-brand-primary">.</span></h1>
+                        <p className="text-[10px] text-zinc-500 font-bold tracking-widest uppercase">Client Portal v2</p>
+                    </div>
                 </div>
 
+                <nav className="flex-1 px-4 space-y-1">
+                    {[
+                        { id: "dashboard", label: "Overview", icon: LayoutDashboard },
+                        { id: "documents", label: "Vault", icon: FileText },
+                        { id: "comms", label: "Messenger", icon: Rocket },
+                        { id: "account", label: "Subscription", icon: CreditCard },
+                    ].map((item) => (
+                        <button
+                            key={item.id}
+                            onClick={() => setActiveTab(item.id)}
+                            className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group ${activeTab === item.id
+                                ? "bg-brand-primary/10 text-brand-primary shadow-inner shadow-brand-primary/5"
+                                : "text-zinc-500 hover:text-zinc-200 hover:bg-white/5"
+                                }`}
+                        >
+                            <item.icon className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${activeTab === item.id ? "text-brand-primary" : ""}`} />
+                            <span className="font-bold text-sm tracking-tight">{item.label}</span>
+                            {activeTab === item.id && (
+                                <motion.div layoutId="activeTab" className="ml-auto w-1.5 h-1.5 rounded-full bg-brand-primary shadow-[0_0_10px_rgba(20,184,166,0.8)]" />
+                            )}
+                        </button>
+                    ))}
 
-                <nav className="flex-1 space-y-2">
-                    <button
-                        onClick={() => setActiveTab("dashboard")}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-sm transition-all text-left ${activeTab === "dashboard" ? "bg-brand-primary/10 text-brand-secondary" : "text-zinc-400 hover:text-white hover:bg-white/5"
-                            }`}
-                    >
-                        <LayoutDashboard className="w-4 h-4" />
-                        Dashboard
-                    </button>
-                    <button onClick={() => router.push('/client-portal/resources')} className="w-full flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg font-medium text-sm transition-all text-left group">
-                        <Rocket className="w-4 h-4 group-hover:text-amber-400 transition-colors" />
-                        Resources <span className="ml-auto text-[10px] bg-amber-400/10 text-amber-400 px-2 py-0.5 rounded-full font-bold">NEW</span>
-                    </button>
-                    <button
-                        onClick={() => setActiveTab("documents")}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-sm transition-all text-left ${activeTab === "documents" ? "bg-brand-primary/10 text-brand-secondary" : "text-zinc-400 hover:text-white hover:bg-white/5"
-                            }`}
-                    >
-                        <FileText className="w-4 h-4" />
-                        Documents
-                    </button>
                     {isUserAdmin && (
                         <button
                             onClick={() => setActiveTab("admin")}
-                            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-sm transition-all text-left ${activeTab === "admin" ? "bg-amber-400/10 text-amber-400" : "text-zinc-400 hover:text-white hover:bg-white/5"
+                            className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group mt-4 border border-brand-accent/20 ${activeTab === "admin"
+                                ? "bg-brand-accent/10 text-brand-accent shadow-inner shadow-brand-accent/5"
+                                : "text-zinc-500 hover:text-zinc-200 hover:bg-white/5"
                                 }`}
                         >
-                            <ShieldCheck className="w-4 h-4" />
-                            Admin
+                            <Settings className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${activeTab === "admin" ? "text-brand-accent" : ""}`} />
+                            <span className="font-bold text-sm tracking-tight uppercase tracking-wider text-[11px]">Admin Panel</span>
                         </button>
                     )}
-                    <button
-                        onClick={() => setActiveTab("account")}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg font-medium text-sm transition-all text-left ${activeTab === "account" ? "bg-brand-primary/10 text-brand-secondary" : "text-zinc-400 hover:text-white hover:bg-white/5"
-                            }`}
-                    >
-                        <Settings className="w-4 h-4" />
-                        Account
-                    </button>
                 </nav>
 
-
-                <button
-                    onClick={handleLogout}
-                    className="mt-auto flex items-center gap-3 px-3 py-2 text-red-400 hover:text-red-300 hover:bg-red-400/5 rounded-lg font-medium text-sm transition-all"
-                >
-                    <LogOut className="w-4 h-4" />
-                    Secure Logout
-                </button>
-            </aside>
-
-            {/* Main Content */}
-            <main className="flex-1 overflow-y-auto pb-24 md:pb-0 relative">
-                <header className="sticky top-0 z-10 bg-[#0f0c15]/80 backdrop-blur-md border-b border-white/5 px-8 py-4 flex justify-between items-center md:hidden">
-                    <h1 className="text-xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent">
-                        Portal
-                    </h1>
-                </header>
-
-                <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="max-w-6xl mx-auto p-8 md:p-12 space-y-12"
-                >
-                    {activeTab === "dashboard" ? (
-                        <>
-                            {/* ── Welcome + Status Banner ── */}
-                            <motion.section variants={itemVariants} className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                                <div>
-                                    <div className="flex items-center gap-4 mb-2">
-                                        {isUserAdmin && (
-                                            <div className="p-2 bg-brand-primary/10 rounded-xl border border-brand-primary/20">
-                                                <img src="/assets/gnomad_logo_new.webp" alt="Admin" className="w-8 h-8 object-contain drop-shadow-[0_0_10px_rgba(45,212,191,0.2)]" />
-                                            </div>
-                                        )}
-                                        <div>
-                                            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-1 leading-none">Client Command Center</p>
-                                            <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
-                                                Welcome back, <span className="bg-gradient-to-r from-brand-secondary to-brand-accent bg-clip-text text-transparent">
-                                                    {isUserAdmin ? "David the Gnomad" : profile?.firstName}
-                                                </span>
-                                                {isUserAdmin && (
-                                                    <span className="ml-3 text-[10px] font-black bg-amber-400 text-black px-2 py-0.5 rounded-md tracking-tighter uppercase align-middle">ADMIN</span>
-                                                )}
-                                            </h2>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex flex-wrap items-center gap-3 mt-4">
-                                        <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-bold border ${profile?.tier === "Flagship" ? "bg-amber-400/5 border-amber-400/20 text-amber-400" : "bg-teal-400/5 border-teal-400/20 text-teal-400"}`}>
-                                            <Zap className="w-3 h-3 fill-current" />
-                                            {profile?.tier} Tier
-                                        </div>
-                                        {profile?.websiteUrl && (
-                                            <a
-                                                href={profile.websiteUrl.startsWith("http") ? profile.websiteUrl : `https://${profile.websiteUrl}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold text-zinc-400 hover:text-white hover:bg-white/10 transition-all uppercase tracking-widest"
-                                            >
-                                                <Globe className="w-3 h-3" />
-                                                {profile.websiteUrl}
-                                            </a>
-                                        )}
-                                    </div>
-
-                                </div>
-                                {/* Milestone Alert */}
-                                <div className="flex items-center gap-3 bg-brand-secondary/5 border border-brand-secondary/20 rounded-2xl px-5 py-3">
-                                    <Clock className="w-4 h-4 text-brand-secondary flex-shrink-0" />
-                                    <div>
-                                        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Next Milestone</p>
-                                        <p className="text-sm font-bold">{profile?.nextMilestone}</p>
-                                        <p className="text-[10px] text-zinc-500">{profile?.nextMilestoneDate}</p>
-                                    </div>
-                                </div>
-                            </motion.section>
-
-                            {/* ── Main Gauges Row ── */}
-                            <motion.section variants={itemVariants}>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {/* Website Health */}
-                                    <div className="bg-[#14111d] border border-white/5 rounded-2xl p-6 flex flex-col items-center gap-2 relative group hover:border-white/10 transition-all">
-                                        <div className="absolute inset-0 bg-gradient-to-br from-teal-500/3 to-transparent group-hover:from-teal-500/6 rounded-2xl transition-all" />
-                                        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 self-start">Website Performance</p>
-                                        <GaugeDial
-                                            value={profile?.websiteHealthScore ?? 0}
-                                            max={100}
-                                            label="Website Health Score"
-                                            sublabel="out of 100"
-                                            explanation={KPI_EXPLANATIONS.health}
-                                            unit=""
-                                            size="large"
-                                        />
-                                        {(profile?.websiteHealthScore ?? 0) === 0 && (
-                                            <p className="text-[10px] text-zinc-600 text-center">Score pending — your account manager is evaluating your site</p>
-                                        )}
-                                    </div>
-
-                                    {/* Marketing Reach */}
-                                    <div className="bg-[#14111d] border border-white/5 rounded-2xl p-6 flex flex-col items-center gap-2 relative group hover:border-white/10 transition-all">
-                                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/3 to-transparent group-hover:from-purple-500/6 rounded-2xl transition-all" />
-                                        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 self-start">Marketing Reach</p>
-                                        <GaugeDial
-                                            value={profile?.leadsPerMonth ?? 0}
-                                            max={100}
-                                            label="New Leads Per Month"
-                                            sublabel="leads / mo"
-                                            explanation={KPI_EXPLANATIONS.marketing}
-                                            size="large"
-                                            colorZones={[
-                                                { min: 0, max: 25, color: "#ef4444" },
-                                                { min: 25, max: 60, color: "#f59e0b" },
-                                                { min: 60, max: 100, color: "#10b981" },
-                                            ]}
-                                            formatValue={(v) => String(Math.round(v))}
-                                        />
-                                        {(profile?.leadsPerMonth ?? 0) === 0 && (
-                                            <p className="text-[10px] text-zinc-600 text-center">Tracking starts once your marketing campaign is live</p>
-                                        )}
-                                    </div>
-                                </div>
-                            </motion.section>
-
-                            {/* ── Small KPI Gauges Row ── */}
-                            <motion.section variants={itemVariants}>
-                                <div className="grid grid-cols-3 gap-4">
-                                    {[{
-                                        value: profile?.pageSpeedScore ?? 0,
-                                        max: 5,
-                                        label: "Page Speed",
-                                        sublabel: "out of 5",
-                                        zones: [
-                                            { min: 0, max: 40, color: "#ef4444" },
-                                            { min: 40, max: 75, color: "#f59e0b" },
-                                            { min: 75, max: 100, color: "#10b981" },
-                                        ],
-                                        fmt: (v: number) => v.toFixed(1),
-                                        expl: KPI_EXPLANATIONS.speed
-                                    }, {
-                                        value: profile?.seoScore ?? 0,
-                                        max: 100,
-                                        label: "SEO Score",
-                                        sublabel: "out of 100",
-                                        zones: [
-                                            { min: 0, max: 33, color: "#ef4444" },
-                                            { min: 33, max: 66, color: "#f59e0b" },
-                                            { min: 66, max: 100, color: "#10b981" },
-                                        ],
-                                        fmt: (v: number) => String(Math.round(v)),
-                                        expl: KPI_EXPLANATIONS.seo
-                                    }, {
-                                        value: profile?.uptimePercent ?? 99.9,
-                                        max: 100,
-                                        label: "Uptime",
-                                        sublabel: "% this month",
-                                        zones: [
-                                            { min: 0, max: 95, color: "#ef4444" },
-                                            { min: 95, max: 99, color: "#f59e0b" },
-                                            { min: 99, max: 100, color: "#10b981" },
-                                        ],
-                                        fmt: (v: number) => `${v.toFixed(1)}%`,
-                                        expl: KPI_EXPLANATIONS.uptime
-                                    }].map((kpi) => (
-                                        <div key={kpi.label} className="bg-[#14111d] border border-white/5 rounded-2xl p-4 flex flex-col items-center hover:border-white/10 transition-all">
-                                            <GaugeDial
-                                                value={kpi.value}
-                                                max={kpi.max}
-                                                label={kpi.label}
-                                                sublabel={kpi.sublabel}
-                                                explanation={kpi.expl}
-                                                size="small"
-                                                colorZones={kpi.zones}
-                                                formatValue={kpi.fmt}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            </motion.section>
-
-                            {/* ── Active Features + Services Row ── */}
-                            <motion.section variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {/* Active Features Bar Chart */}
-                                <div className="bg-[#14111d] border border-white/5 rounded-2xl p-6 space-y-5">
-                                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Active Features</p>
-                                    {[
-                                        { key: "chatbot", label: "Sterling AI Chatbot", color: "bg-brand-secondary", enabled: profile?.features?.chatbot },
-                                        { key: "social", label: "Social Media Management", color: "bg-purple-500", enabled: profile?.features?.socialMediaManagement },
-                                        { key: "consulting", label: "Business Consulting", color: "bg-amber-400", enabled: profile?.features?.businessConsulting },
-                                        { key: "updates", label: `Website Updates (${profile?.features?.websiteUpdateFrequency ?? "Monthly"})`, color: "bg-blue-400", enabled: true },
-                                    ].map((f) => (
-                                        <div key={f.key} className="space-y-1.5">
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-xs font-medium text-zinc-300">{f.label}</span>
-                                                <span className={`text-[10px] font-black uppercase ${f.enabled ? "text-emerald-400" : "text-zinc-600"}`}>
-                                                    {f.enabled ? "ACTIVE" : "INACTIVE"}
-                                                </span>
-                                            </div>
-                                            <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                                                <div
-                                                    className={`h-full rounded-full transition-all duration-1000 ${f.enabled ? f.color : "bg-zinc-800"}`}
-                                                    style={{ width: f.enabled ? "100%" : "15%" }}
-                                                />
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                {/* Active Services */}
-                                <div className="bg-[#14111d] border border-white/5 rounded-2xl p-6 space-y-4">
-                                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Active Services</p>
-                                    {profile?.activeServices && profile.activeServices.length > 0 ? (
-                                        profile.activeServices.map((service, i) => (
-                                            <div key={i} className="flex items-center justify-between p-3 bg-[#1e1b26] border border-white/5 rounded-xl">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="p-2 bg-zinc-900 rounded-lg">
-                                                        {renderIcon(service.iconName, "w-4 h-4 text-zinc-400")}
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-sm font-semibold">{service.title}</p>
-                                                        <p className="text-[10px] text-zinc-500">{service.status}</p>
-                                                    </div>
-                                                </div>
-                                                <div className={`w-2 h-2 rounded-full ${service.status === "Active" ? "bg-emerald-400" : service.status === "In Progress" ? "bg-amber-400" : "bg-zinc-600"}`} />
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <div className="p-6 text-center border border-dashed border-white/10 rounded-xl">
-                                            <p className="text-zinc-600 text-xs">Services will appear here once provisioned by your account manager.</p>
-                                        </div>
-                                    )}
-                                </div>
-                            </motion.section>
-
-                            {/* ── Bottom Row: Invoice + CTA ── */}
-                            <motion.section variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="p-6 bg-[#14111d] border border-brand-accent/20 rounded-2xl flex flex-col justify-between gap-4">
-                                    <div>
-                                        <div className="flex justify-between items-start mb-2">
-                                            <span className="text-zinc-400 text-sm font-medium">Next Invoice</span>
-                                            <div className="p-2 bg-brand-accent/10 rounded-lg">
-                                                <CreditCard className="w-4 h-4 text-brand-accent" />
-                                            </div>
-                                        </div>
-                                        <p className="text-3xl font-bold">${(profile?.monthlyPrice ?? profile?.invoiceAmount ?? 0).toFixed(2)}</p>
-                                        <p className="text-xs text-zinc-400 mt-1">Due: {profile?.invoiceDueDate}</p>
-                                    </div>
-                                    <div className="pt-3 border-t border-brand-accent/20">
-                                        <p className="text-xs text-brand-accent/80 leading-relaxed font-medium">{profile?.invoiceValueSummary}</p>
-                                    </div>
-                                </div>
-
-                                <button
-                                    onClick={() => router.push('/client-portal/resources')}
-                                    className="p-6 bg-gradient-to-br from-brand-primary/10 to-brand-secondary/10 border border-brand-secondary/20 rounded-2xl flex flex-col justify-between gap-4 text-left hover:border-brand-secondary/40 hover:scale-[1.01] transition-all group"
-                                >
-                                    <div className="p-3 bg-brand-secondary/10 w-fit rounded-xl">
-                                        <Rocket className="w-6 h-6 text-brand-secondary group-hover:scale-110 transition-transform" />
-                                    </div>
-                                    <div>
-                                        <p className="font-black text-lg tracking-tight">Intelligence Hub</p>
-                                        <p className="text-zinc-500 text-sm mt-1">Run AI-powered market research, competitive analysis, and more.</p>
-                                    </div>
-                                    <span className="text-xs font-bold text-brand-secondary flex items-center gap-1">
-                                        Open Hub <ChevronRight className="w-4 h-4" />
-                                    </span>
-                                </button>
-
-                                {/* Owner-only: Live GA4 Analytics section */}
-                                {isUserAdmin && (
-                                    <motion.div variants={itemVariants} className="mt-2 bg-[#14111d] border border-white/5 rounded-2xl p-6">
-                                        <GA4Widget />
-                                    </motion.div>
-                                )}
-                            </motion.section>
-                        </>
-                    ) : activeTab === "documents" ? (
-                        <motion.section variants={itemVariants}>
-                            <DocumentVault uid={uid} totalStorageUsed={profile?.totalStorageUsed || 0} />
-                        </motion.section>
-                    ) : activeTab === "account" ? (
-                        <motion.section variants={itemVariants}>
-                            <AccountSection profile={profile ?? defaultProfile} />
-                        </motion.section>
-                    ) : (
-                        <motion.section variants={itemVariants}>
-                            <AdminDashboard />
-                        </motion.section>
-                    )}
-
-                </motion.div>
-
-                {/* Mobile Bottom Navigation (Visible only on small screens) */}
-                <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#0f0c15]/90 backdrop-blur-xl border-t border-white/10 px-6 py-4 z-50">
-                    <div className="flex justify-between items-center text-zinc-500">
+                <div className="p-4 mt-auto">
+                    <div className="p-4 bg-white/5 rounded-2xl border border-white/5 mb-4">
+                        <div className="flex items-center gap-3 mb-3">
+                            <div className="relative">
+                                <Image src="/assets/gnomad_logo_new.webp" alt="Admin" width={32} height={32} className="rounded-full border border-white/10" />
+                                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-500 border-2 border-[#080808] rounded-full"></div>
+                            </div>
+                            <div className="overflow-hidden">
+                                <p className="text-xs font-bold truncate">{profile?.firstName || "Client"}</p>
+                                <p className="text-[10px] text-zinc-500 truncate">{profile?.tier} Partner</p>
+                            </div>
+                        </div>
                         <button
-                            onClick={() => setActiveTab("dashboard")}
-                            className={`flex flex-col items-center gap-1 ${activeTab === "dashboard" ? "text-brand-secondary" : "hover:text-white"}`}
+                            onClick={handleLogout}
+                            className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/20"
                         >
-                            <LayoutDashboard className="w-6 h-6" />
-                            <span className="text-[10px] font-medium">Dashboard</span>
-                        </button>
-                        <button onClick={() => router.push('/client-portal/resources')} className="flex flex-col items-center gap-1 hover:text-white transition-colors">
-                            <Rocket className="w-6 h-6" />
-                            <span className="text-[10px] font-medium">Resources</span>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("documents")}
-                            className={`flex flex-col items-center gap-1 ${activeTab === "documents" ? "text-brand-secondary" : "hover:text-white"}`}
-                        >
-                            <FileText className="w-6 h-6" />
-                            <span className="text-[10px] font-medium">Documents</span>
-                        </button>
-                        {isUserAdmin && (
-                            <button
-                                onClick={() => setActiveTab("admin")}
-                                className={`flex flex-col items-center gap-1 ${activeTab === "admin" ? "text-amber-400" : "hover:text-white"}`}
-                            >
-                                <ShieldCheck className="w-6 h-6" />
-                                <span className="text-[10px] font-medium">Admin</span>
-                            </button>
-                        )}
-                        <button
-                            onClick={() => setActiveTab("account")}
-                            className={`flex flex-col items-center gap-1 ${activeTab === "account" ? "text-brand-secondary" : "hover:text-white"}`}
-                        >
-                            <Settings className="w-6 h-6" />
-                            <span className="text-[10px] font-medium">Account</span>
-                        </button>
-                        <button onClick={handleLogout} className="flex flex-col items-center gap-1 text-red-400/80 hover:text-red-400 transition-colors">
-
-                            <LogOut className="w-6 h-6" />
-                            <span className="text-[10px] font-medium">Logout</span>
+                            <LogOut className="w-3.5 h-3.5" />
+                            Sign Out
                         </button>
                     </div>
                 </div>
-                <Chatbot />
+            </aside>
+
+            {/* Main Content */}
+            <main className="flex-1 overflow-y-auto">
+                <div className="max-w-7xl mx-auto p-10 pt-16">
+                    {/* Header with Title and Global Actions */}
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                        <div>
+                            <div className="flex items-center gap-3 mb-2">
+                                <span className="px-2 py-0.5 bg-brand-primary/10 text-brand-primary text-[10px] font-black rounded-lg border border-brand-primary/20 tracking-wider">WORKSPACE</span>
+                                <h1 className="text-4xl font-black tracking-tight text-white capitalize">{activeTab}</h1>
+                            </div>
+                            <p className="text-zinc-500 font-medium">Welcome back, {profile?.firstName}. Project status: <span className="text-brand-primary font-bold">{profile?.projectStatus}</span></p>
+                        </div>
+
+                        {activeTab === "dashboard" && (
+                            <div className="flex gap-3">
+                                <button className="px-6 py-3 rounded-2xl bg-white text-black font-black text-xs hover:bg-zinc-200 transition-all shadow-xl shadow-white/5 flex items-center gap-2">
+                                    Book Strategy Call
+                                    <ChevronRight className="w-4 h-4" />
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setIsZeffyOpen(true);
+                                    }}
+                                    className="px-6 py-3 rounded-2xl bg-brand-primary text-white font-black text-xs hover:bg-brand-secondary transition-all shadow-xl shadow-brand-primary/20 flex items-center gap-2"
+                                >
+                                    Quick Pay
+                                    <CreditCard className="w-4 h-4" />
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="space-y-12">
+                        {activeTab === "dashboard" && (
+                            <>
+                                {/* Top KPI Grid */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    <div className="glass-panel border p-6 rounded-3xl relative overflow-hidden group">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Next Milestone</p>
+                                            <Clock className="w-4 h-4 text-brand-primary" />
+                                        </div>
+                                        <p className="text-xl font-bold mb-1 text-white group-hover:text-brand-primary transition-colors">{profile?.nextMilestone}</p>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-2xl font-black text-brand-primary">{profile?.nextMilestoneDate}</span>
+                                        </div>
+                                        <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-brand-primary to-transparent opacity-30"></div>
+                                    </div>
+
+                                    <div className="glass-panel border p-6 rounded-3xl relative overflow-hidden group">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Active Services</p>
+                                            <Rocket className="w-4 h-4 text-brand-accent" />
+                                        </div>
+                                        <div className="flex -space-x-3 mb-2">
+                                            {profile?.activeServices.slice(0, 4).map((_, i) => (
+                                                <div key={i} className="w-8 h-8 rounded-full border-2 border-[#050505] bg-gradient-to-br from-brand-accent to-brand-primary flex items-center justify-center text-[10px] font-black text-white shadow-xl">
+                                                    {i + 1}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <p className="text-xl font-bold text-white">{profile?.activeServices.length} Total Projects</p>
+                                        <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-brand-accent to-transparent opacity-30"></div>
+                                    </div>
+
+                                    <div className="glass-panel border p-6 rounded-3xl relative overflow-hidden group">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Vault Usage</p>
+                                            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                                        </div>
+                                        <p className="text-3xl font-black text-white mb-2">{profile?.totalStorageUsed}MB <span className="text-xs text-zinc-600 font-bold">/ 5GB</span></p>
+                                        <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${(profile?.totalStorageUsed || 0) / 50}%` }}
+                                                className="h-full bg-emerald-500"
+                                            />
+                                        </div>
+                                        <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-emerald-500 to-transparent opacity-30"></div>
+                                    </div>
+
+                                    <div className="glass-panel border p-6 rounded-3xl relative overflow-hidden group">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Partnership</p>
+                                            <CreditCard className="w-4 h-4 text-amber-400" />
+                                        </div>
+                                        <p className="text-xl font-bold text-white mb-1">{profile?.tier} Tier</p>
+                                        <p className="text-xs text-zinc-500 font-bold">Since {new Date(profile?.customerSince || "").toLocaleDateString()}</p>
+                                        <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-amber-400 to-transparent opacity-30"></div>
+                                    </div>
+                                </div>
+
+                                {/* KPI Metrics Visualized */}
+                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                                    <div className="lg:col-span-8 space-y-6">
+                                        {/* Gauges */}
+                                        <div className="glass-panel border p-10 rounded-[2.5rem] relative overflow-hidden">
+                                            <div className="flex items-center justify-between mb-10">
+                                                <div>
+                                                    <h3 className="text-2xl font-black text-white mb-1">Strategic Health</h3>
+                                                    <p className="text-sm text-zinc-500 font-medium">Real-time performance metrics</p>
+                                                </div>
+                                                <button className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 active:scale-95 transition-all text-xs font-bold border border-white/5">
+                                                    Full Report
+                                                </button>
+                                            </div>
+
+                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                                                <GaugeDial
+                                                    value={profile?.websiteHealthScore || 0}
+                                                    max={100}
+                                                    label="Site Health"
+                                                    sublabel="Overall"
+                                                    size="large"
+                                                />
+                                                <GaugeDial
+                                                    value={profile?.leadsPerMonth || 0}
+                                                    max={200}
+                                                    label="Leads"
+                                                    sublabel="Monthly"
+                                                    size="large"
+                                                />
+                                                <GaugeDial
+                                                    value={profile?.pageSpeedScore || 0}
+                                                    max={5}
+                                                    label="Speed"
+                                                    sublabel="Core Vitals"
+                                                    size="large"
+                                                    colorZones={[
+                                                        { min: 0, max: 2, color: "#ef4444" },
+                                                        { min: 2, max: 4, color: "#f59e0b" },
+                                                        { min: 4, max: 5, color: "#10b981" }
+                                                    ]}
+                                                />
+                                                <GaugeDial
+                                                    value={profile?.seoScore || 0}
+                                                    max={100}
+                                                    label="SEO"
+                                                    sublabel="Rank Score"
+                                                    size="large"
+                                                    colorZones={[
+                                                        { min: 0, max: 50, color: "#ef4444" },
+                                                        { min: 50, max: 80, color: "#f59e0b" },
+                                                        { min: 80, max: 100, color: "#10b981" }
+                                                    ]}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Services List */}
+                                        <div className="glass-panel border rounded-[2.5rem] overflow-hidden">
+                                            <div className="p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
+                                                <h3 className="text-xl font-black text-white">Project Roadmap</h3>
+                                                <div className="flex gap-2">
+                                                    <div className="flex items-center gap-1.5 px-3 py-1 bg-white/5 rounded-lg border border-white/5">
+                                                        <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+                                                        <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-tighter">Live</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="divide-y divide-white/5">
+                                                {profile?.activeServices.map((service) => (
+                                                    <div key={service.id} className="p-6 hover:bg-white/[0.02] transition-all group cursor-pointer flex items-center justify-between">
+                                                        <div className="flex items-center gap-5">
+                                                            <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-zinc-400 group-hover:text-brand-primary group-hover:bg-brand-primary/10 border border-white/5 transition-all">
+                                                                {renderIcon(service.iconName)}
+                                                            </div>
+                                                            <div>
+                                                                <p className="text-sm font-bold text-white mb-1 group-hover:translate-x-1 transition-transform">{service.title}</p>
+                                                                <StatusBadge status={service.status} />
+                                                            </div>
+                                                        </div>
+                                                        <ChevronRight className="w-5 h-5 text-zinc-600 group-hover:text-white group-hover:translate-x-1 transition-all" />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="lg:col-span-4 space-y-6">
+                                        {/* GA4 Preview Card */}
+                                        <GA4Widget />
+
+                                        {/* Billing Summary */}
+                                        <div className="glass-panel border p-8 rounded-[2.5rem] bg-gradient-to-br from-white/[0.03] to-transparent">
+                                            <h3 className="text-xl font-black text-white mb-6">Payment Hub</h3>
+                                            <div className="p-6 rounded-3xl bg-brand-primary/10 border border-brand-primary/20 mb-6">
+                                                <p className="text-[10px] font-bold text-brand-primary uppercase tracking-[0.2em] mb-4">Pending Invoice</p>
+                                                <div className="flex items-end justify-between mb-4">
+                                                    <p className="text-4xl font-black text-white">${profile?.invoiceAmount}</p>
+                                                    <p className="text-xs font-bold text-zinc-500 mb-1">Due {profile?.invoiceDueDate}</p>
+                                                </div>
+                                                <p className="text-sm text-zinc-400 font-medium mb-6 pt-4 border-t border-brand-primary/10">{profile?.invoiceValueSummary}</p>
+                                                <button
+                                                    onClick={() => setIsZeffyOpen(true)}
+                                                    className="w-full py-4 rounded-2xl bg-brand-primary hover:bg-brand-secondary text-white font-black text-sm transition-all shadow-xl shadow-brand-primary/20 cursor-pointer"
+                                                >
+                                                    Settle Securely
+                                                </button>
+                                            </div>
+                                            <div className="space-y-4">
+                                                <button className="w-full flex items-center justify-between p-4 rounded-2xl border border-white/5 hover:bg-white/5 transition-all text-sm font-bold text-zinc-400 hover:text-white group">
+                                                    View Invoice History
+                                                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                </button>
+                                                <button className="w-full flex items-center justify-between p-4 rounded-2xl border border-white/5 hover:bg-white/5 transition-all text-sm font-bold text-zinc-400 hover:text-white group">
+                                                    Update Payment Method
+                                                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
+
+                        {activeTab === "comms" && profile && (
+                            <CommunicationHub partnerProfile={profile} />
+                        )}
+
+                        {activeTab === "documents" && uid && profile && (
+                            <DocumentVault uid={uid} totalStorageUsed={profile.totalStorageUsed} />
+                        )}
+
+                        {activeTab === "admin" && isUserAdmin && (
+                            <AdminDashboard />
+                        )}
+
+                        {activeTab === "account" && profile && (
+                            <AccountSection profile={profile} />
+                        )}
+                    </div>
+                </div>
             </main>
+
+            <ZeffyModal
+                isOpen={isZeffyOpen}
+                onClose={() => setIsZeffyOpen(false)}
+            />
         </div>
     );
 }

@@ -1,145 +1,40 @@
-import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
+import { NextResponse } from "next/server";
 
-export const dynamic = "force-dynamic";
+export const runtime = "nodejs"; // important if you use any node libs
 
-// Vapi sends POST requests for various call lifecycle events.
-// We only act on `end-of-call-report` which contains the full transcript.
-export async function POST(request: NextRequest) {
-    try {
-        const body = await request.json();
-        const { message } = body;
+interface VapiToolCall {
+    id?: string;
+    toolCallId?: string;
+    function?: {
+        arguments?: Record<string, unknown> | string | null;
+    };
+    arguments?: Record<string, unknown> | string | null;
+}
 
-        // Only process end-of-call events
-        if (!message || message.type !== "end-of-call-report") {
-            return NextResponse.json({ received: true }, { status: 200 });
+export async function POST(req: Request) {
+    const body = await req.json();
+
+    // TEMP: log everything (remove after debugging)
+    console.log("VAPI WEBHOOK RECEIVED:", JSON.stringify(body));
+
+    const msg = body?.message;
+
+    // Tool calls MUST return results[]
+    if (msg?.type === "tool-calls") {
+        const toolCalls: VapiToolCall[] = msg.toolCallList ?? [];
+        const results = toolCalls.map((tc: VapiToolCall) => ({
+            toolCallId: tc.id || tc.toolCallId, // if id is present
+            result: { ok: true, echoed: tc.function?.arguments ?? tc.arguments ?? null },
+        }));
+
+        // If toolCallId is missing from results, we try to grab it from the source
+        if (!results[0]?.toolCallId && toolCalls[0]?.id) {
+            results[0].toolCallId = toolCalls[0].id;
         }
 
-        const call = message.call ?? {};
-        const artifact = message.artifact ?? {};
-        const analysis = message.analysis ?? {};
-
-        // --- Extract call details ---
-        const callId = call.id ?? "unknown";
-        const callerNumber = call.customer?.number ?? "Unknown Number";
-        const endedReason = message.endedReason ?? "unknown";
-        const startedAt = call.startedAt ? new Date(call.startedAt).toLocaleString("en-US", { timeZone: "America/Chicago" }) : "Unknown";
-        const durationSeconds = message.durationSeconds ?? 0;
-        const durationFormatted = durationSeconds >= 60
-            ? `${Math.floor(durationSeconds / 60)}m ${Math.round(durationSeconds % 60)}s`
-            : `${Math.round(durationSeconds)}s`;
-
-        // --- Extract transcript & summary with deep fallbacks ---
-        const transcript = artifact.transcript
-            || call.transcript
-            || message.transcript
-            || message.artifact?.transcript
-            || "No transcript recorded.";
-
-        const summary = analysis.summary
-            || message.summary
-            || message.analysis?.summary
-            || "";
-
-        // --- Extract New Structured Data ---
-        // Vapi passes these in analysis.structuredData
-        const structuredData = analysis.structuredData || {};
-        const productInterest = structuredData["Product Interest Level"] || "Not specified";
-        const appointmentBooked = structuredData["Appointment Booked"] === true ? "✅ YES" : "❌ NO";
-        const escalationRequired = structuredData["Escalation Required"] === true ? "⚠️ YES" : "NO";
-        const successScale = structuredData["Success Evaluation - Numeric Scale"] || "N/A";
-        const callSummaryNew = structuredData["Call Summary"] || summary;
-
-        // Debug log for troubleshooting empty reports
-        if (transcript === "No transcript recorded.") {
-            console.warn("Vapi Webhook: Missing transcript in payload. Structure:", JSON.stringify(message, null, 2).slice(0, 500));
-        }
-
-        // --- Build email HTML ---
-        const transcriptHtml = transcript
-            .split("\n")
-            .map((line: string) => {
-                const isAI = line.toLowerCase().startsWith("ai:") || line.toLowerCase().startsWith("morgan:");
-                const isCaller = line.toLowerCase().startsWith("user:") || line.toLowerCase().startsWith("human:");
-                const color = isAI ? "#2dd4bf" : isCaller ? "#a78bfa" : "#888";
-                const label = isAI ? "MORGAN" : isCaller ? "CALLER" : "";
-                return label
-                    ? `<p style="margin: 6px 0;"><span style="color:${color}; font-weight: bold; font-size: 11px; text-transform: uppercase;">${label}</span><br/><span style="color: #ccc;">${line.replace(/^(ai:|morgan:|user:|human:)/i, "").trim()}</span></p>`
-                    : `<p style="margin: 4px 0; color: #666; font-size: 12px;">${line}</p>`;
-            })
-            .join("");
-
-        const html = `
-            <div style="font-family: -apple-system, sans-serif; max-width: 640px; margin: auto; background: #0f0c15; color: #fff; padding: 36px; border-radius: 16px;">
-                <h1 style="color: #2dd4bf; margin: 0 0 4px;">📞 Morgan Call Log</h1>
-                <p style="color: #555; margin: 0 0 24px; font-size: 13px;">Gnomad Studio AI Intelligence — 918 Renaissance</p>
-
-                <div style="background: #1a1728; border-radius: 12px; padding: 20px; margin-bottom: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                    <div>
-                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Caller ID</p>
-                        <p style="margin: 4px 0 0; font-size: 16px; font-weight: bold;">${callerNumber}</p>
-                    </div>
-                    <div>
-                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Duration</p>
-                        <p style="margin: 4px 0 0; font-size: 16px; font-weight: bold;">${durationFormatted}</p>
-                    </div>
-                    <div>
-                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Success (1-10)</p>
-                        <p style="margin: 4px 0 0; font-size: 16px; font-weight: bold; color: #f59e0b;">${successScale}</p>
-                    </div>
-                    <div>
-                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Appointment</p>
-                        <p style="margin: 4px 0 0; font-size: 16px; font-weight: bold;">${appointmentBooked}</p>
-                    </div>
-                </div>
-
-                <div style="background: #1e1b26; border-left: 3px solid #2dd4bf; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-                    <div style="margin-bottom: 12px;">
-                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold; margin-bottom: 4px;">🎯 Product Interest</p>
-                        <p style="margin: 0; color: #fff; font-size: 14px;">${productInterest}</p>
-                    </div>
-                    <div>
-                        <p style="margin: 0; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold; margin-bottom: 4px;">📝 Call Summary</p>
-                        <p style="margin: 0; color: #bbb; line-height: 1.5; font-size: 14px;">${callSummaryNew}</p>
-                    </div>
-                    ${escalationRequired.includes("YES") ? `
-                    <div style="margin-top: 12px; padding: 8px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 4px; color: #f87171; font-size: 12px; font-weight: bold; text-align: center;">
-                        ⚠️ ACTION REQUIRED: ESCALATION REMINDER
-                    </div>` : ""}
-                </div>
-
-                <div style="background: #14111d; border-radius: 12px; padding: 20px;">
-                    <p style="margin: 0 0 16px; color: #555; font-size: 11px; text-transform: uppercase; font-weight: bold;">Full Transcript</p>
-                    <div style="border-top: 1px solid #ffffff10; padding-top: 12px; font-size: 13px; line-height: 1.6;">
-                        ${transcriptHtml || '<p style="color: #555;">No transcript available.</p>'}
-                    </div>
-                </div>
-
-                <p style="margin-top: 24px; color: #333; font-size: 11px; text-align: center;">
-                    Call ID: ${callId} — Time: ${startedAt}
-                </p>
-            </div>
-        `;
-
-        // --- Send email ---
-        if (!process.env.RESEND_API_KEY) {
-            console.error("RESEND_API_KEY not set");
-            return NextResponse.json({ error: "Email not configured" }, { status: 200 }); // Still return 200 to Vapi
-        }
-
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        await resend.emails.send({
-            from: "Gnomad Studio <leads@gnomadstudio.org>",
-            to: ["david.the.gnomad@gmail.com"],
-            subject: `📞 Call: ${callerNumber} (Score: ${successScale}) — Morgan`,
-            html,
-        });
-
-        return NextResponse.json({ success: true }, { status: 200 });
-
-    } catch (error: unknown) {
-        const message = error instanceof Error ? error.message : String(error);
-        console.error("Vapi webhook error:", error);
-        return NextResponse.json({ error: "Webhook processing failed", message }, { status: 500 });
+        return NextResponse.json({ results });
     }
+
+    // End-of-call-report (and other events) can just 200 OK
+    return NextResponse.json({ ok: true });
 }

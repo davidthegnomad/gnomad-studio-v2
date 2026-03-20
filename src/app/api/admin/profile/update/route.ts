@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
         const supabaseAdmin = createAdminClient();
 
         // Build a sanitized update object mapping to snake_case schema
-        const allowedUpdates: Record<string, any> = {};
+        const allowedUpdates: Record<string, string | number | boolean | object | null | undefined> = {};
 
         // Core identity
         if (updates.firstName !== undefined) allowedUpdates.first_name = updates.firstName;
@@ -95,8 +95,11 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({ success: true }, { status: 200 });
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("Admin Update Error:", error);
-        return NextResponse.json({ error: "Internal Server Error", message: error.message }, { status: 500 });
+        return NextResponse.json({
+            error: "Internal Server Error",
+            message: error instanceof Error ? error.message : "Update failed"
+        }, { status: 500 });
     }
 }

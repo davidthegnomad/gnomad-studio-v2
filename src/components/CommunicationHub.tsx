@@ -1,88 +1,119 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, Mail, Phone } from "lucide-react";
+import { Mail, Phone, MessageSquare, Sparkles } from "lucide-react";
 import Chatbot from "./Chatbot";
 import EmailMessenger from "./EmailMessenger";
 
-export default function CommunicationHub() {
-    const [activeTab, setActiveTab] = useState<"chat" | "email" | null>(null);
+interface PartnerProfile {
+    firstName?: string;
+    tier?: string;
+}
 
-    const toggleTab = (tab: "chat" | "email") => {
-        if (activeTab === tab) {
-            setActiveTab(null);
-        } else {
-            setActiveTab(tab);
+interface CommunicationHubProps {
+    partnerProfile?: PartnerProfile;
+    externalInput?: string;
+}
+
+export default function CommunicationHub({ partnerProfile, externalInput }: CommunicationHubProps) {
+    const [activeTool, setActiveTool] = useState<"chat" | "messenger" | null>(null);
+    const [chatbotExternalInput, setChatbotExternalInput] = useState("");
+
+    const toggleChat = () => setActiveTool(activeTool === "chat" ? null : "chat");
+    const toggleMessenger = () => setActiveTool(activeTool === "messenger" ? null : "messenger");
+
+    useEffect(() => {
+        if (externalInput) {
+            requestAnimationFrame(() => {
+                setChatbotExternalInput(externalInput);
+                setActiveTool("chat");
+            });
         }
-    };
+    }, [externalInput]);
 
     return (
-        <div className="fixed bottom-8 right-8 z-[100] flex flex-col items-end gap-4">
-            {/* Communication Windows */}
+        <div className="fixed bottom-8 right-8 z-[100] flex flex-col items-end gap-5">
+            {/* Tool Layer */}
             <AnimatePresence mode="wait">
-                {activeTab === "chat" && (
+                {activeTool === "chat" && (
                     <motion.div
-                        key="chat-window"
+                        key="chat"
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        className="mb-2"
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
                     >
-                        {/* We'll modify Chatbot to accept an 'isHosted' prop or similar */}
-                        <Chatbot isEmbedded onClose={() => setActiveTab(null)} />
+                        <Chatbot
+                            hideLauncher={true}
+                            apiUrl="/api/chat/portal"
+                            body={{ partnerContext: partnerProfile }}
+                            initialMessage={partnerProfile
+                                ? `Welcome back, ${partnerProfile.firstName}! I'm Sterling. Ready to refine your ${partnerProfile.tier} Tier strategy?`
+                                : "Welcome! I'm Sterling from Gnomad Studio. How can I help you today?"
+                            }
+                            externalInput={chatbotExternalInput}
+                            onClose={() => setActiveTool(null)}
+                        />
                     </motion.div>
                 )}
-                {activeTab === "email" && (
+
+                {activeTool === "messenger" && (
                     <motion.div
-                        key="email-window"
+                        key="messenger"
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        className="mb-2"
+                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                        className="fixed bottom-28 right-8"
                     >
-                        <EmailMessenger onClose={() => setActiveTab(null)} />
+                        <EmailMessenger onClose={() => setActiveTool(null)} />
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* The Speed Dial Pill */}
+            {/* Horizontal Pill FAB */}
             <motion.div
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="glass-panel rounded-full px-8 py-3 flex items-center gap-6 border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-2xl"
+                initial={{ y: 20, opacity: 0, scale: 0.9 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.02 }}
+                className="glass-panel rounded-full p-2 flex items-center gap-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 ring-1 ring-white/5"
             >
-                {/* Chat Button (Sterling) */}
-                <button
-                    onClick={() => toggleTab("chat")}
-                    className={`p-2 transition-all duration-300 rounded-full ${activeTab === "chat" ? "text-brand-primary bg-brand-primary/10 shadow-[0_0_15px_rgba(0,191,200,0.3)]" : "text-gray-400 hover:text-white"}`}
-                    aria-label="Chat with Sterling"
+                {/* Sterling Chat Action */}
+                <motion.button
+                    whileHover={{ scale: 1.05, backgroundColor: "rgba(0, 191, 200, 0.15)" }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={toggleChat}
+                    className={`p-3.5 rounded-full transition-all flex items-center justify-center relative ${activeTool === "chat" ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20" : "text-zinc-400 hover:text-white"}`}
+                    title="Chat with Sterling"
                 >
-                    <MessageCircle className="w-5 h-5" />
-                </button>
+                    <MessageSquare className="w-5 h-5" />
+                    {!activeTool && (
+                        <Sparkles className="absolute -top-1 -right-1 w-3 h-3 text-brand-secondary animate-pulse" />
+                    )}
+                </motion.button>
 
-                <div className="w-px h-4 bg-white/10" />
-
-                {/* Email Button (Messenger) */}
-                <button
-                    onClick={() => toggleTab("email")}
-                    className={`p-2 transition-all duration-300 rounded-full ${activeTab === "email" ? "text-brand-primary bg-brand-primary/10 shadow-[0_0_15px_rgba(0,191,200,0.3)]" : "text-gray-400 hover:text-white"}`}
-                    aria-label="Send Email"
+                {/* Email (Messenger) Action */}
+                <motion.button
+                    onClick={toggleMessenger}
+                    whileHover={{ scale: 1.05, backgroundColor: "rgba(245, 158, 11, 0.15)" }}
+                    whileTap={{ scale: 0.9 }}
+                    className={`p-3.5 rounded-full transition-all flex items-center justify-center ${activeTool === "messenger" ? "bg-brand-accent text-[#0f0c15] shadow-lg shadow-brand-accent/20" : "text-zinc-400 hover:text-white"}`}
+                    title="Direct Messenger"
                 >
                     <Mail className="w-5 h-5" />
-                </button>
+                </motion.button>
 
-                <div className="w-px h-4 bg-white/10" />
-
-                {/* Call Button (Morgan) */}
-                <a
-                    href="tel:9184711813"
-                    className="p-2 text-gray-400 hover:text-brand-primary transition-all duration-300 rounded-full hover:bg-brand-primary/10"
-                    aria-label="Call Morgan"
+                {/* Phone (Morgan) Action */}
+                <motion.a
+                    href="tel:+19184711813"
+                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                    whileTap={{ scale: 0.9 }}
+                    className="p-3.5 rounded-full text-zinc-400 hover:text-white transition-all flex items-center justify-center"
+                    title="Call Team (Morgan)"
                 >
                     <Phone className="w-5 h-5" />
-                </a>
+                </motion.a>
             </motion.div>
         </div>
     );

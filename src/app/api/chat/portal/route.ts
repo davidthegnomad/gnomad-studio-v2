@@ -32,7 +32,9 @@ The user is currently inside their Client Portal Dashboard. They have access to:
 
 export async function POST(req: NextRequest) {
     try {
-        const { messages } = await req.json();
+        const { messages, partnerContext } = await req.json();
+
+        const personalizedPrompt = `${systemPrompt}${partnerContext ? `\n\n**Current Partner Context:**\n${JSON.stringify(partnerContext, null, 2)}` : ''}`;
 
         // Call DeepSeek directly using OpenAI-compatible API with streaming
         const response = await fetch('https://api.deepseek.com/chat/completions', {
@@ -44,7 +46,7 @@ export async function POST(req: NextRequest) {
             body: JSON.stringify({
                 model: 'deepseek-chat',
                 messages: [
-                    { role: 'system', content: systemPrompt },
+                    { role: 'system', content: personalizedPrompt },
                     ...messages,
                 ],
                 temperature: 0.7,

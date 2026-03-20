@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HelpCircle, X } from "lucide-react";
+import { HelpCircle, X, Sparkles } from "lucide-react";
 
 interface ColorZone {
     min: number;
@@ -20,6 +20,7 @@ interface GaugeDialProps {
     size?: "large" | "small";
     colorZones?: ColorZone[];
     formatValue?: (v: number) => string;
+    onAskSterling?: (label: string) => void;
 }
 
 const DEFAULT_ZONES: ColorZone[] = [
@@ -46,6 +47,7 @@ export default function GaugeDial({
     size = "large",
     colorZones = DEFAULT_ZONES,
     formatValue,
+    onAskSterling,
 }: GaugeDialProps) {
     const [isHovered, setIsHovered] = useState(false);
     const [isMobileActive, setIsMobileActive] = useState(false);
@@ -59,7 +61,6 @@ export default function GaugeDial({
     const strokeWidth = isLarge ? 14 : 9;
     const gapAngle = 70; // degrees of gap at bottom
     const startAngle = 90 + gapAngle / 2;   // 125°
-    const endAngle = 90 - gapAngle / 2 + 360; // 415°
     const totalSweep = 360 - gapAngle;       // 290°
 
     const pct = Math.min(Math.max(value / max, 0), 1);
@@ -111,7 +112,7 @@ export default function GaugeDial({
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => setIsMobileActive(!isMobileActive)}
         >
-            <svg width={svgSize} height={isLarge ? svgSize * 0.82 : svgSize * 0.82} viewBox={`0 0 ${svgSize} ${svgSize * 0.85}`} style={{ overflow: "visible" }}>
+            <svg width={svgSize} height={isLarge ? svgSize * 0.82 : svgSize * 0.82} viewBox={`0 0 ${svgSize} ${svgSize * 0.85}`} overflow="visible">
                 {/* Glow filter */}
                 <defs>
                     <filter id={`glow-${label.replace(/\s/g, "")}`}>
@@ -191,6 +192,19 @@ export default function GaugeDial({
                     <HelpCircle className={`w-3.5 h-3.5 text-zinc-600 group-hover/help:text-brand-secondary transition-colors`} />
                 )}
             </div>
+
+            {onAskSterling && (
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onAskSterling(label);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1 bg-brand-secondary/10 hover:bg-brand-secondary/20 border border-brand-secondary/20 rounded-full text-[9px] font-bold text-brand-secondary transition-all group/ask"
+                >
+                    <Sparkles className="w-3 h-3 group-hover/ask:scale-110 transition-transform" />
+                    ASK ADVICE
+                </button>
+            )}
 
             {/* Desktop Tooltip - Improved Positioning to avoid clipping */}
             <AnimatePresence>

@@ -1,0 +1,39 @@
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   eslint.config.mjs
+	modified:   src/app/advisory/page.tsx
+	modified:   src/app/api/admin/clients/route.ts
+	modified:   src/app/api/admin/invoices/generate/route.ts
+	modified:   src/app/api/admin/profile/update/route.ts
+	modified:   src/app/api/admin/sync-auth-users/route.ts
+	deleted:    src/app/api/chat/portal-route.ts
+	modified:   src/app/api/cron/monthly-invoices/route.ts
+	modified:   src/app/api/documents/upload/route.ts
+	modified:   src/app/api/ga4/route.ts
+	modified:   src/app/api/tools/generate/route.ts
+	modified:   src/app/api/vapi/webhook/route.ts
+	modified:   src/app/client-portal/page.tsx
+	modified:   src/app/client-portal/resources/[toolId]/page.tsx
+	modified:   src/app/client-portal/resources/page.tsx
+	modified:   src/components/AccountSection.tsx
+	modified:   src/components/AdminDashboard.tsx
+	modified:   src/components/Chatbot.tsx
+	modified:   src/components/CommunicationHub.tsx
+	modified:   src/components/DocumentVault.tsx
+	modified:   src/components/GaugeDial.tsx
+	modified:   src/components/Packages.tsx
+	modified:   src/components/showcase/ShowcaseTemplate.tsx
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	AGENCY/
+	gnomad_status.txt
+	src/app/api/chat/portal/
+	src/components/ZeffyModal.tsx
+
+no changes added to commit (use "git add" and/or "git commit -a")

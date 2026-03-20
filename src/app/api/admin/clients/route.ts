@@ -43,8 +43,11 @@ export async function GET() {
 
         return NextResponse.json({ clients }, { status: 200 });
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("Admin List Error:", error);
-        return NextResponse.json({ error: "Internal Server Error", message: error.message }, { status: 500 });
+        return NextResponse.json({
+            error: "Internal Server Error",
+            message: error instanceof Error ? error.message : "Fetching failed"
+        }, { status: 500 });
     }
 }

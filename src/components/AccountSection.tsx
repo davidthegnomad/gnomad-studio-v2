@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
     User,
@@ -14,9 +15,7 @@ import {
     Calendar,
     Briefcase,
     BadgeCheck,
-    Cpu,
-    ExternalLink,
-    Rocket
+    Cpu
 } from "lucide-react";
 
 
@@ -104,10 +103,12 @@ export default function AccountSection({ profile }: AccountSectionProps) {
 
                 {/* Growth & ROI Card (Optimus) */}
                 <motion.div variants={itemVariants} className="bg-[#14111d] border border-white/5 rounded-3xl p-6 space-y-4 relative overflow-hidden group">
-                    <img
+                    <Image
                         src="/assets/gnomad_logo_new.webp"
                         alt=""
-                        className="absolute -bottom-4 -right-4 w-24 h-24 object-contain opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none"
+                        width={96}
+                        height={96}
+                        className="absolute -bottom-4 -right-4 object-contain opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none"
                     />
 
                     <div className="flex justify-between items-start">
@@ -165,10 +166,12 @@ export default function AccountSection({ profile }: AccountSectionProps) {
 
                 {/* Agentic Mesh Status (Morpheous) */}
                 <motion.div variants={itemVariants} className="bg-[#14111d] border border-white/5 rounded-3xl p-6 space-y-4 relative overflow-hidden group">
-                    <img
+                    <Image
                         src="/assets/gnomad_logo_new.webp"
                         alt=""
-                        className="absolute -top-4 -right-4 w-24 h-24 object-contain opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none rotate-12"
+                        width={96}
+                        height={96}
+                        className="absolute -top-4 -right-4 object-contain opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none rotate-12"
                     />
 
                     <div className="flex justify-between items-start">
@@ -241,7 +244,7 @@ export default function AccountSection({ profile }: AccountSectionProps) {
                             className="min-w-[85vw] md:min-w-0 md:col-span-2 bg-gradient-to-br from-[#1e1b26] to-[#0f0c15] border border-amber-400/20 rounded-3xl p-8 relative overflow-hidden group snap-center flex flex-col justify-between min-h-[320px]"
                         >
                             <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform duration-700">
-                                <img src="/assets/gnomad_logo_new.webp" alt="" className="w-32 h-32 object-contain" />
+                                <Image src="/assets/gnomad_logo_new.webp" alt="" width={128} height={128} className="object-contain" />
                             </div>
 
                             <div className="relative z-10 space-y-4">
@@ -280,7 +283,7 @@ export default function AccountSection({ profile }: AccountSectionProps) {
                             variants={itemVariants}
                             className="min-w-[85vw] md:min-w-0 bg-brand-secondary/5 border border-brand-secondary/10 rounded-3xl p-8 flex flex-col justify-between group snap-center relative overflow-hidden min-h-[320px]"
                         >
-                            <img src="/assets/gnomad_logo_new.webp" alt="" className="absolute -top-6 -right-6 w-32 h-32 opacity-[0.05] rotate-12 group-hover:scale-110 transition-transform duration-700" />
+                            <Image src="/assets/gnomad_logo_new.webp" alt="" width={128} height={128} className="absolute -top-6 -right-6 opacity-[0.05] rotate-12 group-hover:scale-110 transition-transform duration-700" />
                             <div className="space-y-4 relative z-10">
                                 <div className="p-3 bg-brand-secondary/10 rounded-2xl w-fit">
                                     <Globe className="w-8 h-8 text-brand-secondary" />
@@ -297,7 +300,7 @@ export default function AccountSection({ profile }: AccountSectionProps) {
                         <div className="flex md:grid md:grid-cols-3 gap-6 md:col-span-3">
                             {/* SEO Card */}
                             <motion.div variants={itemVariants} className="min-w-[85vw] md:min-w-0 bg-[#14111d] border border-white/5 rounded-3xl p-6 hover:border-brand-secondary/30 transition-all flex flex-col justify-between group snap-center relative overflow-hidden min-h-[220px]">
-                                <img src="/assets/gnomad_logo_new.webp" alt="" className="absolute -bottom-4 -right-4 w-20 h-20 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
+                                <Image src="/assets/gnomad_logo_new.webp" alt="" width={80} height={80} className="absolute -bottom-4 -right-4 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
                                 <div className="space-y-4">
                                     <div className="p-2.5 bg-brand-secondary/10 rounded-xl w-fit">
                                         <Globe className="w-5 h-5 text-brand-secondary" />
@@ -315,7 +318,7 @@ export default function AccountSection({ profile }: AccountSectionProps) {
 
                             {/* Chatbot Card */}
                             <motion.div variants={itemVariants} className="min-w-[85vw] md:min-w-0 bg-[#14111d] border border-white/5 rounded-3xl p-6 hover:border-cyan-400/30 transition-all flex flex-col justify-between group snap-center relative overflow-hidden min-h-[220px]">
-                                <img src="/assets/gnomad_logo_new.webp" alt="" className="absolute -bottom-4 -right-4 w-20 h-20 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
+                                <Image src="/assets/gnomad_logo_new.webp" alt="" width={80} height={80} className="absolute -bottom-4 -right-4 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
                                 <div className="space-y-4">
                                     <div className="p-2.5 bg-cyan-400/10 rounded-xl w-fit">
                                         <Cpu className="w-5 h-5 text-cyan-400" />
@@ -333,7 +336,7 @@ export default function AccountSection({ profile }: AccountSectionProps) {
 
                             {/* Strategy Card */}
                             <motion.div variants={itemVariants} className="min-w-[85vw] md:min-w-0 bg-[#14111d] border border-white/5 rounded-3xl p-6 hover:border-brand-accent/30 transition-all flex flex-col justify-between group snap-center relative overflow-hidden min-h-[220px]">
-                                <img src="/assets/gnomad_logo_new.webp" alt="" className="absolute -bottom-4 -right-4 w-20 h-20 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
+                                <Image src="/assets/gnomad_logo_new.webp" alt="" width={80} height={80} className="absolute -bottom-4 -right-4 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity" />
                                 <div className="space-y-4">
                                     <div className="p-2.5 bg-brand-accent/10 rounded-xl w-fit">
                                         <BadgeCheck className="w-5 h-5 text-brand-accent" />

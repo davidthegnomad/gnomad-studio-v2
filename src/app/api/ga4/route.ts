@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { BetaAnalyticsDataClient } from "@google-analytics/data";
 import { createClient } from "@/lib/supabase/server";
 
@@ -16,7 +16,7 @@ function getAnalyticsClient(): BetaAnalyticsDataClient | null {
     });
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         // Auth check
         const supabase = await createClient();
@@ -104,14 +104,15 @@ export async function GET(request: NextRequest) {
         });
 
 
-    } catch (error: any) {
-        console.error("GA4 API error:", error?.message);
+    } catch (error) {
+        const message = error instanceof Error ? error.message : "Analytical retrieval failed";
+        console.error("GA4 API error:", message);
         return NextResponse.json({
             ok: false,
-            error: error.message,
-            hint: error.message?.includes("PERMISSION_DENIED")
+            error: message,
+            hint: message.includes("PERMISSION_DENIED")
                 ? "Add firebase-adminsdk-fbsvc@gnomad-studio-client.iam.gserviceaccount.com as Viewer in GA4 → Admin → Property Access Management"
-                : error.message?.includes("NOT_FOUND")
+                : message.includes("NOT_FOUND")
                     ? "Check GA4_PROPERTY_ID in .env.local — make sure it's the numeric Property ID from GA4 → Admin → Property Settings"
                     : "Unknown GA4 error — check server logs",
         }, { status: 200 });

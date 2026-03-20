@@ -1,16 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 // Removed Firebase unused imports
 import { createClient } from "@/lib/supabase/client";
 import Chatbot from "@/components/Chatbot";
-function renderIcon(iconName: string, className: string) {
-    const icons: any = { LayoutDashboard, ShieldCheck, FileText, Settings, Rocket };
-    const IconComponent = icons[iconName] || FileText;
-    return <IconComponent className={className} />;
-};
+import { LucideIcon, Loader2 } from "lucide-react";
 
 import {
     LayoutDashboard,
@@ -37,7 +34,7 @@ interface Tool {
     id: string;
     title: string;
     description: string;
-    icon: any;
+    icon: LucideIcon;
     tier: "Pioneer" | "Flagship";
 }
 
@@ -147,15 +144,25 @@ export default function ResourcesPage() {
         visible: { y: 0, opacity: 1 }
     };
 
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-[#0f0c15] flex items-center justify-center">
+                <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-[#0f0c15] text-white font-sans selection:bg-brand-primary flex overflow-hidden">
             {/* Sidebar */}
             <aside className="w-64 border-r border-white/5 bg-[#14111d] flex flex-col p-6 hidden md:flex shrink-0">
                 <div className="flex items-center gap-3 mb-10 px-2">
-                    <img
+                    <Image
                         src="/assets/gnomad_logo_new.webp"
                         alt="Llama Logo"
-                        className="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(45,212,191,0.3)]"
+                        width={40}
+                        height={40}
+                        className="object-contain drop-shadow-[0_0_15px_rgba(45,212,191,0.3)]"
                     />
                     <span className="font-bold tracking-tight text-lg">Gnomad Studio</span>
                 </div>
@@ -229,10 +236,12 @@ export default function ResourcesPage() {
                     className="max-w-6xl mx-auto p-8 md:p-12 space-y-12 relative z-10"
                 >
                     <motion.section variants={itemVariants} className="space-y-6 text-center flex flex-col items-center">
-                        <img
+                        <Image
                             src="/assets/gnomad_logo_new.webp"
                             alt="Llama"
-                            className="w-20 h-20 object-contain drop-shadow-[0_0_30px_rgba(45,212,191,0.2)] mb-4"
+                            width={80}
+                            height={80}
+                            className="object-contain drop-shadow-[0_0_30px_rgba(45,212,191,0.2)] mb-4"
                         />
                         <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
                             Intelligence <span className="bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent">Hub</span>
@@ -317,7 +326,10 @@ export default function ResourcesPage() {
                     </div>
                 </div>
             </main>
-            <Chatbot />
+            <Chatbot
+                apiUrl="/api/chat/portal"
+                initialMessage="Welcome to the Intelligence Hub! I'm Sterling. Which of these reports would you like to discuss today?"
+            />
         </div>
     );
 }

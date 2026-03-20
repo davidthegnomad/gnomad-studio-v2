@@ -10,7 +10,6 @@ import {
     X,
     Loader2,
     CheckCircle2,
-    AlertCircle,
     ShieldAlert,
     UserPlus,
     DollarSign,
@@ -21,8 +20,6 @@ import {
     Briefcase,
     Calendar,
     ExternalLink,
-    MessageSquare,
-    ChevronDown,
     StickyNote,
     Lock,
     LineChart
@@ -89,7 +86,16 @@ function tenureLabel(since?: string): string {
     return `${years}yr${rem > 0 ? ` ${rem}mo` : ""}`;
 }
 
-function InputField({ id, label, value, onChange, placeholder, type = "text" }: any) {
+interface InputFieldProps {
+    id: string;
+    label: string;
+    value: string | number | undefined;
+    onChange: (val: string) => void;
+    placeholder?: string;
+    type?: string;
+}
+
+function InputField({ id, label, value, onChange, placeholder, type = "text" }: InputFieldProps) {
     return (
         <div className="space-y-1.5">
             <label htmlFor={id} className="text-[10px] font-black uppercase tracking-widest text-zinc-500">{label}</label>
@@ -128,8 +134,8 @@ export default function AdminDashboard() {
             });
             const data = await res.json();
             setInvoiceToast({ uid, ok: res.ok, msg: data.message || data.error || "Done" });
-        } catch (e: any) {
-            setInvoiceToast({ uid, ok: false, msg: e.message });
+        } catch (e) {
+            setInvoiceToast({ uid, ok: false, msg: e instanceof Error ? e.message : "Error" });
         } finally {
             setInvoicingUid(null);
             setTimeout(() => setInvoiceToast(null), 4000);
@@ -147,7 +153,7 @@ export default function AdminDashboard() {
             const data = await res.json();
             if (res.ok) setClients(data.clients);
             else throw new Error(data.error);
-        } catch (err: any) {
+        } catch {
             setMessage({ type: "error", text: "Failed to load client directory." });
         } finally {
             setLoading(false);
@@ -164,8 +170,8 @@ export default function AdminDashboard() {
                 setMessage({ type: "success", text: data.message });
                 fetchClients();
             } else throw new Error(data.error);
-        } catch (err: any) {
-            setMessage({ type: "error", text: err.message });
+        } catch (err) {
+            setMessage({ type: "error", text: err instanceof Error ? err.message : "Sync failed" });
         } finally {
             setSyncing(false);
         }
@@ -190,8 +196,8 @@ export default function AdminDashboard() {
                 const data = await res.json();
                 throw new Error(data.error || "Creation failed");
             }
-        } catch (err: any) {
-            setMessage({ type: "error", text: err.message });
+        } catch (err) {
+            setMessage({ type: "error", text: err instanceof Error ? err.message : "Operation failed" });
         } finally {
             setIsSaving(false);
         }
@@ -236,8 +242,8 @@ export default function AdminDashboard() {
                 const data = await res.json();
                 throw new Error(data.error || "Update failed");
             }
-        } catch (err: any) {
-            setMessage({ type: "error", text: err.message });
+        } catch (err) {
+            setMessage({ type: "error", text: err instanceof Error ? err.message : "Operation failed" });
         } finally {
             setIsSaving(false);
         }
@@ -527,7 +533,7 @@ export default function AdminDashboard() {
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="space-y-1.5">
                                             <label htmlFor="edit-tier" className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Service Tier</label>
-                                            <select id="edit-tier" value={editingClient.tier} onChange={(e) => setEditingClient({ ...editingClient, tier: e.target.value as any })}
+                                            <select id="edit-tier" value={editingClient.tier} onChange={(e) => setEditingClient({ ...editingClient, tier: e.target.value as "Pioneer" | "Flagship" })}
                                                 className="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-secondary/50 outline-none">
                                                 <option value="Pioneer">Pioneer (Standard)</option>
                                                 <option value="Flagship">Flagship (Premium)</option>
@@ -559,7 +565,7 @@ export default function AdminDashboard() {
                                                 <button
                                                     key={key}
                                                     type="button"
-                                                    onClick={() => toggleFeature(key as any)}
+                                                    onClick={() => toggleFeature(key as keyof Omit<ClientFeatures, "websiteUpdateFrequency">)}
                                                     className={`flex items-center gap-3 p-4 rounded-xl border text-left transition-all ${active ? "border-brand-secondary/40 bg-brand-secondary/5" : "border-white/5 bg-zinc-950/50 hover:border-white/10"}`}
                                                 >
                                                     {icon}
@@ -574,7 +580,7 @@ export default function AdminDashboard() {
                                             <label htmlFor="edit-updateFreq" className="text-[10px] font-black uppercase tracking-widest text-zinc-500 flex items-center gap-1.5"><Calendar className="w-3 h-3" />Website Update Frequency</label>
                                             <select id="edit-updateFreq"
                                                 value={editingClient.features?.websiteUpdateFrequency ?? "Monthly"}
-                                                onChange={(e) => setEditingClient({ ...editingClient, features: { ...(editingClient.features ?? defaultFeatures), websiteUpdateFrequency: e.target.value as any } })}
+                                                onChange={(e) => setEditingClient({ ...editingClient, features: { ...(editingClient.features ?? defaultFeatures), websiteUpdateFrequency: e.target.value as ClientFeatures["websiteUpdateFrequency"] } })}
                                                 className="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-secondary/50 outline-none">
                                                 {["Monthly", "Bi-Weekly", "Weekly", "On-Demand"].map(f => <option key={f} value={f}>{f}</option>)}
                                             </select>
@@ -698,7 +704,7 @@ export default function AdminDashboard() {
                                 <div className="grid grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label htmlFor="newTier" className="text-[10px] font-black italic uppercase tracking-widest text-zinc-500">Retainer Tier</label>
-                                        <select id="newTier" value={newClient.tier} onChange={(e) => setNewClient({ ...newClient, tier: e.target.value as any })}
+                                        <select id="newTier" value={newClient.tier} onChange={(e) => setNewClient({ ...newClient, tier: e.target.value as "Pioneer" | "Flagship" })}
                                             className="w-full bg-zinc-950 border border-white/5 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-brand-secondary/50 transition-all font-bold">
                                             <option value="Pioneer">Pioneer (Standard)</option>
                                             <option value="Flagship">Flagship (Premium)</option>

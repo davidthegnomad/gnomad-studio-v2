@@ -48,8 +48,12 @@ export async function GET(request: NextRequest) {
 
                 const data = await res.json();
                 results.push({ uid, status: res.ok ? "success" : "error", message: data.message || data.error });
-            } catch (err: any) {
-                results.push({ uid, status: "error", message: err.message });
+            } catch (err) {
+                results.push({
+                    uid,
+                    status: "error",
+                    message: err instanceof Error ? err.message : "Internal Error"
+                });
             }
         }
 
@@ -67,8 +71,8 @@ export async function GET(request: NextRequest) {
             results,
         });
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("Monthly invoice cron error:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: error instanceof Error ? error.message : "Cron job failed" }, { status: 500 });
     }
 }

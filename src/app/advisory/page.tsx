@@ -177,8 +177,8 @@ export default function AdvisoryPage() {
                             </div>
                             <h4 className="text-xl font-bold text-white mb-2 relative z-10">Operational Optimizer</h4>
                             <div className="text-[10px] font-black tracking-widest uppercase text-brand-secondary mb-6 relative z-10">Process Redesign</div>
-                            <p className="text-gray-400 text-sm leading-relaxed mb-8 flex-1 relative z-10">
-                                A rigorous audit of your internal friction points. We use DMAIC principles to identify "Profit Leaks" in your workforce and rebuild your standard operating procedures.
+                            <p className="text-gray-400 text-sm leading-relaxed mb-8 flex-1">
+                                A rigorous audit of your internal friction points. We use DMAIC principles to identify &quot;Profit Leaks&quot; in your workforce and rebuild your standard operating procedures.
                             </p>
                             <ul className="space-y-3 text-xs text-gray-300 mb-8 border-t border-white/10 pt-6 relative z-10">
                                 <li className="flex items-center gap-2"><div className="w-1 h-1 rounded-full bg-brand-secondary" /> Lean Six Sigma Audits</li>

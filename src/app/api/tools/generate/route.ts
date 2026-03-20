@@ -324,7 +324,7 @@ export async function POST(request: NextRequest) {
         }
 
         const toolDef = PROMPTS[toolId];
-        let systemPrompt = toolDef.system
+        const systemPrompt = toolDef.system
             .replace(/\{\{ZIP_CODE\}\}/g, zipCode || 'the provided area')
             .replace(/\{\{INDUSTRY\}\}/g, industry)
             .replace(/\{\{COMPANY_NAME\}\}/g, companyName || '')

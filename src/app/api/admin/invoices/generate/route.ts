@@ -270,8 +270,11 @@ export async function POST(request: NextRequest) {
             message: `Invoice ${invoiceNumber} generated and ${profile.email ? "emailed to " + profile.email : "saved (no email on file)."}`
         }, { status: 200 });
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("Invoice generation error:", error);
-        return NextResponse.json({ error: "Invoice generation failed", message: error.message }, { status: 500 });
+        return NextResponse.json({
+            error: "Invoice generation failed",
+            message: error instanceof Error ? error.message : "Internal Error"
+        }, { status: 500 });
     }
 }

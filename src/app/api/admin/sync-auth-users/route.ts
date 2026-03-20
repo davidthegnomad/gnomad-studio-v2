@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 
-export async function POST(request: NextRequest) {
+export async function POST() {
     try {
         const supabase = await createClient();
         const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -82,8 +82,11 @@ export async function POST(request: NextRequest) {
             skipped,
         }, { status: 200 });
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("Sync Auth Users Error:", error);
-        return NextResponse.json({ error: "Internal Server Error", message: error.message }, { status: 500 });
+        return NextResponse.json({
+            error: "Internal Server Error",
+            message: error instanceof Error ? error.message : "Sync failed"
+        }, { status: 500 });
     }
 }

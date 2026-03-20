@@ -90,8 +90,11 @@ export async function POST(request: NextRequest) {
             usage: currentUsage + fileSize
         }, { status: 200 });
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("Upload error:", error);
-        return NextResponse.json({ error: "Internal Server Error", message: error.message }, { status: 500 });
+        return NextResponse.json({
+            error: "Internal Server Error",
+            message: error instanceof Error ? error.message : "Upload failed"
+        }, { status: 500 });
     }
 }

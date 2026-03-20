@@ -6,8 +6,6 @@ import {
     FileText,
     Upload,
     Trash2,
-    Download,
-    CheckCircle2,
     AlertCircle,
     Loader2,
     HardDrive,
@@ -99,8 +97,8 @@ export default function DocumentVault({ uid, totalStorageUsed }: DocumentVaultPr
 
             // Success! The API handles the Firestore & Storage updates.
             // The local onSnapshot listener will pick up the record.
-        } catch (err: any) {
-            setUploadError(err.message);
+        } catch (err) {
+            setUploadError(err instanceof Error ? err.message : "Upload failed");
         } finally {
             setIsUploading(false);
         }

@@ -18,10 +18,20 @@ import {
     Activity,
     LineChart,
     PieChart,
-    Briefcase
+    Briefcase,
+    LucideIcon
 } from "lucide-react";
 
-const TOOL_DEFS: Record<string, { title: string; desc: string; icon: any; placeholderContext: string; requiresCompanyName?: boolean; requiresContext?: boolean }> = {
+interface ToolDef {
+    title: string;
+    desc: string;
+    icon: LucideIcon;
+    placeholderContext: string;
+    requiresCompanyName?: boolean;
+    requiresContext?: boolean;
+}
+
+const TOOL_DEFS: Record<string, ToolDef> = {
     "forensic-competitive-stack": { title: "Forensic Competitive Stack Analysis", desc: "Reveals competitor tech stacks and UX vulnerabilities.", icon: Network, placeholderContext: "Optional: List your top 3 local competitors here..." },
     "audience-spending-leakage": { title: "Audience Spending Leakage Profiler", desc: "Maps local buyer personas and identifies uncaptured revenue.", icon: Users, placeholderContext: "Optional: Describe the general age/income profile of your best customers..." },
     "blue-ocean-gap": { title: "Blue Ocean Strategic Gap Analysis", desc: "Triangulates market data to find unconventional growth opportunities.", icon: Target, placeholderContext: "Optional: What is one service you offer that no one else does?" },
@@ -41,7 +51,7 @@ export default function ToolExecutionPage() {
     const router = useRouter();
     const toolId = params?.toolId as string;
 
-    const [tool, setTool] = useState<any>(null);
+    const [tool, setTool] = useState<ToolDef | null>(null);
     const [zipCode, setZipCode] = useState("");
     const [industry, setIndustry] = useState("");
     const [context, setContext] = useState("");
