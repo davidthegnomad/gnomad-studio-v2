@@ -114,6 +114,127 @@
           "demo35-gnomadstudio"
         ]
       }
+    },
+    "client-demo-23f2a": {
+      "hosting": {
+        "demo30": [
+          "demo30-gnomadhub"
+        ],
+        "demo27": [
+          "demo27-gnomadhub"
+        ],
+        "demo33": [
+          "demo33-gnomadhub"
+        ],
+        "demo13": [
+          "demo13-gnomadhub"
+        ],
+        "demo28": [
+          "demo28-gnomadhub"
+        ],
+        "demo22": [
+          "demo22-gnomadhub"
+        ],
+        "demo29": [
+          "demo29-gnomadhub"
+        ],
+        "demo14": [
+          "demo14-gnomadhub"
+        ],
+        "demo15": [
+          "demo15-gnomadhub"
+        ],
+        "demo17": [
+          "demo17-gnomadhub"
+        ],
+        "demo18": [
+          "demo18-gnomadhub"
+        ],
+        "demo2": [
+          "demo2-gnomadhub"
+        ],
+        "demo20": [
+          "demo20-gnomadhub"
+        ],
+        "demo25": [
+          "demo25-gnomadhub"
+        ],
+        "demo26": [
+          "demo26-gnomadhub"
+        ],
+        "demo3": [
+          "demo3-gnomadhub"
+        ],
+        "demo8": [
+          "demo8-gnomadhub"
+        ],
+        "demo32": [
+          "demo32-gnomadhub"
+        ],
+        "demo37": [
+          "demo37-gnomadhub"
+        ],
+        "demo38": [
+          "demo38-gnomadhub"
+        ],
+        "demo1": [
+          "demo1-gnomadhub"
+        ],
+        "demo4": [
+          "demo4-gnomadhub"
+        ],
+        "demo5": [
+          "demo5-gnomadhub"
+        ],
+        "demo6": [
+          "demo6-gnomadhub"
+        ],
+        "demo7": [
+          "demo7-gnomadhub"
+        ],
+        "demo9": [
+          "demo9-gnomadhub"
+        ],
+        "demo10": [
+          "demo10-gnomadhub"
+        ],
+        "demo11": [
+          "demo11-gnomadhub"
+        ],
+        "demo12": [
+          "demo12-gnomadhub"
+        ],
+        "demo16": [
+          "demo16-gnomadhub"
+        ],
+        "demo19": [
+          "demo19-gnomadhub"
+        ],
+        "demo21": [
+          "demo21-gnomadhub"
+        ],
+        "demo23": [
+          "demo23-gnomadhub"
+        ],
+        "demo24": [
+          "demo24-gnomadhub"
+        ],
+        "demo31": [
+          "demo31-gnomadhub"
+        ],
+        "demo34": [
+          "demo34-gnomadhub"
+        ],
+        "demo35": [
+          "demo35-gnomadhub"
+        ],
+        "demo36": [
+          "demo36-gnomadhub"
+        ],
+        "main": [
+          "client-demo-23f2a"
+        ]
+      }
     }
   },
   "etags": {}

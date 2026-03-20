@@ -343,7 +343,7 @@
     },
     {
       "target": "demo31",
-      "public": "DEMO/michaels-jewelry/dist",
+      "public": "DEMO/l-and-m-tree-service/dist",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -365,7 +365,7 @@
     },
     {
       "target": "demo33",
-      "public": "DEMO/making-it-happen-cleaning-services/dist",
+      "public": "DEMO/lawnbros-outdoor-services/dist",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -398,6 +398,28 @@
     },
     {
       "target": "demo36",
+      "public": "DEMO/affordable-roofing-solutionz/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo37",
+      "public": "DEMO/fulton-fried-pies",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
+    },
+    {
+      "target": "demo38",
       "public": "DEMO/affordable-roofing-solutionz/dist",
       "ignore": [
         "firebase.json",
