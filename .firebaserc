@@ -112,6 +112,9 @@
         ],
         "demo35": [
           "demo35-gnomadstudio"
+        ],
+        "okiepaws": [
+          "okiepaws-gnomadstudio"
         ]
       }
     },
@@ -230,6 +233,9 @@
         ],
         "demo36": [
           "demo36-gnomadhub"
+        ],
+        "okiepaws": [
+          "okiepaws-gnomadstudio"
         ],
         "main": [
           "client-demo-23f2a"

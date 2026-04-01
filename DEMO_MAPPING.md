@@ -10,7 +10,7 @@ This document tracks the mapping between local demo projects, Firebase Hosting t
 | `DEMO/doggie-doo-mobile-grooming` | `demo4` | [Relative Path](./doggie-doo-mobile-grooming) | Pet Services | Dev |
 | `DEMO/cutting-edge-lawn-service` | `demo5` | [Relative Path](./cutting-edge-lawn-service) | Outdoor Services | Dev |
 | `DEMO/grass-monkey-landscaping` | `demo6` | [Relative Path](./grass-monkey-landscaping) | Service Industry | Dev |
-| `DEMO/okie-paws` | `demo7` | [Relative Path](./okie-paws) | Pet Services | Dev |
+| `DEMO/okie-paws` | `main` | [https://demo.gnomad.studio/okiepaws](https://demo.gnomad.studio/okiepaws) | Pet Services | **LIVE** |
 | `DEMO/champion-car-detailing` | `demo8` | [https://demo8-gnomadhub.web.app](https://demo8-gnomadhub.web.app) | Automotive | **LIVE** |
 | `DEMO/muskogee-tree-care` | `demo9` | [Relative Path](./muskogee-tree-care) | Outdoor Services | Dev |
 | `DEMO/green-st-dispensary` | `demo10` | [Relative Path](./green-st-dispensary) | Dispensary | Dev |

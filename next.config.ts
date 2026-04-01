@@ -7,6 +7,18 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: ".",
   },
+  async rewrites() {
+    return [
+      {
+        source: '/okiepaws',
+        destination: '/okiepaws/index.html',
+      },
+      {
+        source: '/okiepaws/:path*',
+        destination: '/okiepaws/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

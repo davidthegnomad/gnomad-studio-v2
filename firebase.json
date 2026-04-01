@@ -428,6 +428,17 @@
       ],
       "cleanUrls": true,
       "trailingSlash": false
+    },
+    {
+      "target": "okiepaws",
+      "public": "DEMO/okie-paws/dist",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "cleanUrls": true,
+      "trailingSlash": false
     }
   ],
   "firestore": {
