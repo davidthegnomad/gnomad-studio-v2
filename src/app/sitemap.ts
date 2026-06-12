@@ -11,6 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { url: 'https://gnomadstudio.org/#mission', lastModified: lastMod, changeFrequency: 'monthly', priority: 0.8 },
         { url: 'https://gnomadstudio.org/#services', lastModified: lastMod, changeFrequency: 'monthly', priority: 0.9 },
         { url: 'https://gnomadstudio.org/#manifesto', lastModified: lastMod, changeFrequency: 'monthly', priority: 0.7 },
+        { url: 'https://gnomadstudio.org/gnome-kan-do', lastModified: privacyMod, changeFrequency: 'monthly', priority: 0.5 },
+        { url: 'https://gnomadstudio.org/gnome-kan-do-support', lastModified: privacyMod, changeFrequency: 'yearly', priority: 0.3 },
         ...privacySlugs.map((slug) => ({
             url: `https://gnomadstudio.org/${slug}`,
             lastModified: privacyMod,
