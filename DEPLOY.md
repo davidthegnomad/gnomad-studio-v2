@@ -1,31 +1,31 @@
 # Deploy — gnomadstudio.org (production)
 
-> **This repo is the live site.** Firebase App Hosting watches **`master`** on this GitHub repo.
+> **Firebase App Hosting builds from branch `main`** (not `master`).
 
 | | |
 |---|---|
 | **Live** | https://gnomadstudio.org |
 | **Firebase project** | `gnomad-studio-client` |
 | **Backend** | `gnomad-studio-v2` (us-central1) |
-| **Branch** | **`master`** |
+| **Deploy branch** | **`main`** |
 
 ## Quick deploy
 
 ```bash
-git checkout master
-git add .
-git commit -m "your message"
+# After committing on master:
 git push origin master
+git checkout main && git cherry-pick <sha> && git push origin main
+
+# Then: Firebase Console → Create rollout → main
 ```
 
-Then open **Firebase Console → App Hosting → gnomad-studio-v2 → Rollouts** and confirm the live rollout matches your commit.
+**Verify:** https://gnomadstudio.org/sitemap.xml should reflect your change.
 
 ## Full runbook
 
-See workspace doc (canonical):
-
 `ORG_Docs/repos-and-hosting/GNOMADSTUDIO_ORG_DEPLOY.md`
 
-## Common mistake
+## Common mistakes
 
-`01_web_design/gnomadstudio-org/` (GitHub `gnomadstudio.org`, branch `main`) is **not** wired to production. Edits there do not deploy.
+- Pushing only to **`master`** — does not deploy
+- Rolling out **`main`** when the commit is only on **`master`**
