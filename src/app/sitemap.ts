@@ -9,5 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { url: 'https://gnomadstudio.org/#mission', lastModified: lastMod, changeFrequency: 'monthly', priority: 0.8 },
         { url: 'https://gnomadstudio.org/#services', lastModified: lastMod, changeFrequency: 'monthly', priority: 0.9 },
         { url: 'https://gnomadstudio.org/#manifesto', lastModified: lastMod, changeFrequency: 'monthly', priority: 0.7 },
+        { url: 'https://gnomadstudio.org/slate-privacy', lastModified: new Date('2026-06-11'), changeFrequency: 'yearly', priority: 0.3 },
     ];
 }
