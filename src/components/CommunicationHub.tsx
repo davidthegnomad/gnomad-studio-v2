@@ -47,7 +47,8 @@ export default function CommunicationHub({ partnerProfile, externalInput }: Comm
                     >
                         <Chatbot
                             hideLauncher={true}
-                            apiUrl="/api/chat/portal"
+                            // Public visitors get the website concierge; logged-in partners get the portal persona
+                            apiUrl={partnerProfile ? "/api/chat/portal" : "/api/chat"}
                             body={{ partnerContext: partnerProfile }}
                             initialMessage={partnerProfile
                                 ? `Welcome back, ${partnerProfile.firstName}! I'm Sterling. Ready to refine your ${partnerProfile.tier} Tier strategy?`
