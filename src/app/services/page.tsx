@@ -69,7 +69,8 @@ export default function ServicesPage() {
                             transition={{ delay: 0.1 }}
                             className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
                         >
-                            High-end digital tools for Muskogee small businesses. Simple language, powerful results.
+                            World-class tech for Main Street Muskogee. Straight talk, honest pricing,
+                            and websites built to win customers — not awards.
                         </motion.p>
                     </div>
                 </section>

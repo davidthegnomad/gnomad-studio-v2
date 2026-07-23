@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
     return (
-        <main className="flex flex-col items-center justify-center min-h-[95vh] text-center px-4 relative overflow-hidden pt-48">
+        <main className="flex flex-col items-center justify-center min-h-[95vh] text-center px-4 relative overflow-hidden pt-48 pb-44 md:pb-0">
             <div className="absolute inset-0 bg-gradient-to-b from-brand-primary/10 via-transparent to-background z-0 pointer-events-none" />
             <div className="z-10 max-w-4xl space-y-8">
                 <motion.div

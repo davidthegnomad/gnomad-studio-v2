@@ -30,7 +30,9 @@ export default function Chatbot({
     externalInput?: string,
     hideLauncher?: boolean
 }) {
-    const [isOpenInternal, setIsOpenInternal] = useState(false);
+    // When the launcher is hidden (e.g. mounted on demand by CommunicationHub),
+    // the window must start open — there is no other way to open it.
+    const [isOpenInternal, setIsOpenInternal] = useState(hideLauncher);
     const isOpen = isEmbedded ? true : isOpenInternal;
     const [isMinimized, setIsMinimized] = useState(false);
     const [isMaximized, setIsMaximized] = useState(false);
@@ -61,14 +63,16 @@ export default function Chatbot({
     }, [messages]);
 
     const toggleChat = useCallback(() => {
-        if (isEmbedded && onClose) {
+        // If a parent controls our lifecycle (CommunicationHub / embedded view),
+        // defer to it so its state stays in sync with what's on screen.
+        if (onClose) {
             onClose();
         } else {
             setIsOpenInternal((prev) => !prev);
         }
         setIsMinimized(false);
         setIsMaximized(false);
-    }, [isEmbedded, onClose]);
+    }, [onClose]);
 
     // Manual Resizing Logic
     const startResizing = (e: React.MouseEvent) => {

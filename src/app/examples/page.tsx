@@ -113,7 +113,8 @@ export default function ExamplesPage() {
                             transition={{ delay: 0.2 }}
                             className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed mb-12"
                         >
-                            Explore our collection of impactful, engineered aesthetics built for the Muskogee business community.
+                            Real designs built for real 918 businesses — tire shops, groomers, landscapers, clinics.
+                            Find your industry. Picture your name on it. Then claim it.
                         </motion.p>
                     </div>
 

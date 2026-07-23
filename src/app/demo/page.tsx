@@ -75,8 +75,8 @@ export default function DemoPage() {
                             Active <span className="text-gray-600">Development</span> Logs.
                         </motion.h1>
                         <p className="text-gray-500 text-sm max-w-2xl leading-relaxed">
-                            A non-public catalog of active project exhibits and tactical development previews.
-                            Alphabetical index for internal design verification and board review.
+                            Live previews straight from the workbench — every build here is a Muskogee
+                            business getting ready to be found. Yours could be next.
                         </p>
                     </div>
                 </section>

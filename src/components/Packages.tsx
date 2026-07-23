@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import ZeffyModal from "./ZeffyModal";
@@ -126,10 +127,10 @@ export default function Packages({ showGradientBackground = false }: PackagesPro
                         </div>
                         <h3 className="text-3xl font-black text-white mb-2 relative z-10">Pioneer</h3>
                         <div className="text-xl font-black text-brand-primary mb-1">Small Business Tier</div>
-                        <p className="text-[10px] font-black text-white/50 tracking-widest uppercase mb-8">$100/MO CONTRIBUTION</p>
+                        <p className="text-[10px] font-black text-white/50 tracking-widest uppercase mb-8">$150/MO CONTRIBUTION</p>
 
                         <p className="text-gray-400 mb-8 leading-relaxed text-sm h-20">
-                            The standard for high-performance localized growth. For businesses ready to own their market.
+                            Our most popular path. Elite hosting, &lsquo;Near Me&rsquo; SEO, and a live growth dashboard — everything a Muskogee business needs to own its market.
                         </p>
 
                         <ul className="space-y-4 mb-10 text-sm flex-1">
@@ -176,7 +177,7 @@ export default function Packages({ showGradientBackground = false }: PackagesPro
                         <p className="text-[10px] font-black text-zinc-600 tracking-widest uppercase mb-8">$300/MO CONTRIBUTION</p>
 
                         <p className="text-zinc-500 mb-8 leading-relaxed text-sm h-20">
-                            Unrestricted scale. Deep logistics, brand engineering, and institutional-grade intelligence.
+                            Unrestricted scale. Full brand engineering, e-commerce command, and institutional-grade market intelligence.
                         </p>
 
                         <ul className="space-y-4 mb-10 text-xs flex-1">
@@ -198,6 +199,22 @@ export default function Packages({ showGradientBackground = false }: PackagesPro
                         </button>
                     </motion.div>
                 </div>
+
+                {/* Enterprise call-out — matches the $800 Enterprise Package available at checkout */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mt-14 text-center"
+                >
+                    <p className="text-sm text-zinc-500">
+                        Running something bigger? AI agents, custom software, and multi-storefront logistics live in our{' '}
+                        <span className="text-white font-bold">Enterprise tier ($800/mo)</span>.{' '}
+                        <Link href="/contact" className="text-brand-accent font-bold hover:text-white transition-colors">
+                            Talk to David →
+                        </Link>
+                    </p>
+                </motion.div>
             </div>
 
             <ZeffyModal

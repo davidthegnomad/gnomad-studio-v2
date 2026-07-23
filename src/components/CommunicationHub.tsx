@@ -32,8 +32,9 @@ export default function CommunicationHub({ partnerProfile, externalInput }: Comm
         }
     }, [externalInput]);
 
+    // On mobile the hub sits above the MobileDispatch bar instead of beside it
     return (
-        <div className="fixed bottom-8 right-8 z-[100] flex flex-col items-end gap-5">
+        <div className="fixed bottom-28 right-4 md:bottom-8 md:right-8 z-[100] flex flex-col items-end gap-5">
             {/* Tool Layer */}
             <AnimatePresence mode="wait">
                 {activeTool === "chat" && (
@@ -65,7 +66,7 @@ export default function CommunicationHub({ partnerProfile, externalInput }: Comm
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="fixed bottom-28 right-8"
+                        className="fixed bottom-48 right-4 md:bottom-28 md:right-8"
                     >
                         <EmailMessenger onClose={() => setActiveTool(null)} />
                     </motion.div>

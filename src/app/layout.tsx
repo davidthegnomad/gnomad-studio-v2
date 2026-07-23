@@ -14,7 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gnomad Studio | Small Business Web Design Muskogee, OK | The 918 Renaissance",
+  metadataBase: new URL("https://gnomadstudio.org"),
+  title: {
+    default: "Gnomad Studio | Small Business Web Design Muskogee, OK | The 918 Renaissance",
+    template: "%s | Gnomad Studio",
+  },
   description: "Muskogee's MBA-led, mission-first digital studio. Professional websites and local SEO for Muskogee small businesses — from 'Pay What You Can' for solopreneurs to full enterprise builds. Serving the 918 / Green Country.",
   keywords: ["website design Muskogee OK", "small business web design Muskogee", "local SEO Muskogee", "Muskogee digital marketing", "918 web design", "Green Country small business", "non-profit web studio Oklahoma"],
   authors: [{ name: "David Cole" }],
@@ -40,7 +44,9 @@ export const metadata: Metadata = {
     shortcut: ['/favicon.ico'],
     apple: [{ url: '/favicon.ico' }],
   },
-  alternates: { canonical: "https://gnomadstudio.org" },
+  // NOTE: canonical is set per-route (see each route's layout.tsx).
+  // A site-wide canonical here would tell Google every page is the homepage.
+  alternates: { canonical: "/" },
 };
 
 const jsonLd = {
