@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Lock, Phone, MessageSquare, Menu } from "lucide-react";
+import { Lock, Phone, Mail, Sparkles } from "lucide-react";
 
 export default function MobileDispatch() {
     return (
@@ -15,7 +15,7 @@ export default function MobileDispatch() {
 
                 <Link href="/contact" className="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full active:bg-white/5 transition-colors group">
                     <div className="w-8 h-8 rounded-full bg-brand-secondary/20 flex items-center justify-center text-brand-secondary mb-1">
-                        <MessageSquare size={16} />
+                        <Mail size={16} />
                     </div>
                     <span className="text-[9px] font-bold text-gray-400 group-active:text-white tracking-widest uppercase">Email</span>
                 </Link>
@@ -27,12 +27,16 @@ export default function MobileDispatch() {
                     <span className="text-[9px] font-bold text-gray-400 group-active:text-white tracking-widest uppercase">Call</span>
                 </a>
 
-                <a href="#services" className="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full active:bg-white/5 transition-colors group">
+                <button
+                    onClick={() => window.dispatchEvent(new CustomEvent("gnomad:open-chat"))}
+                    className="nav-btn flex flex-col items-center justify-center w-14 h-14 rounded-full active:bg-white/5 transition-colors group"
+                    aria-label="Chat with Sterling"
+                >
                     <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white mb-1">
-                        <Menu size={16} />
+                        <Sparkles size={16} />
                     </div>
-                    <span className="text-[9px] font-bold text-gray-400 group-active:text-white tracking-widest uppercase">Menu</span>
-                </a>
+                    <span className="text-[9px] font-bold text-gray-400 group-active:text-white tracking-widest uppercase">Chat</span>
+                </button>
             </div>
         </div>
     );

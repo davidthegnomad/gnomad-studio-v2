@@ -5,6 +5,7 @@ import Packages from "@/components/Packages";
 import ContactGrid from "@/components/ContactGrid";
 import Footer from "@/components/Footer";
 import CommunicationHub from "@/components/CommunicationHub";
+import MobileDispatch from "@/components/MobileDispatch";
 import { motion } from "framer-motion";
 import { Globe, Search, BarChart3, Smartphone, Palette, ShoppingCart, Heart } from "lucide-react";
 
@@ -131,6 +132,7 @@ export default function ServicesPage() {
                 <ContactGrid />
                 <Footer />
             </main>
+            <MobileDispatch />
             <CommunicationHub />
         </div>
     );

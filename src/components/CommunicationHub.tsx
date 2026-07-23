@@ -32,6 +32,13 @@ export default function CommunicationHub({ partnerProfile, externalInput }: Comm
         }
     }, [externalInput]);
 
+    // Mobile entry point: MobileDispatch fires this event (the pill is hidden on phones)
+    useEffect(() => {
+        const openChat = () => setActiveTool("chat");
+        window.addEventListener("gnomad:open-chat", openChat);
+        return () => window.removeEventListener("gnomad:open-chat", openChat);
+    }, []);
+
     // On mobile the hub sits above the MobileDispatch bar instead of beside it
     return (
         <div className="fixed bottom-28 right-4 md:bottom-8 md:right-8 z-[100] flex flex-col items-end gap-5">
@@ -79,7 +86,7 @@ export default function CommunicationHub({ partnerProfile, externalInput }: Comm
                 initial={{ y: 20, opacity: 0, scale: 0.9 }}
                 animate={{ y: 0, opacity: 1, scale: 1 }}
                 whileHover={{ scale: 1.02 }}
-                className="glass-panel rounded-full p-2 flex items-center gap-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 ring-1 ring-white/5"
+                className="glass-panel rounded-full p-2 hidden md:flex items-center gap-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 ring-1 ring-white/5"
             >
                 {/* Sterling Chat Action */}
                 <motion.button
