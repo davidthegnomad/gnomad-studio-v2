@@ -4,20 +4,23 @@ import { motion } from "framer-motion";
 
 const showcaseItems = [
     {
-        name: "Landscaping Company",
-        image: "/examples/Grass_Monkey_Full_Site.webp",
+        name: "Fulton Fried Pies",
+        image: "/examples/fultonpies_Full_Site.webp",
+        href: "https://fultonpies.com/",
         delay: 0.1,
     },
     {
-        name: "Pet Groomer",
-        image: "/examples/pet_example.webp",
+        name: "McDaniel Family Chiropractic",
+        image: "/examples/gomcdanielchiro_Live_Full_Site.webp",
+        href: "https://gomcdanielchiro.com/",
         delay: 0.3,
     },
     {
-        name: "Mobile Car Detail",
-        image: "/examples/car_detail_example.webp",
+        name: "Pisano's Pizza",
+        image: "/examples/pisanosmuskogee_Full_Site.webp",
+        href: "https://pisanosmuskogee.com/",
         delay: 0.5,
-    }
+    },
 ];
 
 export default function LaptopShowcase() {
@@ -34,26 +37,30 @@ export default function LaptopShowcase() {
                         Engineered for <span className="text-brand-primary">Immersion.</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto uppercase text-[10px] font-black tracking-[0.3em]">
-                        High-Performance Digital Exhibits
+                        Live Client Sites — Click Any Laptop
                     </p>
                 </motion.div>
 
                 <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
                     {showcaseItems.map((item, idx) => (
-                        <motion.div
+                        <motion.a
                             key={item.name}
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             initial={{ opacity: 0, y: 50, scale: 0.95 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, delay: item.delay, ease: "easeOut" }}
-                            className="group relative"
+                            className="group relative block"
+                            aria-label={`Open ${item.name} live site in a new tab`}
                         >
                             {/* Laptop Wrapper */}
                             <div className="relative aspect-[16/10] w-full">
                                 {/* Screen Frame */}
-                                <div className="absolute inset-x-0 top-0 h-[92%] bg-zinc-900 rounded-t-2xl border-4 border-zinc-800 shadow-2xl overflow-hidden z-20">
+                                <div className="absolute inset-x-0 top-0 h-[92%] bg-zinc-900 rounded-t-2xl border-4 border-zinc-800 shadow-2xl overflow-hidden z-20 group-hover:border-brand-primary/60 transition-colors duration-300">
                                     {/* Scrollable content container */}
-                                    <div className="w-full h-full overflow-hidden relative" style={{ containerType: 'size' }}>
+                                    <div className="w-full h-full overflow-hidden relative" style={{ containerType: "size" }}>
                                         <motion.div
                                             className="w-full"
                                             initial={{ y: 0 }}
@@ -63,8 +70,8 @@ export default function LaptopShowcase() {
                                             <Image
                                                 src={item.image}
                                                 alt={item.name}
-                                                width={1920}
-                                                height={10000}
+                                                width={1600}
+                                                height={3200}
                                                 className="w-full h-auto"
                                                 priority={idx === 0}
                                             />
@@ -86,7 +93,7 @@ export default function LaptopShowcase() {
                                 </h3>
                                 <div className="w-8 h-1 bg-brand-primary/20 mx-auto mt-2 rounded-full group-hover:w-16 transition-all duration-500" />
                             </div>
-                        </motion.div>
+                        </motion.a>
                     ))}
                 </div>
             </div>
