@@ -1,6 +1,37 @@
 import Image from "next/image";
 import Link from "next/link";
 
+function FacebookIcon({ className }: { className?: string }) {
+    return (
+        <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M22 12.07C22 6.48 17.52 2 11.93 2S1.86 6.48 1.86 12.07c0 5.02 3.66 9.18 8.44 9.93v-7.03H7.9v-2.9h2.4V9.84c0-2.37 1.4-3.68 3.55-3.68 1.03 0 2.1.18 2.1.18v2.32h-1.18c-1.17 0-1.53.73-1.53 1.48v1.78h2.61l-.42 2.9h-2.19V22c4.78-.75 8.44-4.91 8.44-9.93z" />
+        </svg>
+    );
+}
+
+function InstagramIcon({ className }: { className?: string }) {
+    return (
+        <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5zM17.75 6.5a1 1 0 1 1-1 1 1 1 0 0 1 1-1z" />
+        </svg>
+    );
+}
+
+const socialLinks = [
+    {
+        name: "Facebook",
+        href: "https://www.facebook.com/GnomadStudio",
+        handle: "Gnomad Studio",
+        icon: FacebookIcon,
+    },
+    {
+        name: "Instagram",
+        href: "https://www.instagram.com/david.the.gnomad",
+        handle: "@david.the.gnomad",
+        icon: InstagramIcon,
+    },
+];
+
 export default function Footer() {
     return (
         <footer className="py-16 bg-background border-t border-white/5 px-6 pb-32 md:pb-16 hidden md:block">
@@ -18,6 +49,20 @@ export default function Footer() {
                             <div className="flex items-center gap-1.5 focus-within:ring-2 ring-brand-primary rounded px-2">
                                 <span className="font-black text-xs tracking-widest uppercase text-brand-primary">Gnomad Studio</span>
                                 <span className="bg-brand-secondary/20 text-brand-secondary px-1.5 py-0.5 rounded text-[8px] font-black uppercase tracking-tighter">ORG</span>
+                            </div>
+                            <div className="flex items-center gap-3 mt-3">
+                                {socialLinks.map(({ name, href, icon: Icon }) => (
+                                    <a
+                                        key={name}
+                                        href={href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={`Gnomad Studio on ${name}`}
+                                        className="size-8 rounded-full border border-white/10 bg-black/40 text-gray-300 hover:text-brand-primary hover:border-brand-primary/50 flex items-center justify-center transition-colors"
+                                    >
+                                        <Icon className="w-3.5 h-3.5" />
+                                    </a>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -85,6 +130,20 @@ export default function Footer() {
                     <div className="md:col-span-2">
                         <h4 className="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mb-6">Connect</h4>
                         <ul className="space-y-4 text-sm font-semibold text-gray-400">
+                            {socialLinks.map(({ name, href, handle, icon: Icon }) => (
+                                <li key={name}>
+                                    <a
+                                        href={href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2 hover:text-white transition-colors group"
+                                    >
+                                        <Icon className="w-3.5 h-3.5 text-brand-primary/80 group-hover:text-brand-primary" />
+                                        <span>{name}</span>
+                                        <span className="text-[10px] text-gray-600 group-hover:text-gray-400">{handle}</span>
+                                    </a>
+                                </li>
+                            ))}
                             <li>
                                 <a href="https://github.com/davidthegnomad" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition-colors group">
                                     Github

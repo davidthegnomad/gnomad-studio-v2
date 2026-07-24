@@ -3,6 +3,7 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import LaptopShowcase from "@/components/LaptopShowcase";
+import HowWeBuild from "@/components/HowWeBuild";
 import Mission from "@/components/Mission";
 import Packages from "@/components/Packages";
 import Founder from "@/components/Founder";
@@ -17,6 +18,7 @@ export default function Home() {
       <Navigation />
       <Hero />
       <LaptopShowcase />
+      <HowWeBuild />
       <Mission />
       <Packages />
       <Founder />
