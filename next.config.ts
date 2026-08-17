@@ -23,10 +23,21 @@ const nextConfig: NextConfig = {
       { source: "/portfolio/:path*", destination: "/examples/", permanent: true },
       { source: "/work", destination: "/examples/", permanent: true },
       { source: "/projects", destination: "/examples/", permanent: true },
-      { source: "/demos", destination: "/examples/", permanent: true },
-      { source: "/demos/:path*", destination: "/examples/", permanent: true },
-      { source: "/DEMO", destination: "/examples/", permanent: true },
-      { source: "/DEMO/:path*", destination: "/examples/", permanent: true },
+      { source: "/demos", destination: "/demo/", permanent: true },
+      { source: "/demos/:path*", destination: "/demo/", permanent: true },
+      // Old static copies lived at /DEMO/<slug>/ — Hostinger is canonical.
+      // Do not add a /DEMO → /examples redirect: App Hosting folds case, so it
+      // also swallowed /demo (the catalog).
+      {
+        source: "/DEMO/:slug/index.html",
+        destination: "https://demo.gnomad.studio/muskogee/:slug/",
+        permanent: true,
+      },
+      {
+        source: "/DEMO/:slug",
+        destination: "https://demo.gnomad.studio/muskogee/:slug/",
+        permanent: true,
+      },
       { source: "/about", destination: "/", permanent: true },
       { source: "/agency", destination: "/", permanent: true },
       { source: "/home", destination: "/", permanent: true },
