@@ -242,9 +242,10 @@ export const privacyPolicies: Record<string, PrivacyPolicy> = {
                 heading: "2. Permissions and Local Processing",
                 list: [
                     "activeTab & scripting — capture the visible page and automated scroll-stitching",
-                    "storage — temporarily hold image chunks locally for stitching",
+                    "storage & unlimitedStorage — temporarily hold capture metadata and JPEG tiles locally so long pages can exceed Chrome's default 10 MB quota. Nothing is uploaded.",
                     "downloads — save PNG/PDF when you click export",
                     "clipboardWrite — copy to clipboard when you explicitly request it",
+                    "contextMenus — optional right-click shortcut to start a capture",
                 ],
             },
             {
