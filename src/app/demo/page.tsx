@@ -5,49 +5,56 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { ExternalLink, Terminal } from "lucide-react";
 
+const PITCH = "https://demo.gnomad.studio/muskogee";
+const pitch = (slug: string) => `${PITCH}/${slug}/`;
+
 const demoSites = [
-    { name: "Aaron & Son Custom Cabinets", href: "https://demo19-gnomadstudio.web.app", category: "Furniture" },
-    { name: "Affordable Roofing Solutionz", href: "https://gnomad-studio-client.web.app/DEMO/affordable-roofing-solutionz/index.html", category: "Roofing Services" },
-    { name: "Blaze-N-Bake", href: "/DEMO/blaze-n-bake/index.html", category: "Bakery / Retail" },
-    { name: "Body Craft Supply", href: "https://demo20-gnomadstudio.web.app", category: "Industrial Supply" },
-    { name: "Champion Mobile Detail", href: "https://demo8-gnomadstudio.web.app", category: "Automotive" },
-    { name: "CS Detailing", href: "https://demo18-gnomadstudio.web.app", category: "Automotive" },
-    { name: "Cutting Edge Lawn", href: "https://demo5-gnomadstudio.web.app", category: "Outdoor Services" },
-    { name: "Doggie Doo Grooming", href: "https://demo4-gnomadstudio.web.app", category: "Pet Services" },
-    { name: "E.J. Mayes Auto Repair", href: "https://demo17-gnomadstudio.web.app", category: "Automotive" },
-    { name: "Elevate N Print", href: "https://demo11-gnomadstudio.web.app", category: "Printing & Design" },
-    { name: "Fulton Fried Pies & Bakery", href: "/DEMO/fulton-fried-pies/index.html", category: "Bakery / Retail" },
-    { name: "Grass Monkey Landscaping", href: "https://demo6-gnomadstudio.web.app", category: "Service Industry" },
-    { name: "Green St Dispensary", href: "https://demo10-gnomadstudio.web.app", category: "Dispensary" },
-    { name: "Jack's Donuts Muskogee", href: "/DEMO/jacks-donuts-muskogee/index.html", category: "Bakery / Retail" },
-    { name: "Blackout Tint", href: "/DEMO/blackout-tint-muskogee/index.html", category: "Automotive" },
-    { name: "Harrison Tire & Supply", href: "https://demo3-gnomadstudio.web.app", category: "Automotive" },
-    { name: "Home Turf of Muskogee", href: "https://demo16-gnomadstudio.web.app", category: "Outdoor Services" },
-    { name: "JFR Tire Shop", href: "https://demo15-gnomadstudio.web.app", category: "Automotive" },
-    { name: "L & M Tree Service", href: "https://demo35-gnomadstudio.web.app", category: "Outdoor Services" },
-    { name: "LawnBros Outdoor Services", href: "https://demo34-gnomadstudio.web.app", category: "Outdoor Services" },
-    { name: "Lifted Spirits Muskogee", href: "/DEMO/lifted-spirits/index.html", category: "Bar / Lounge" },
-    { name: "Making It Happen Cleaning", href: "https://demo33-gnomadstudio.web.app", category: "Service Industry" },
-    { name: "Max's Garage", href: "https://demo32-gnomadstudio.web.app", category: "Automotive" },
-    { name: "Michael's Jewelry", href: "https://demo31-gnomadstudio.web.app", category: "Retail" },
-    { name: "Muskogee Bail Bonds", href: "https://demo13-gnomadstudio.web.app", category: "Emergency Services" },
-    { name: "Muskogee Tree Care", href: "https://demo9-gnomadstudio.web.app", category: "Outdoor Services" },
-    { name: "Natural Nails Muskogee", href: "https://demo30-gnomadstudio.web.app", category: "Beauty & Wellness" },
-    { name: "New Life Ministries", href: "https://demo29-gnomadstudio.web.app", category: "Non-Profit" },
-    { name: "Okie Paws", href: "https://demo7-gnomadstudio.web.app", category: "Pet Services" },
-    { name: "Oklahoma Uncontested Divorce", href: "https://demo28-gnomadstudio.web.app", category: "Legal Services" },
-    { name: "Opulent Salon Suites", href: "https://demo27-gnomadstudio.web.app", category: "Beauty & Wellness" },
-    { name: "Paradise Donuts Muskogee", href: "https://demo22-gnomadstudio.web.app", category: "Bakery / Retail" },
-    { name: "Pete's Machine Shop", href: "https://demo25-gnomadstudio.web.app", category: "Industrial Supply" },
-    { name: "Re-Up Muskogee", href: "/DEMO/re-up-muskogee/index.html", category: "Dispensary" },
-    { name: "Scott's Repair Shop", href: "https://demo26-gnomadstudio.web.app", category: "Automotive" },
-    { name: "So Fetch Grooming", href: "https://demo1-gnomadstudio.web.app", category: "Pet Services" },
-    { name: "TB Custom Tinting", href: "https://demo14-gnomadstudio.web.app", category: "Automotive" },
-    { name: "Three Rivers Pools & Spas", href: "https://demo21-gnomadstudio.web.app", category: "Outdoor Services" },
-    { name: "Tucker Photography", href: "https://demo12-gnomadstudio.web.app", category: "Photography" },
-    { name: "Wilcoxen & Wilcoxen", href: "https://demo22-gnomadstudio.web.app", category: "Legal Services" },
-    { name: "Wild West Junk & Lawncare", href: "https://demo23-gnomadstudio.web.app", category: "Outdoor Services" },
-    { name: "Woodworth Lawn & Tree Service", href: "https://demo24-gnomadstudio.web.app", category: "Outdoor Services" }
+    { name: "Aaron & Son Custom Cabinets", href: pitch("aaron-and-son-custom-cabinets"), category: "Furniture" },
+    { name: "Affordable Roofing Solutionz", href: pitch("affordable-roofing-solutionz"), category: "Roofing Services" },
+    { name: "Becca's Builds", href: pitch("beccas-builds"), category: "Furniture" },
+    { name: "Body Craft Supply", href: pitch("body-craft-supply"), category: "Industrial Supply" },
+    { name: "Bridges Lawn Care", href: pitch("bridges-lawn-care"), category: "Outdoor Services" },
+    { name: "Champion Mobile Detail", href: pitch("champion-car-detailing"), category: "Automotive" },
+    { name: "Cincinnati Radiator", href: pitch("cincinnati-radiator"), category: "Automotive" },
+    { name: "CS Detailing", href: pitch("cs-detailing"), category: "Automotive" },
+    { name: "Cutting Edge Lawn", href: pitch("cutting-edge-lawn-service"), category: "Outdoor Services" },
+    { name: "DipStix Quick Lube", href: pitch("dipstix-quick-lube"), category: "Automotive" },
+    { name: "Doggie Doo Grooming", href: pitch("doggie-doo-mobile-grooming"), category: "Pet Services" },
+    { name: "E.J. Mayes Auto Repair", href: pitch("e-j-mayes-auto-repair"), category: "Automotive" },
+    { name: "Elevate N Print", href: pitch("elevate-n-print"), category: "Printing & Design" },
+    { name: "Filthy Gorgeous", href: pitch("filthy-gorgeous"), category: "Pet Services" },
+    { name: "Fite Estate Honey", href: pitch("fite-estate-honey"), category: "Retail" },
+    { name: "Fulton Fried Pies & Bakery", href: pitch("fulton-fried-pies"), category: "Bakery / Retail" },
+    { name: "Grass Monkey Landscaping", href: pitch("grass-monkey-landscaping"), category: "Outdoor Services" },
+    { name: "Green St Dispensary", href: pitch("green-st-dispensary"), category: "Dispensary" },
+    { name: "Harrison Tire & Supply", href: pitch("harrison-tire"), category: "Automotive" },
+    { name: "Home Turf of Muskogee", href: pitch("home-turf-of-muskogee"), category: "Outdoor Services" },
+    { name: "Jack's Donuts Muskogee", href: pitch("jacks-donuts-muskogee"), category: "Bakery / Retail" },
+    { name: "JFR Tire Shop", href: pitch("jfr-tire-shop"), category: "Automotive" },
+    { name: "L & M Tree Service", href: pitch("l-and-m-tree-service"), category: "Outdoor Services" },
+    { name: "LawnBros Outdoor Services", href: pitch("lawnbros-outdoor-services"), category: "Outdoor Services" },
+    { name: "Making It Happen Cleaning", href: pitch("making-it-happen-cleaning-services"), category: "Service Industry" },
+    { name: "Max's Garage", href: pitch("maxs-garage"), category: "Automotive" },
+    { name: "Michael's Jewelry", href: pitch("michaels-jewelry"), category: "Retail" },
+    { name: "Muskogee Bail Bonds", href: pitch("muskogee-bail-bonds"), category: "Emergency Services" },
+    { name: "Muskogee Tree Care", href: pitch("muskogee-tree-care"), category: "Outdoor Services" },
+    { name: "Natural Nails Muskogee", href: pitch("natural-nails-muskogee"), category: "Beauty & Wellness" },
+    { name: "New Life Ministries", href: pitch("new-life-ministries"), category: "Non-Profit" },
+    { name: "Okie Paws", href: pitch("okie-paws"), category: "Pet Services" },
+    { name: "Oklahoma Uncontested Divorce", href: pitch("oklahoma-uncontested-divorce"), category: "Legal Services" },
+    { name: "Opulent Salon Suites", href: pitch("opulent-salon-suites"), category: "Beauty & Wellness" },
+    { name: "Paradise Donuts Muskogee", href: pitch("paradise-donuts-muskogee"), category: "Bakery / Retail" },
+    { name: "Pete's Machine Shop", href: pitch("petes-machine-shop"), category: "Industrial Supply" },
+    { name: "Robertson Tire", href: pitch("robertson-tire"), category: "Automotive" },
+    { name: "Scott's Repair Shop", href: pitch("scotts-repair-shop"), category: "Automotive" },
+    { name: "So Fetch Grooming", href: pitch("so-fetch"), category: "Pet Services" },
+    { name: "TB Custom Tinting", href: pitch("tb-custom-tinting"), category: "Automotive" },
+    { name: "Three Rivers Pools & Spas", href: pitch("three-rivers-pools-and-spas"), category: "Outdoor Services" },
+    { name: "Tucker Photography", href: pitch("tucker-photography"), category: "Photography" },
+    { name: "Victor's Janitorial", href: pitch("victors-janitorial"), category: "Service Industry" },
+    { name: "Wilcoxen & Wilcoxen", href: pitch("wilcoxen-and-wilcoxen"), category: "Legal Services" },
+    { name: "Wild West Junk & Lawncare", href: pitch("wild-west-junk-and-lawncare"), category: "Outdoor Services" },
+    { name: "Woodworth Lawn & Tree Service", href: pitch("woodworth-lawn-and-tree-service"), category: "Outdoor Services" },
 ].sort((a, b) => a.name.localeCompare(b.name));
 
 export default function DemoPage() {
@@ -77,6 +84,18 @@ export default function DemoPage() {
                         <p className="text-gray-500 text-sm max-w-2xl leading-relaxed">
                             A non-public catalog of active project exhibits and tactical development previews.
                             Alphabetical index for internal design verification and board review.
+                        </p>
+                        <p className="text-gray-500 text-sm max-w-2xl leading-relaxed mt-4">
+                            Hosted at{" "}
+                            <a
+                                href="https://demo.gnomad.studio/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-brand-primary hover:underline"
+                            >
+                                demo.gnomad.studio
+                            </a>
+                            .
                         </p>
                     </div>
                 </section>
