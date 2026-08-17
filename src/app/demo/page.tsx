@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { ExternalLink, Terminal } from "lucide-react";
 
-const PITCH = "https://demo.gnomad.studio/muskogee";
+const PITCH = "https://gnomad.studio/demo/muskogee";
 const pitch = (slug: string) => `${PITCH}/${slug}/`;
 
 const demoSites = [
@@ -88,12 +88,12 @@ export default function DemoPage() {
                         <p className="text-gray-500 text-sm max-w-2xl leading-relaxed mt-4">
                             Hosted at{" "}
                             <a
-                                href="https://demo.gnomad.studio/"
+                                href="https://gnomad.studio/demo/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-brand-primary hover:underline"
                             >
-                                demo.gnomad.studio
+                                gnomad.studio/demo
                             </a>
                             .
                         </p>
