@@ -25,18 +25,18 @@ const nextConfig: NextConfig = {
       { source: "/projects", destination: "/examples/", permanent: true },
       { source: "/demos", destination: "/demo/", permanent: true },
       { source: "/demos/:path*", destination: "/demo/", permanent: true },
-      // Old static copies lived at /DEMO/<slug>/ — Hostinger is canonical.
-      // Do not add a /DEMO → /examples redirect: App Hosting folds case, so it
-      // also swallowed /demo (the catalog).
+      // Hostinger gnomad.studio / demo.gnomad.studio is down (TLS). Serve
+      // pitches on this host. Do NOT redirect /DEMO/:slug — App Hosting is
+      // case-insensitive, so that also 308'd /demo/:slug to a dead host.
       {
-        source: "/DEMO/:slug/index.html",
-        destination: "https://demo.gnomad.studio/muskogee/:slug/",
-        permanent: true,
+        source: "/demo/muskogee/:slug",
+        destination: "/demo/:slug",
+        permanent: false,
       },
       {
-        source: "/DEMO/:slug",
-        destination: "https://demo.gnomad.studio/muskogee/:slug/",
-        permanent: true,
+        source: "/demo/park-hill/:slug",
+        destination: "/demo/:slug",
+        permanent: false,
       },
       { source: "/about", destination: "/", permanent: true },
       { source: "/agency", destination: "/", permanent: true },

@@ -4,11 +4,17 @@ import Link from 'next/link';
 import { DemoSiteConfig } from '@/config/demo-sites';
 import { ArrowRight } from 'lucide-react';
 
-export default function ShowcaseTemplate({ config }: { config: DemoSiteConfig }) {
+export default function ShowcaseTemplate({
+    config,
+    iframeSrc,
+}: {
+    config: DemoSiteConfig;
+    iframeSrc: string;
+}) {
     return (
         <div className="fixed inset-0 w-full h-full bg-black z-[9999]">
             <iframe
-                src={`/showcase-sites/${config.id}/index.html`}
+                src={iframeSrc}
                 className="w-full h-full border-none"
                 title={config.name}
             />

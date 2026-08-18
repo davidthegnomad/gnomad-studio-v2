@@ -5,8 +5,7 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { ExternalLink, Terminal } from "lucide-react";
 
-const PITCH = "https://gnomad.studio/demo/muskogee";
-const pitch = (slug: string) => `${PITCH}/${slug}/`;
+const pitch = (slug: string) => `/demo/${slug}/`;
 
 const demoSites = [
     { name: "Aaron & Son Custom Cabinets", href: pitch("aaron-and-son-custom-cabinets"), category: "Furniture" },
@@ -24,7 +23,7 @@ const demoSites = [
     { name: "Elevate N Print", href: pitch("elevate-n-print"), category: "Printing & Design" },
     { name: "Filthy Gorgeous", href: pitch("filthy-gorgeous"), category: "Pet Services" },
     { name: "Fite Estate Honey", href: pitch("fite-estate-honey"), category: "Retail" },
-    { name: "Good Vibes", href: "https://gnomad.studio/demo/park-hill/good-vibes/", category: "Dispensary" },
+    { name: "Good Vibes", href: pitch("good-vibes"), category: "Dispensary" },
     { name: "Grass Monkey Landscaping", href: pitch("grass-monkey-landscaping"), category: "Outdoor Services" },
     { name: "Green St Dispensary", href: pitch("green-st-dispensary"), category: "Dispensary" },
     { name: "Harrison Tire & Supply", href: pitch("harrison-tire"), category: "Automotive" },
@@ -87,16 +86,7 @@ export default function DemoPage() {
                             business getting ready to be found. Yours could be next.
                         </p>
                         <p className="text-gray-500 text-sm max-w-2xl leading-relaxed mt-4">
-                            Hosted at{" "}
-                            <a
-                                href="https://gnomad.studio/demo/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-brand-primary hover:underline"
-                            >
-                                gnomad.studio/demo
-                            </a>
-                            .
+                            Open a pitch below. Full-screen preview stays on this site.
                         </p>
                     </div>
                 </section>
@@ -115,8 +105,6 @@ export default function DemoPage() {
                                 <a
                                     key={idx}
                                     href={site.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
                                     className="grid grid-cols-12 gap-4 px-8 py-6 hover:bg-white/[0.04] transition-all group items-center"
                                 >
                                     <div className="col-span-8">
